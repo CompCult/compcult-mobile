@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ResetPasswordPage extends StatelessWidget {
-  final _emailController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,26 +38,36 @@ class ResetPasswordPage extends StatelessWidget {
                   fontSize: 13,
                 ),
               ),
-              SizedBox(height: 10),
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: "E-mail",
-                  labelStyle: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
+              SizedBox(height: 15),
+              _buildField("E-mail"),
               SizedBox(height: 20),
               _buildButton("CONFIRMAR"),
-              SizedBox(height: 20),
+              // SizedBox(height: 20),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  // Ainda precisa-se fazer tratamento de validação do campo.
+  Widget _buildField(String label) {
+    return TextField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(
+          color: Colors.black38,
+          fontFamily: "Poppins",
+          fontWeight: FontWeight.w500,
+          fontSize: 15,
+        ),
+        border: OutlineInputBorder(),
+        prefixIcon: Icon(Icons.mail_outline),
+      ),
+      style: TextStyle(
+        fontSize: 13,
+        fontFamily: "Poppins",
       ),
     );
   }

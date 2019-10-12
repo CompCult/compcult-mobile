@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'pages/login_page.dart';
+import 'pages/sign_in_page.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // Raíz da aplicação.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           button: TextStyle(fontSize: 10),
         ),
       ),
-      home: LoginPage(),
+      home: SignInPage(),
     );
   }
 }

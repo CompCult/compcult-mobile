@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/reset_password_page.dart';
 import 'package:museu_vivo/pages/sign_up_page.dart';
 
-class LoginPage extends StatelessWidget {
+class SignInPage extends StatelessWidget {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        padding: EdgeInsets.only(top: 60, left: 40, right: 40),
+        padding: EdgeInsets.only(top: 30, left: 40, right: 40),
         color: Colors.white,
         child: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
@@ -22,8 +22,8 @@ class LoginPage extends StatelessWidget {
               children: <Widget>[
                 // Para redimensionar a logo.
                 SizedBox(
-                  width: 200,
-                  height: 200,
+                  width: 250,
+                  height: 250,
                   child: Image.asset("images/logo.png"),
                 ),
                 SizedBox(height: 20),

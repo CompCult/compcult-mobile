@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatelessWidget {
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _formFieldsKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: 10, left: 40, right: 40),
+        padding: EdgeInsets.only(top: 20, left: 40, right: 40),
         color: Colors.white,
         child: ListView(
           children: <Widget>[
@@ -15,102 +20,19 @@ class SignUpPage extends StatelessWidget {
               alignment: Alignment(0.0, 1.15),
               decoration: new BoxDecoration(
                 image: new DecorationImage(
-                  image: AssetImage("images/profile-picture.png"),
+                  image: AssetImage("images/logo.png"),
                   fit: BoxFit.fitHeight,
                 ),
               ),
-              child: Container(
-                height: 56,
-                width: 56,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.3, 1.0],
-                    colors: [
-                      Color(0xFFf44336),
-                      Color(0XFFc62828),
-                    ],
-                  ),
-                  border: Border.all(
-                    width: 4.0,
-                    color: const Color(0xFFFFFFFF),
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(56),
-                  ),
-                ),
-                child: SizedBox.expand(
-                  child: FlatButton(
-                    padding: EdgeInsets.only(right: 0),
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-              ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: "Nome",
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
-              ),
-              style: TextStyle(
-                fontSize: 13,
-                fontFamily: "Poppins",
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              // autofocus: true,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: "E-mail",
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
-              ),
-              style: TextStyle(
-                fontSize: 13,
-                fontFamily: "Poppins",
-              ),
-            ),
+            SizedBox(height: 15),
+            _buildFormField("Nome", _nameController, false),
             SizedBox(height: 10),
-            TextFormField(
-              // autofocus: true,
-              keyboardType: TextInputType.text,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "Senha",
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
-              ),
-              style: TextStyle(
-                fontSize: 13,
-                fontFamily: "Poppins",
-              ),
-            ),
+            _buildFormField("Instituição", _nameController, false),
+            SizedBox(height: 10),
+            _buildFormField("E-mail", _emailController, false),
+            SizedBox(height: 10),
+            _buildFormField("Senha", _passwordController, true),
             SizedBox(height: 15),
             Container(
               height: 60,
@@ -145,26 +67,58 @@ class SignUpPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            Container(
-              height: 40,
-              alignment: Alignment.center,
-              child: FlatButton(
-                child: Text(
-                  "Cancelar",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontFamily: "PTSans",
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                onPressed: () => Navigator.pop(context, false),
-              ),
-            ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildFormField(String label, TextEditingController controller,
+      bool permissionToObscure) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: permissionToObscure == true
+          ? TextInputType.text
+          : TextInputType.emailAddress,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(
+          color: Colors.black38,
+          fontFamily: "Poppins",
+          fontWeight: FontWeight.w500,
+          fontSize: 13,
+        ),
+        border: OutlineInputBorder(),
+        prefixIcon: _iconFormFiel(label),
+      ),
+      style: TextStyle(
+        fontSize: 11,
+        fontFamily: "Poppins",
+      ),
+      validator: (value) {
+        if (value.isEmpty)
+          return "O campo \"${label.toLowerCase()}\" não pode ser vazio";
+      },
+      obscureText: permissionToObscure,
+    );
+  }
+
+  Icon _iconFormFiel(String label) {
+    switch (label.toLowerCase()) {
+      case "nome":
+        return Icon(Icons.person);
+        break;
+      case "instituição":
+        return Icon(Icons.school);
+        break;
+      case "e-mail":
+        return Icon(Icons.mail_outline);
+        break;
+      case "senha":
+        return Icon(Icons.lock_outline);
+        break;
+      default:
+        return null;
+    }
   }
 }
