@@ -4,7 +4,6 @@ class SignUpPage extends StatelessWidget {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _formFieldsKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
