@@ -13,6 +13,7 @@ class MainPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Meu Vivo Museu'),
+          automaticallyImplyLeading: false,
           actions: <Widget>[
             PopupMenuButton<int>(
               itemBuilder: (_) => [
