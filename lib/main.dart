@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'pages/main_page.dart';
 import 'pages/sign_in_page.dart';
 
 void main() => runApp(MyApp());
@@ -19,6 +20,10 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SignInPage(),
+      routes: {
+        SignInPage.routeName: (_) => SignInPage(),
+        MainPage.routeName: (_) => MainPage(),
+      },
     );
   }
 }
