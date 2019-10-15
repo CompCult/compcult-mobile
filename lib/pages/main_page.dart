@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/sign_in_page.dart';
 
 import './missions_page.dart';
 import './quizzes_page.dart';
@@ -16,8 +17,11 @@ class MainPage extends StatelessWidget {
           automaticallyImplyLeading: false,
           actions: <Widget>[
             PopupMenuButton<int>(
+              onSelected: (_) =>
+                  Navigator.of(context).pushNamed(SignInPage.routeName),
               itemBuilder: (_) => [
                 PopupMenuItem(
+                  value: 1,
                   child: Text("Sair"),
                 ),
               ],
