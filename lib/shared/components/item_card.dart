@@ -36,6 +36,14 @@ class ItemCard extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
+              SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  '${mission.points} Pontos',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              )
             ],
           ),
         ),
