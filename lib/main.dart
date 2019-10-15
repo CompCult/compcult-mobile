@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'pages/main_page.dart';
 import 'pages/sign_in_page.dart';
+import 'pages/mission_submit.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,6 +24,17 @@ class MyApp extends StatelessWidget {
       routes: {
         SignInPage.routeName: (_) => SignInPage(),
         MainPage.routeName: (_) => MainPage(),
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case MissionSubmit.routeName:
+            return MaterialPageRoute(
+              builder: (_) => MissionSubmit(settings.arguments),
+            );
+            break;
+          default:
+            return null;
+        }
       },
     );
   }
