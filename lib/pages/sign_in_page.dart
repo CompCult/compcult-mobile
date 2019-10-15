@@ -191,8 +191,8 @@ class _SignInPageState extends State<SignInPage> {
   Future<int> _auth() async {
     final Response response = await Dio()
         .post('https://museu-vivo-api.herokuapp.com/users/auth', data: {
-      "email": _emailController.text,
-      "password": _passwordController.text,
+      'email': _emailController.text,
+      'password': _passwordController.text,
     });
 
     return response.data['_id'];

@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/sign_in_page.dart';
 
 class SignUpPage extends StatelessWidget {
   final _nameController = TextEditingController();
+  final _institutionController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -27,7 +30,7 @@ class SignUpPage extends StatelessWidget {
             SizedBox(height: 15),
             _buildFormField("Nome", _nameController, false),
             SizedBox(height: 10),
-            _buildFormField("Instituição", _nameController, false),
+            _buildFormField("Instituição", _institutionController, false),
             SizedBox(height: 10),
             _buildFormField("E-mail", _emailController, false),
             SizedBox(height: 10),
@@ -62,7 +65,14 @@ class SignUpPage extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      await _createUser();
+                      Navigator.of(context).pushNamed(SignInPage.routeName);
+                    } catch (exception) {
+                      print(exception);
+                    }
+                  },
                 ),
               ),
             ),
@@ -119,5 +129,16 @@ class SignUpPage extends StatelessWidget {
       default:
         return null;
     }
+  }
+
+  Future _createUser() async {
+    await Dio()
+        .post('https://museu-vivo-api.herokuapp.com/users/register', data: {
+      'name': _nameController.text,
+      'type': 'estudante',
+      'institution': _institutionController.text,
+      'email': _emailController.text,
+      'password': _passwordController.text,
+    });
   }
 }
