@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/main_page.dart';
-import 'package:museu_vivo/pages/reset_password_page.dart';
-import 'package:museu_vivo/pages/sign_up_page.dart';
+import 'package:provider/provider.dart';
+
+import 'main_page.dart';
+import 'reset_password_page.dart';
+import 'sign_up_page.dart';
+import '../shared/providers/user_provider.dart';
 
 class SignInPage extends StatelessWidget {
   static const String routeName = '/sign-in';
@@ -118,6 +121,9 @@ class SignInPage extends StatelessWidget {
   }
 
   Widget _buildButton(String label, BuildContext context) {
+    final UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,
@@ -150,6 +156,8 @@ class SignInPage extends StatelessWidget {
           // Aqui estarah a funcao para efetuar login. Por enquanto, está só uma validação de campos.
           onPressed: () {
             if (_formKey.currentState.validate()) {
+              // TODO: substituir o 4 pelo id do usuario
+              userProvider.updateUserId(4);
               Navigator.of(context).pushNamed(MainPage.routeName);
             }
           },
