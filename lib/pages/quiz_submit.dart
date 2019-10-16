@@ -25,25 +25,52 @@ class _QuizSubmitState extends State<QuizSubmit> {
 
     return Scaffold(
       key: _scaffoldState,
-      appBar: AppBar(title: Text('Submeter Quiz')),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.send),
-        onPressed: () {
-          Dio()
-              .post('https://museu-vivo-api.herokuapp.com/quiz_answers', data: {
-            '_user': userId,
-            '_quiz': widget.quiz.id,
-            'answer': _alternative,
-          });
-
-          Navigator.of(context).pop(true);
-        },
+      appBar: AppBar(
+        title: Text(
+          "Submeter quiz",
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontSize: 16,
+          ),
+        ),
       ),
       body: ListView(
+        padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
         children: <Widget>[
-          Text('${widget.quiz.title}'),
-          Text('${widget.quiz.description}'),
+          Column(
+            children: <Widget>[
+              Text(
+                "${widget.quiz.title}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "${widget.quiz.description}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "SourceSansPro",
+                  color: Colors.black54,
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+            ],
+          ),
           _buildQuizForm(),
+          const SizedBox(
+            height: 40,
+          ),
+          _buildButtonSubmit("ENVIAR RESPOSTA", userId),
         ],
       ),
     );
@@ -55,7 +82,10 @@ class _QuizSubmitState extends State<QuizSubmit> {
         RadioListTile(
           groupValue: _alternative,
           value: 'a',
-          title: Text(widget.quiz.alternativeA),
+          title: Text(
+            widget.quiz.alternativeA,
+            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
+          ),
           onChanged: (value) => setState(() {
             _alternative = value;
           }),
@@ -63,7 +93,10 @@ class _QuizSubmitState extends State<QuizSubmit> {
         RadioListTile(
           groupValue: _alternative,
           value: 'b',
-          title: Text(widget.quiz.alternativeB),
+          title: Text(
+            widget.quiz.alternativeB,
+            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
+          ),
           onChanged: (value) => setState(() {
             _alternative = value;
           }),
@@ -71,7 +104,10 @@ class _QuizSubmitState extends State<QuizSubmit> {
         RadioListTile(
           groupValue: _alternative,
           value: 'c',
-          title: Text(widget.quiz.alternativeC),
+          title: Text(
+            widget.quiz.alternativeC,
+            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
+          ),
           onChanged: (value) => setState(() {
             _alternative = value;
           }),
@@ -79,7 +115,10 @@ class _QuizSubmitState extends State<QuizSubmit> {
         RadioListTile(
           groupValue: _alternative,
           value: 'd',
-          title: Text(widget.quiz.alternativeD),
+          title: Text(
+            widget.quiz.alternativeD,
+            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
+          ),
           onChanged: (value) => setState(() {
             _alternative = value;
           }),
@@ -87,12 +126,59 @@ class _QuizSubmitState extends State<QuizSubmit> {
         RadioListTile(
           groupValue: _alternative,
           value: 'e',
-          title: Text(widget.quiz.alternativeE),
+          title: Text(
+            widget.quiz.alternativeE,
+            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
+          ),
           onChanged: (value) => setState(() {
             _alternative = value;
           }),
         ),
       ],
+    );
+  }
+
+  Widget _buildButtonSubmit(String label, int userId) {
+    return Container(
+      height: 50,
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          stops: [0.3, 1],
+          colors: [
+            Color(0xFFf44336),
+            Color(0XFFc62828),
+          ],
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(5),
+        ),
+      ),
+      child: SizedBox.expand(
+        child: FlatButton(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            onPressed: () {
+              Dio().post('https://museu-vivo-api.herokuapp.com/quiz_answers',
+                  data: {
+                    '_user': userId,
+                    '_quiz': widget.quiz.id,
+                    'answer': _alternative,
+                  });
+
+              Navigator.of(context).pop(true);
+            }),
+      ),
     );
   }
 }
