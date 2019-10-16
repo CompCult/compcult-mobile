@@ -43,7 +43,7 @@ class MissionsPage extends StatelessWidget {
         final mission = missions[i];
 
         return ItemCard(
-          mission: mission,
+          item: mission,
           routeName: MissionSubmit.routeName,
         );
       },

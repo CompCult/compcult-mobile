@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:museu_vivo/shared/models/mission.dart';
 
 class ItemCard extends StatelessWidget {
-  final Mission mission;
+  final dynamic item;
   final String routeName;
 
-  ItemCard({this.mission, this.routeName});
+  ItemCard({this.item, this.routeName});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class ItemCard extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(routeName, arguments: mission);
+          Navigator.of(context).pushNamed(routeName, arguments: item);
         },
         child: Padding(
           padding: const EdgeInsets.all(15),
@@ -22,7 +22,7 @@ class ItemCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                mission.name,
+                item.name,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor,
@@ -31,7 +31,7 @@ class ItemCard extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                '${mission.description.substring(0, 140)}...',
+                '${item.description.length > 140 ? item.description.substring(0, 140) : item.description}...',
                 style: TextStyle(
                   color: Colors.grey,
                 ),
@@ -40,7 +40,7 @@ class ItemCard extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  '${mission.points} Pontos',
+                  '${item.points} Pontos',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               )
