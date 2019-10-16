@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 
+import '../shared/providers/user_provider.dart';
 import '../shared/components/item_card.dart';
 import './mission_submit.dart';
 import '../shared/models/mission.dart';
@@ -8,8 +10,10 @@ import '../shared/models/mission.dart';
 class MissionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final int userId = Provider.of<UserProvider>(context).userId;
+
     return FutureBuilder(
-      future: _getMissions(),
+      future: _getMissions(userId),
       builder: (_, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -46,8 +50,8 @@ class MissionsPage extends StatelessWidget {
     );
   }
 
-  Future<Response> _getMissions() {
-    return Dio()
-        .get('https://museu-vivo-api.herokuapp.com/missions/public?user_id=4');
+  Future<Response> _getMissions(int userId) {
+    return Dio().get(
+        'https://museu-vivo-api.herokuapp.com/missions/public?user_id=$userId');
   }
 }

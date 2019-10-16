@@ -1,14 +1,25 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/main_page.dart';
-import 'package:museu_vivo/pages/reset_password_page.dart';
-import 'package:museu_vivo/pages/sign_up_page.dart';
+import 'package:provider/provider.dart';
 
-class SignInPage extends StatelessWidget {
+import 'main_page.dart';
+import 'reset_password_page.dart';
+import 'sign_up_page.dart';
+import '../shared/providers/user_provider.dart';
+
+class SignInPage extends StatefulWidget {
   static const String routeName = '/sign-in';
 
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  bool _showErrorMessage = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +40,16 @@ class SignInPage extends StatelessWidget {
                   height: 250,
                   child: Image.asset("images/logo.png"),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 5),
+                if (_showErrorMessage)
+                  Text(
+                    'Usuário ou senha incorretos',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                SizedBox(height: 15),
                 _buildFormField("E-mail", _emailController, false),
                 SizedBox(height: 10),
                 _buildFormField("Senha", _passwordController, true),
@@ -118,6 +138,9 @@ class SignInPage extends StatelessWidget {
   }
 
   Widget _buildButton(String label, BuildContext context) {
+    final UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,
@@ -147,14 +170,31 @@ class SignInPage extends StatelessWidget {
             ),
             textAlign: TextAlign.left,
           ),
-          // Aqui estarah a funcao para efetuar login. Por enquanto, está só uma validação de campos.
-          onPressed: () {
+          onPressed: () async {
             if (_formKey.currentState.validate()) {
-              Navigator.of(context).pushNamed(MainPage.routeName);
+              try {
+                final int userId = await _auth();
+                userProvider.updateUserId(userId);
+                Navigator.of(context).pushNamed(MainPage.routeName);
+              } catch (exception) {
+                setState(() {
+                  _showErrorMessage = true;
+                });
+              }
             }
           },
         ),
       ),
     );
+  }
+
+  Future<int> _auth() async {
+    final Response response = await Dio()
+        .post('https://museu-vivo-api.herokuapp.com/users/auth', data: {
+      'email': _emailController.text,
+      'password': _passwordController.text,
+    });
+
+    return response.data['_id'];
   }
 }
