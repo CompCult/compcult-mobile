@@ -12,21 +12,43 @@ class MainPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Meu Vivo Museu'),
+          title: Text(
+            'Meu Vivo Museu',
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontSize: 18,
+            ),
+          ),
           automaticallyImplyLeading: false,
           actions: <Widget>[
             PopupMenuButton<int>(
               itemBuilder: (_) => [
                 PopupMenuItem(
-                  child: Text("Sair"),
+                  child: Text(
+                    "Sair",
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
               ],
             ),
           ],
           bottom: TabBar(
             tabs: [
-              Tab(text: 'MISSÕES'),
-              Tab(text: 'QUIZZES'),
+              Tab(
+                child: Text(
+                  "MISSÕES",
+                  style: TextStyle(fontFamily: "Poppins"),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  "QUIZZES",
+                  style: TextStyle(fontFamily: "Poppins"),
+                ),
+              ),
             ],
           ),
         ),
