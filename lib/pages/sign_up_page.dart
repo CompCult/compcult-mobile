@@ -1,6 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/sign_in_page.dart';
+import 'package:dio/dio.dart';
+
+import './sign_in_page.dart';
 
 class SignUpPage extends StatelessWidget {
   final _nameController = TextEditingController();
