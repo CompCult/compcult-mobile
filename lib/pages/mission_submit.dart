@@ -1,9 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../shared/models/mission.dart';
 
-class MissionSubmit extends StatelessWidget {
+class MissionSubmit extends StatefulWidget {
   static const String routeName = '/mission-submit';
 
   final Mission _mission;
@@ -11,11 +15,17 @@ class MissionSubmit extends StatelessWidget {
   MissionSubmit(this._mission);
 
   @override
+  _MissionSubmitState createState() => _MissionSubmitState();
+}
+
+class _MissionSubmitState extends State<MissionSubmit> {
+  File _image;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          // _mission.name,
           "Submeter resposta",
           style: TextStyle(
             fontFamily: "Poppins",
@@ -30,7 +40,7 @@ class MissionSubmit extends StatelessWidget {
             Column(
               children: <Widget>[
                 Text(
-                  _mission.name,
+                  widget._mission.name,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "Poppins",
@@ -43,7 +53,7 @@ class MissionSubmit extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  _mission.description,
+                  widget._mission.description,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "SourceSansPro",
@@ -76,12 +86,22 @@ class MissionSubmit extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    _flatButtonIcon("Câmera", Icons.add_a_photo),
-                    _flatButtonIcon("Galeria", Icons.wallpaper),
+                    _flatButtonIcon(
+                        "Câmera", Icons.add_a_photo, _getImageFromCamera),
+                    _flatButtonIcon(
+                        "Galeria", Icons.wallpaper, _getImageFromGallery),
                   ],
                 ),
+                Container(
+                  color: Colors.green,
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  child: _image == null
+                      ? Text("Nenhuma imagem selecionada.")
+                      : Image.file(_image),
+                ),
                 SizedBox(
-                  height: 60,
+                  height: 40,
                 ),
                 _buildButton("ENVIAR RESPOSTA"),
               ],
@@ -129,10 +149,10 @@ class MissionSubmit extends StatelessWidget {
     );
   }
 
-  Widget _flatButtonIcon(String label, IconData icon) {
+  Widget _flatButtonIcon(String label, IconData icon, Function func) {
     return FlatButton.icon(
       padding: EdgeInsets.only(left: 10, right: 10),
-      onPressed: () {},
+      onPressed: func,
       icon: Icon(icon),
       label: Padding(
         padding: const EdgeInsets.only(top: 1),
@@ -145,5 +165,28 @@ class MissionSubmit extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future _getImageFromCamera() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  Future _getImageFromGallery() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  // Transforma em Base64
+  // Caso as imagens sejam muito grandes, é necessário usar um Future.
+  Future<String> _changeFormatImage() async {
+    List<int> imageBytes = await _image.readAsBytesSync();
+    print(imageBytes);
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
   }
 }
