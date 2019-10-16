@@ -54,7 +54,7 @@ class ItemCard extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  '${mission.points} PONTOS',
+                  '${item.points} PONTOS',
                   style: TextStyle(
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.bold,
