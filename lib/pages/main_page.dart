@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './sign_in_page.dart';
 import './missions_page.dart';
 import './quizzes_page.dart';
 
@@ -16,8 +17,13 @@ class MainPage extends StatelessWidget {
           automaticallyImplyLeading: false,
           actions: <Widget>[
             PopupMenuButton<int>(
+              onSelected: (_) => Navigator.of(context).pushNamedAndRemoveUntil(
+                SignInPage.routeName,
+                (route) => false,
+              ),
               itemBuilder: (_) => [
                 PopupMenuItem(
+                  value: 1,
                   child: Text("Sair"),
                 ),
               ],
