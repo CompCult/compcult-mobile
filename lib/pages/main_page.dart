@@ -29,6 +29,7 @@ class MainPage extends StatelessWidget {
               ),
               itemBuilder: (_) => [
                 PopupMenuItem(
+                  value: 1,
                   child: Text(
                     "Sair",
                     style: TextStyle(
