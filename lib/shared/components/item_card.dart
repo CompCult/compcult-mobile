@@ -36,15 +36,17 @@ class ItemCard extends StatelessWidget {
               Text(
                 item.name,
                 style: TextStyle(
+                  fontFamily: "Poppins",
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor,
-                  fontSize: 16,
+                  fontSize: 15,
                 ),
               ),
               SizedBox(height: 10),
               Text(
                 '${item.description.length > 140 ? item.description.substring(0, 140) : item.description}...',
                 style: TextStyle(
+                  fontFamily: "SourceSansPro",
                   color: Colors.grey,
                 ),
               ),
@@ -52,8 +54,12 @@ class ItemCard extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  '${item.points} Pontos',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  '${mission.points} PONTOS',
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
                 ),
               )
             ],

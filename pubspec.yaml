@@ -19,12 +19,19 @@ environment:
 dependencies:
   dio: ^3.0.3
   provider: ^3.1.0
+  image_picker: ^0.6.1+8
   flutter:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  
+  # Testanto outra forma de acesso a camera
+  # camera:
+  # path_provider:
+  # path:
+
 
 dev_dependencies:
   flutter_test:
@@ -76,11 +83,17 @@ flutter:
         - asset: fonts/PTSans-Bold.ttf
           weight: 700
 
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+    - family: Merriweather
+      fonts:
+        - asset: fonts/Merriweather-Regular.ttf
+    
+    - family: SourceSansPro
+      fonts:
+        - asset: fonts/SourceSansPro-Regular.ttf
+
+    - family: SourceSerifPro
+      fonts:
+        - asset: fonts/SourceSerifPro-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
