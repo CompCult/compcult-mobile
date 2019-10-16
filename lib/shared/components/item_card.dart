@@ -17,11 +17,11 @@ class ItemCard extends StatelessWidget {
               .pushNamed(routeName, arguments: item)
               .then(
             (value) {
-              if (value) {
+              if (value != null) {
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Enviado com sucesso!'),
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.grey,
                   ),
                 );
               }
