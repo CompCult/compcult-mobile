@@ -20,6 +20,7 @@ class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
 
   bool _showErrorMessage = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -160,16 +161,18 @@ class _SignInPageState extends State<SignInPage> {
       ),
       child: SizedBox.expand(
         child: FlatButton(
-          child: Text(
-            label,
-            style: TextStyle(
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.left,
-          ),
+          child: _isLoading
+              ? CircularProgressIndicator()
+              : Text(
+                  label,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
           onPressed: () async {
             if (_formKey.currentState.validate()) {
               try {
@@ -179,6 +182,7 @@ class _SignInPageState extends State<SignInPage> {
               } catch (exception) {
                 setState(() {
                   _showErrorMessage = true;
+                  _isLoading = false;
                 });
               }
             }
@@ -189,6 +193,10 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Future<int> _auth() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     final Response response = await Dio()
         .post('https://museu-vivo-api.herokuapp.com/users/auth', data: {
       'email': _emailController.text,

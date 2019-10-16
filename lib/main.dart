@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/main_page.dart';
@@ -38,6 +39,11 @@ class MyApp extends StatelessWidget {
             case MissionSubmit.routeName:
               return MaterialPageRoute(
                 builder: (_) => MissionSubmit(settings.arguments),
+              );
+              break;
+            case QuizSubmit.routeName:
+              return MaterialPageRoute(
+                builder: (_) => QuizSubmit(settings.arguments),
               );
               break;
             default:

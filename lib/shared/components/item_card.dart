@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/shared/models/mission.dart';
 
 class ItemCard extends StatelessWidget {
   final dynamic item;
@@ -13,8 +12,21 @@ class ItemCard extends StatelessWidget {
       color: Colors.white,
       elevation: 2,
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed(routeName, arguments: item);
+        onTap: () async {
+          await Navigator.of(context)
+              .pushNamed(routeName, arguments: item)
+              .then(
+            (value) {
+              if (value) {
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Enviado com sucesso!'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
+            },
+          );
         },
         child: Padding(
           padding: const EdgeInsets.all(15),
