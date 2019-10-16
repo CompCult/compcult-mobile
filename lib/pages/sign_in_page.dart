@@ -27,80 +27,81 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        padding: EdgeInsets.only(top: 30, left: 40, right: 40),
         color: Colors.white,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                // Para redimensionar a logo.
-                SizedBox(
-                  width: 250,
-                  height: 250,
-                  child: Image.asset("images/logo.png"),
-                ),
-                SizedBox(height: 5),
-                if (_showErrorMessage)
-                  Text(
-                    'Usuário ou senha incorretos',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
+        child: ListView(
+          padding: EdgeInsets.fromLTRB(40, 60, 40, 10),
+          children: <Widget>[
+            Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  // Para redimensionar a logo.
+                  SizedBox(
+                    width: 250,
+                    height: 250,
+                    child: Image.asset("images/logo.png"),
                   ),
-                SizedBox(height: 15),
-                _buildFormField("E-mail", _emailController, false),
-                SizedBox(height: 10),
-                _buildFormField("Senha", _passwordController, true),
-                SizedBox(height: 15),
-                _buildButton("ENTRAR", context),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    GestureDetector(
-                      child: Text(
-                        "Cadastre-se",
-                        style: TextStyle(
-                          fontFamily: "PTSans",
-                          fontWeight: FontWeight.w700,
-                        ),
+                  SizedBox(height: 5),
+                  if (_showErrorMessage)
+                    Text(
+                      'Usuário ou senha incorretos',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
                       ),
-                      // Aqui estarah a funcao para efetuar cadastro...
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUpPage(),
-                          ),
-                        );
-                      },
                     ),
-                    GestureDetector(
-                      child: Text(
-                        "Recuperar senha",
-                        style: TextStyle(
-                          fontFamily: "PTSans",
-                          fontWeight: FontWeight.w700,
+                  SizedBox(height: 15),
+                  _buildFormField("E-mail", _emailController, false),
+                  SizedBox(height: 10),
+                  _buildFormField("Senha", _passwordController, true),
+                  SizedBox(height: 15),
+                  _buildButton("ENTRAR", context),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      GestureDetector(
+                        child: Text(
+                          "Cadastre-se",
+                          style: TextStyle(
+                            fontFamily: "PTSans",
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
+                        // Aqui estarah a funcao para efetuar cadastro...
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignUpPage(),
+                            ),
+                          );
+                        },
                       ),
-                      // Aqui estarah a funcao para recuperar senha...
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ResetPasswordPage(),
+                      GestureDetector(
+                        child: Text(
+                          "Recuperar senha",
+                          style: TextStyle(
+                            fontFamily: "PTSans",
+                            fontWeight: FontWeight.w700,
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                        ),
+                        // Aqui estarah a funcao para recuperar senha...
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ResetPasswordPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
