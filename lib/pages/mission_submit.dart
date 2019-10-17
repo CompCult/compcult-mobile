@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:museu_vivo/shared/providers/user_provider.dart';
 
 import '../shared/models/mission.dart';
 
@@ -20,6 +23,7 @@ class MissionSubmit extends StatefulWidget {
 
 class _MissionSubmitState extends State<MissionSubmit> {
   File _image;
+  String _text;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +70,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 TextField(
                   maxLines: 7,
                   keyboardType: TextInputType.multiline,
+                  onChanged: (value) => _text = value,
                   decoration: InputDecoration(
                     alignLabelWithHint: true,
                     labelText: "Resposta",
@@ -143,7 +148,22 @@ class _MissionSubmitState extends State<MissionSubmit> {
             textAlign: TextAlign.left,
           ),
           // Aqui estarah a funcao para efetuar login. Por enquanto, está só uma validação de campos.
-          onPressed: () {},
+          onPressed: () async {
+            final int userId = Provider.of<UserProvider>(context).userId;
+            String base64 = await _changeFormatImage();
+
+            await Dio().post(
+              'https://museu-vivo-api.herokuapp.com/missions_answers',
+              data: {
+                '_user': userId,
+                '_mission': widget._mission.id,
+                'image': base64,
+                'text_msg': _text,
+              },
+            );
+
+            Navigator.of(context).pop(true);
+          },
         ),
       ),
     );
@@ -184,8 +204,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
   // Transforma em Base64
   // Caso as imagens sejam muito grandes, é necessário usar um Future.
   Future<String> _changeFormatImage() async {
-    List<int> imageBytes = await _image.readAsBytesSync();
-    print(imageBytes);
+    List<int> imageBytes = await _image.readAsBytes();
     String base64Image = base64Encode(imageBytes);
     return base64Image;
   }
