@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'pages/main_page.dart';
 import 'pages/sign_in_page.dart';
 import 'pages/mission_submit.dart';
+import 'pages/splash_page.dart';
 import 'shared/providers/user_provider.dart';
 
 void main() => runApp(MyApp());
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
             button: TextStyle(fontSize: 10),
           ),
         ),
-        home: SignInPage(),
+        home: SplashPage(),
         routes: {
           SignInPage.routeName: (_) => SignInPage(),
           MainPage.routeName: (_) => MainPage(),
