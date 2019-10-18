@@ -56,19 +56,25 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  widget._mission.description,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "SourceSansPro",
-                    color: Colors.black54,
+                Container(
+                  height: 100,
+                  child: SingleChildScrollView(
+                    child: Text(
+                      widget._mission.description,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "SourceSansPro",
+                        fontSize: 16,
+                        color: Colors.black54,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 30,
                 ),
                 TextField(
-                  maxLines: 7,
+                  maxLines: 5,
                   keyboardType: TextInputType.multiline,
                   onChanged: (value) => _text = value,
                   decoration: InputDecoration(
@@ -97,23 +103,36 @@ class _MissionSubmitState extends State<MissionSubmit> {
                         "Galeria", Icons.wallpaper, _getImageFromGallery),
                   ],
                 ),
+                const SizedBox(
+                  height: 40,
+                ),
                 Container(
-                  color: Colors.green,
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
                   child: _image == null
-                      ? Text("Nenhuma imagem selecionada.")
-                      : Image.file(_image),
+                      ? Text(
+                          "Nenhuma imagem selecionada...",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            color: Colors.red,
+                          ),
+                        )
+                      : Text(
+                          "Imagem carregada!",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w700,
+                            color: Colors.green,
+                          ),
+                        ),
                 ),
                 SizedBox(
                   height: 40,
                 ),
-                _buildButton("ENVIAR RESPOSTA"),
               ],
             ),
           ],
         ),
       ),
+      bottomSheet: _buildButton("ENVIAR RESPOSTA"),
     );
   }
 
@@ -131,9 +150,9 @@ class _MissionSubmitState extends State<MissionSubmit> {
             Color(0XFFc62828),
           ],
         ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
+        // borderRadius: BorderRadius.all(
+        //   Radius.circular(5),
+        // ),
       ),
       child: SizedBox.expand(
         child: FlatButton(
