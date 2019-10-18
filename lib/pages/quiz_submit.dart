@@ -91,61 +91,66 @@ class _QuizSubmitState extends State<QuizSubmit> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              RadioListTile(
-                groupValue: _alternative,
-                value: 'a',
-                title: Text(
-                  widget.quiz.alternativeA,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+              if (widget.quiz.alternativeA != null)
+                RadioListTile(
+                  groupValue: _alternative,
+                  value: 'a',
+                  title: Text(
+                    widget.quiz.alternativeA,
+                    style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                  ),
+                  onChanged: (value) => setState(() {
+                    _alternative = value;
+                  }),
                 ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),
-              RadioListTile(
-                groupValue: _alternative,
-                value: 'b',
-                title: Text(
-                  widget.quiz.alternativeB,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+              if (widget.quiz.alternativeB != null)
+                RadioListTile(
+                  groupValue: _alternative,
+                  value: 'b',
+                  title: Text(
+                    widget.quiz.alternativeB,
+                    style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                  ),
+                  onChanged: (value) => setState(() {
+                    _alternative = value;
+                  }),
                 ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),
-              RadioListTile(
-                groupValue: _alternative,
-                value: 'c',
-                title: Text(
-                  widget.quiz.alternativeC,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+              if (widget.quiz.alternativeC != null)
+                RadioListTile(
+                  groupValue: _alternative,
+                  value: 'c',
+                  title: Text(
+                    widget.quiz.alternativeC,
+                    style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                  ),
+                  onChanged: (value) => setState(() {
+                    _alternative = value;
+                  }),
                 ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),
-              RadioListTile(
-                groupValue: _alternative,
-                value: 'd',
-                title: Text(
-                  widget.quiz.alternativeD,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+              if (widget.quiz.alternativeD != null)
+                RadioListTile(
+                  groupValue: _alternative,
+                  value: 'd',
+                  title: Text(
+                    widget.quiz.alternativeD,
+                    style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                  ),
+                  onChanged: (value) => setState(() {
+                    _alternative = value;
+                  }),
                 ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),
-              RadioListTile(
-                groupValue: _alternative,
-                value: 'e',
-                title: Text(
-                  widget.quiz.alternativeE,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+              if (widget.quiz.alternativeE != null)
+                RadioListTile(
+                  groupValue: _alternative,
+                  value: 'e',
+                  title: Text(
+                    widget.quiz.alternativeE,
+                    style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                  ),
+                  onChanged: (value) => setState(() {
+                    _alternative = value;
+                  }),
                 ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),
             ],
           ),
         ],
