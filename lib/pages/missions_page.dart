@@ -55,6 +55,7 @@ class _MissionsPageState extends State<MissionsPage> {
   _buildList(List<Mission> missions) {
     return ListView.builder(
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       itemCount: missions.length,
       itemBuilder: (_, i) {
         final mission = missions[i];
