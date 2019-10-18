@@ -24,6 +24,7 @@ class MissionSubmit extends StatefulWidget {
 class _MissionSubmitState extends State<MissionSubmit> {
   File _image;
   String _text;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -156,18 +157,29 @@ class _MissionSubmitState extends State<MissionSubmit> {
       ),
       child: SizedBox.expand(
         child: FlatButton(
-          child: Text(
-            label,
-            style: TextStyle(
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.left,
-          ),
+          child: _isLoading
+              ? CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                )
+              : Text(
+                  label,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
           // Aqui estarah a funcao para efetuar login. Por enquanto, está só uma validação de campos.
           onPressed: () async {
+            if (widget._mission.hasImage && _image == null ||
+                widget._mission.hasText && _text == null) return;
+
+            setState(() {
+              _isLoading = true;
+            });
+
             final int userId = Provider.of<UserProvider>(context).userId;
             String base64 = await _changeFormatImage();
 
