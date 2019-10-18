@@ -49,92 +49,107 @@ class _QuizSubmitState extends State<QuizSubmit> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
-                "${widget.quiz.description}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "SourceSansPro",
-                  color: Colors.black54,
+              Container(
+                height: 80,
+                child: SingleChildScrollView(
+                  child: Text(
+                    "${widget.quiz.description}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: "SourceSansPro",
+                      color: Colors.black54,
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: 20,
               ),
             ],
           ),
           _buildQuizForm(),
-          const SizedBox(
-            height: 40,
-          ),
-          _buildButtonSubmit("ENVIAR RESPOSTA", userId),
+          // const SizedBox(
+          //   height: 20,
+          // ),
         ],
       ),
+      // bottomNavigationBar: _buildButtonSubmit("ENVIAR RESPOSTA", userId),
+      bottomSheet: _buildButtonSubmit("ENVIAR RESPOSTA", userId),
     );
   }
 
   Widget _buildQuizForm() {
-    return Column(
-      children: <Widget>[
-        RadioListTile(
-          groupValue: _alternative,
-          value: 'a',
-          title: Text(
-            widget.quiz.alternativeA,
-            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: 275,
+      ),
+      child: ListView(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              RadioListTile(
+                groupValue: _alternative,
+                value: 'a',
+                title: Text(
+                  widget.quiz.alternativeA,
+                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                ),
+                onChanged: (value) => setState(() {
+                  _alternative = value;
+                }),
+              ),
+              RadioListTile(
+                groupValue: _alternative,
+                value: 'b',
+                title: Text(
+                  widget.quiz.alternativeB,
+                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                ),
+                onChanged: (value) => setState(() {
+                  _alternative = value;
+                }),
+              ),
+              RadioListTile(
+                groupValue: _alternative,
+                value: 'c',
+                title: Text(
+                  widget.quiz.alternativeC,
+                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                ),
+                onChanged: (value) => setState(() {
+                  _alternative = value;
+                }),
+              ),
+              RadioListTile(
+                groupValue: _alternative,
+                value: 'd',
+                title: Text(
+                  widget.quiz.alternativeD,
+                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                ),
+                onChanged: (value) => setState(() {
+                  _alternative = value;
+                }),
+              ),
+              RadioListTile(
+                groupValue: _alternative,
+                value: 'e',
+                title: Text(
+                  widget.quiz.alternativeE,
+                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
+                ),
+                onChanged: (value) => setState(() {
+                  _alternative = value;
+                }),
+              ),
+            ],
           ),
-          onChanged: (value) => setState(() {
-            _alternative = value;
-          }),
-        ),
-        RadioListTile(
-          groupValue: _alternative,
-          value: 'b',
-          title: Text(
-            widget.quiz.alternativeB,
-            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
-          ),
-          onChanged: (value) => setState(() {
-            _alternative = value;
-          }),
-        ),
-        RadioListTile(
-          groupValue: _alternative,
-          value: 'c',
-          title: Text(
-            widget.quiz.alternativeC,
-            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
-          ),
-          onChanged: (value) => setState(() {
-            _alternative = value;
-          }),
-        ),
-        RadioListTile(
-          groupValue: _alternative,
-          value: 'd',
-          title: Text(
-            widget.quiz.alternativeD,
-            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
-          ),
-          onChanged: (value) => setState(() {
-            _alternative = value;
-          }),
-        ),
-        RadioListTile(
-          groupValue: _alternative,
-          value: 'e',
-          title: Text(
-            widget.quiz.alternativeE,
-            style: TextStyle(fontFamily: "Poppins", fontSize: 15),
-          ),
-          onChanged: (value) => setState(() {
-            _alternative = value;
-          }),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -152,9 +167,9 @@ class _QuizSubmitState extends State<QuizSubmit> {
             Color(0XFFc62828),
           ],
         ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
+        // borderRadius: BorderRadius.all(
+        //   Radius.circular(5),
+        // ),
       ),
       child: SizedBox.expand(
         child: FlatButton(
