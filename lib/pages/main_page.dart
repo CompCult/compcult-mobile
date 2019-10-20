@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:museu_vivo/pages/ranking.dart';
 
 import './sign_in_page.dart';
 import './missions_page.dart';
@@ -23,7 +24,6 @@ class MainPage extends StatelessWidget {
               fontSize: 18,
             ),
           ),
-          automaticallyImplyLeading: false,
           actions: <Widget>[
             PopupMenuButton<int>(
               onSelected: (_) => Navigator.of(context).pushNamedAndRemoveUntil(
@@ -61,6 +61,7 @@ class MainPage extends StatelessWidget {
             ],
           ),
         ),
+        drawer: Ranking(),
         body: TabBarView(
           children: <Widget>[
             MissionsPage(),
