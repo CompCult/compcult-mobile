@@ -176,6 +176,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 ),
           // Aqui estarah a funcao para efetuar login. Por enquanto, está só uma validação de campos.
           onPressed: () async {
+            print(_text);
             if (widget._mission.hasImage && _image == null ||
                 widget._mission.hasText && _text == null) return;
 
@@ -184,15 +185,17 @@ class _MissionSubmitState extends State<MissionSubmit> {
             });
 
             final int userId = Provider.of<UserProvider>(context).userId;
-            String base64 = await _changeFormatImage();
+            String base64;
+
+            if (widget._mission.hasImage) base64 = await _changeFormatImage();
 
             await Dio().post(
               'https://museu-vivo-api.herokuapp.com/missions_answers',
               data: {
                 '_user': userId,
                 '_mission': widget._mission.id,
-                'image': base64,
-                'text_msg': _text,
+                if (widget._mission.hasImage) 'image': base64,
+                if (widget._mission.hasText) 'text_msg': _text,
               },
             );
 
