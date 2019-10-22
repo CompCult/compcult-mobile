@@ -23,10 +23,10 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final tabs = [
-    DashboardPage(),
+    // DashboardPage(),
     CoinsPage(),
     MainPage(),
-    UserPage(),
+    // UserPage(),
   ];
 
   @override
@@ -41,26 +41,26 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.shifting,
         currentIndex: _currentIndex,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            title: Text('Timeline'),
-            backgroundColor: Colors.red,
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.dashboard),
+          //   title: Text('Timeline'),
+          //   backgroundColor: Colors.red,
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.monetization_on),
             title: Text('Gemas'),
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.collections_bookmark),
             title: Text('Atividades'),
             backgroundColor: Colors.red,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Perfil'),
-            backgroundColor: Colors.grey,
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.person),
+          //   title: Text('Perfil'),
+          //   backgroundColor: Colors.grey,
+          // ),
         ],
         onTap: (index) {
           setState(() {
