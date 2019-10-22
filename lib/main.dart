@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/home_page.dart';
 import 'pages/main_page.dart';
 import 'pages/sign_in_page.dart';
 import 'pages/mission_submit.dart';
@@ -34,23 +35,24 @@ class MyApp extends StatelessWidget {
         routes: {
           SignInPage.routeName: (_) => SignInPage(),
           MainPage.routeName: (_) => MainPage(),
+          HomePage.routeName: (_) => HomePage(),
         },
-        onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case MissionSubmit.routeName:
-              return MaterialPageRoute(
-                builder: (_) => MissionSubmit(settings.arguments),
-              );
-              break;
-            case QuizSubmit.routeName:
-              return MaterialPageRoute(
-                builder: (_) => QuizSubmit(settings.arguments),
-              );
-              break;
-            default:
-              return null;
-          }
-        },
+        // onGenerateRoute: (settings) {
+        //   switch (settings.name) {
+        //     case MissionSubmit.routeName:
+        //       return MaterialPageRoute(
+        //         builder: (_) => MissionSubmit(settings.arguments),
+        //       );
+        //       break;
+        //     case QuizSubmit.routeName:
+        //       return MaterialPageRoute(
+        //         builder: (_) => QuizSubmit(settings.arguments),
+        //       );
+        //       break;
+        //     default:
+        //       return null;
+        //   }
+        // },
       ),
     );
   }

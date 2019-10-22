@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'home_page.dart';
 import 'main_page.dart';
 import 'reset_password_page.dart';
 import 'sign_up_page.dart';
@@ -179,7 +180,7 @@ class _SignInPageState extends State<SignInPage> {
               try {
                 final int userId = await _auth();
                 userProvider.updateUserId(userId);
-                Navigator.of(context).pushNamed(MainPage.routeName);
+                Navigator.of(context).pushNamed(HomePage.routeName);
               } catch (exception) {
                 setState(() {
                   _showErrorMessage = true;

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:museu_vivo/pages/ranking.dart';
 
 import './sign_in_page.dart';
-import './missions_page.dart';
-import './quizzes_page.dart';
+import 'event_page.dart';
+import 'feed_page.dart';
 
-class MainPage extends StatelessWidget {
-  static const String routeName = '/main';
-
+class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -48,24 +45,23 @@ class MainPage extends StatelessWidget {
             tabs: [
               Tab(
                 child: Text(
-                  "MISSÕES",
+                  "FEED",
                   style: TextStyle(fontFamily: "Poppins"),
                 ),
               ),
               Tab(
                 child: Text(
-                  "QUIZZES",
+                  "EVENTOS",
                   style: TextStyle(fontFamily: "Poppins"),
                 ),
               ),
             ],
           ),
         ),
-        drawer: Ranking(),
         body: TabBarView(
           children: <Widget>[
-            MissionsPage(),
-            QuizzesPage(),
+            FeedPage(),
+            EventPage(),
           ],
         ),
       ),
