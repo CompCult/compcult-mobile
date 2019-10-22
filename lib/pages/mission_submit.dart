@@ -74,57 +74,60 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 SizedBox(
                   height: 30,
                 ),
-                TextField(
-                  maxLines: 5,
-                  keyboardType: TextInputType.multiline,
-                  onChanged: (value) => _text = value,
-                  decoration: InputDecoration(
-                    alignLabelWithHint: true,
-                    labelText: "Resposta",
-                    labelStyle: TextStyle(
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
+                if (widget._mission.hasText)
+                  TextField(
+                    maxLines: 5,
+                    keyboardType: TextInputType.multiline,
+                    onChanged: (value) => _text = value,
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: "Resposta",
+                      labelStyle: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
+                      hintText: "Insira um texto...",
+                      hintStyle: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
+                      border: OutlineInputBorder(),
                     ),
-                    hintText: "Insira um texto...",
-                    hintStyle: TextStyle(
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                    ),
-                    border: OutlineInputBorder(),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    _flatButtonIcon(
-                        "Câmera", Icons.add_a_photo, _getImageFromCamera),
-                    _flatButtonIcon(
-                        "Galeria", Icons.wallpaper, _getImageFromGallery),
-                  ],
-                ),
+                if (widget._mission.hasImage)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      _flatButtonIcon(
+                          "Câmera", Icons.add_a_photo, _getImageFromCamera),
+                      _flatButtonIcon(
+                          "Galeria", Icons.wallpaper, _getImageFromGallery),
+                    ],
+                  ),
                 const SizedBox(
                   height: 40,
                 ),
-                Container(
-                  child: _image == null
-                      ? Text(
-                          "Nenhuma imagem selecionada...",
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            color: Colors.red,
+                if (widget._mission.hasImage)
+                  Container(
+                    child: _image == null
+                        ? Text(
+                            "Nenhuma imagem selecionada...",
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              color: Colors.red,
+                            ),
+                          )
+                        : Text(
+                            "Imagem carregada!",
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontWeight: FontWeight.w700,
+                              color: Colors.green,
+                            ),
                           ),
-                        )
-                      : Text(
-                          "Imagem carregada!",
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w700,
-                            color: Colors.green,
-                          ),
-                        ),
-                ),
+                  ),
                 SizedBox(
                   height: 40,
                 ),

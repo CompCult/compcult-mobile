@@ -37,22 +37,22 @@ class MyApp extends StatelessWidget {
           MainPage.routeName: (_) => MainPage(),
           HomePage.routeName: (_) => HomePage(),
         },
-        // onGenerateRoute: (settings) {
-        //   switch (settings.name) {
-        //     case MissionSubmit.routeName:
-        //       return MaterialPageRoute(
-        //         builder: (_) => MissionSubmit(settings.arguments),
-        //       );
-        //       break;
-        //     case QuizSubmit.routeName:
-        //       return MaterialPageRoute(
-        //         builder: (_) => QuizSubmit(settings.arguments),
-        //       );
-        //       break;
-        //     default:
-        //       return null;
-        //   }
-        // },
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case MissionSubmit.routeName:
+              return MaterialPageRoute(
+                builder: (_) => MissionSubmit(settings.arguments),
+              );
+              break;
+            case QuizSubmit.routeName:
+              return MaterialPageRoute(
+                builder: (_) => QuizSubmit(settings.arguments),
+              );
+              break;
+            default:
+              return null;
+          }
+        },
       ),
     );
   }
