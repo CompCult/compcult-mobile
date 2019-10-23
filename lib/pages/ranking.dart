@@ -4,21 +4,34 @@ import 'package:flutter/material.dart';
 class Ranking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 10,
+            spreadRadius: 1,
+            offset: Offset(0, 0),
+          )
+        ],
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(30.0),
+          topRight: const Radius.circular(30.0),
+        ),
+      ),
+      child: Column(
         children: [
-          Container(
-            color: Theme.of(context).primaryColor,
-            alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: 40),
+          Padding(
+            padding: EdgeInsets.all(25),
             child: Text(
               'Ranking',
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 20,
               ),
             ),
           ),
+          Divider(),
           FutureBuilder(
             future: _getUsers(),
             builder: (_, snapshot) {
@@ -33,17 +46,24 @@ class Ranking extends StatelessWidget {
               final List users = snapshot.data.data;
               users.sort((a, b) => b['points'] - a['points']);
 
-              return ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemCount: users.length,
-                itemBuilder: (_, i) {
-                  return ListTile(
-                    title: Text(users[i]['name']),
-                    trailing: Text('${users[i]['points']}'),
-                  );
-                },
+              return Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: users.length,
+                  itemBuilder: (_, i) {
+                    return ListTile(
+                      leading: Text(
+                        '#${i + 1}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      title: Text(users[i]['name']),
+                      trailing: Text(
+                        '${users[i]['points']}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           ),

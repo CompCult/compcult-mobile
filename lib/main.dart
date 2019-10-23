@@ -3,7 +3,7 @@ import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/home_page.dart';
-import 'pages/main_page.dart';
+import 'pages/games_page.dart';
 import 'pages/sign_in_page.dart';
 import 'pages/mission_submit.dart';
 import 'pages/splash_page.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         home: SplashPage(),
         routes: {
           SignInPage.routeName: (_) => SignInPage(),
-          MainPage.routeName: (_) => MainPage(),
+          GamesPage.routeName: (_) => GamesPage(),
           HomePage.routeName: (_) => HomePage(),
         },
         onGenerateRoute: (settings) {

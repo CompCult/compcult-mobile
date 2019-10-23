@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/user_page.dart';
 
 import 'coins_page.dart';
-import 'dashboard_page.dart';
-import 'main_page.dart';
-import 'user_page.dart';
+import 'games_page.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';
@@ -13,26 +12,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Acompanha o índice da guia atual
   int currentTab = 0;
 
-  // O intervalo de armazenamento da página a ser usado para esta subárvore
   final PageStorageBucket bucket = PageStorageBucket();
 
-  Widget currentScreen = MainPage(); // A view inicial
+  Widget currentScreen = GamesPage(); // A view inicial
   int _currentIndex = 0;
 
   final tabs = [
     // DashboardPage(),
     CoinsPage(),
-    MainPage(),
-    // UserPage(),
+    GamesPage(),
+    UserPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Cria um widget que fornece um depósito de armazenamento para seus descendentes
       body: PageStorage(
         bucket: bucket,
         child: tabs[_currentIndex],
@@ -56,11 +52,11 @@ class _HomePageState extends State<HomePage> {
             title: Text('Atividades'),
             backgroundColor: Colors.red,
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.person),
-          //   title: Text('Perfil'),
-          //   backgroundColor: Colors.grey,
-          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Perfil'),
+            backgroundColor: Colors.red,
+          ),
         ],
         onTap: (index) {
           setState(() {

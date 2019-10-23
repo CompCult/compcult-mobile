@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/ranking.dart';
 import 'package:museu_vivo/shared/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,49 +16,61 @@ class CoinsPage extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Center(
+      child: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Suas gemas',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.red,
-                  ),
-                ),
-                SizedBox(width: 5),
-                Icon(
-                  Icons.monetization_on,
-                  color: Colors.red,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50),
+              child: _buildPoints(userId),
             ),
-            SizedBox(height: 10),
-            FutureBuilder(
-              future: _getCoins(userId),
-              builder: (_, snapshot) {
-                return snapshot.hasData
-                    ? Text(
-                        '${snapshot.data.data['points']}',
-                        style: TextStyle(
-                          fontSize: 50,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    : CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                      );
-              },
-            ),
+            Expanded(child: Ranking()),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPoints(int userId) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Suas gemas',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.red,
+              ),
+            ),
+            SizedBox(width: 5),
+            Icon(
+              Icons.monetization_on,
+              color: Colors.red,
+            ),
+          ],
+        ),
+        SizedBox(height: 10),
+        FutureBuilder(
+          future: _getCoins(userId),
+          builder: (_, snapshot) {
+            return snapshot.hasData
+                ? Text(
+                    '${snapshot.data.data['points']}',
+                    style: TextStyle(
+                      fontSize: 50,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                  );
+          },
+        ),
+      ],
     );
   }
 
