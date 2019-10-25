@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/mission_submit.dart';
 import 'package:museu_vivo/shared/models/mission.dart';
 
-class SecretCodeField extends StatefulWidget {
-  @override
-  _SecretCodeFieldState createState() => _SecretCodeFieldState();
-}
-
-class _SecretCodeFieldState extends State<SecretCodeField> {
+class SecretCodeField extends StatelessWidget {
+  final String label;
+  final Function onSubmited;
   final _secretCodeController = TextEditingController();
+
+  SecretCodeField({this.label, this.onSubmited});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class _SecretCodeFieldState extends State<SecretCodeField> {
       keyboardType: TextInputType.text,
       controller: _secretCodeController,
       decoration: InputDecoration(
-        labelText: 'Código secreto da missão',
+        labelText: label,
         labelStyle: TextStyle(
           color: Colors.black38,
           fontFamily: "Poppins",
@@ -28,14 +27,7 @@ class _SecretCodeFieldState extends State<SecretCodeField> {
         prefixIcon: Icon(Icons.lock_outline),
         suffixIcon: IconButton(
           icon: Icon(Icons.send),
-          onPressed: () async {
-            Response response = await Dio().get(
-                'https://museu-vivo-api.herokuapp.com/missions/private?secret_code=${_secretCodeController.text}');
-            Mission mission = Mission.fromJson(response.data);
-
-            Navigator.of(context)
-                .pushNamed(MissionSubmit.routeName, arguments: mission);
-          },
+          onPressed: () => onSubmited(_secretCodeController.text),
         ),
       ),
       style: TextStyle(

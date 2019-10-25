@@ -18,37 +18,46 @@ class _MissionsPageState extends State<MissionsPage> {
   Widget build(BuildContext context) {
     final int userId = Provider.of<UserProvider>(context).userId;
 
-    return FutureBuilder(
-      future: _getMissions(userId),
-      builder: (_, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 50,
-              height: 50,
-              child: CircularProgressIndicator(),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+        child: Column(
+          children: <Widget>[
+            SecretCodeField(
+              label: 'Código secreto da missão',
+              onSubmited: (missionId) async {
+                Response response = await Dio().get(
+                    'https://museu-vivo-api.herokuapp.com/missions/private?secret_code=$missionId');
+                Mission mission = Mission.fromJson(response.data);
+
+                Navigator.of(context)
+                    .pushNamed(MissionSubmit.routeName, arguments: mission);
+              },
             ),
-          );
-        }
+            SizedBox(height: 15),
+            FutureBuilder(
+              future: _getMissions(userId),
+              builder: (_, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
 
-        final Response response = snapshot.data;
+                final Response response = snapshot.data;
 
-        final List<Mission> missions = List<Mission>.from(
-            response.data.map((mission) => Mission.fromJson(mission)));
-
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-            child: Column(
-              children: <Widget>[
-                SecretCodeField(),
-                SizedBox(height: 15),
-                _buildList(missions),
-              ],
+                final List<Mission> missions = List<Mission>.from(
+                    response.data.map((mission) => Mission.fromJson(mission)));
+                return _buildList(missions);
+              },
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
