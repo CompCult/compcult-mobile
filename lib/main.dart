@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/team_detais.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
+import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/home_page.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         title: 'Meu Vivo Museu',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: 'Poppins',
           primarySwatch: Colors.red,
           buttonTheme: ButtonThemeData(minWidth: 10),
           textTheme: TextTheme(
@@ -43,6 +46,7 @@ class MyApp extends StatelessWidget {
           SignInPage.routeName: (_) => SignInPage(),
           GamesPage.routeName: (_) => GamesPage(),
           HomePage.routeName: (_) => HomePage(),
+          TeamsPage.routeName: (_) => TeamsPage(),
         },
         onGenerateRoute: (settings) {
           switch (settings.name) {
@@ -54,6 +58,11 @@ class MyApp extends StatelessWidget {
             case QuizSubmit.routeName:
               return MaterialPageRoute(
                 builder: (_) => QuizSubmit(settings.arguments),
+              );
+              break;
+            case TeamDetails.routeName:
+              return MaterialPageRoute(
+                builder: (_) => TeamDetails(settings.arguments),
               );
               break;
             default:
