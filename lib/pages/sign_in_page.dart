@@ -177,8 +177,9 @@ class _SignInPageState extends State<SignInPage> {
           onPressed: () async {
             if (_formKey.currentState.validate()) {
               try {
-                final int userId = await _auth();
-                userProvider.updateUserId(userId);
+                final Map user = await _auth();
+                userProvider.updateUserId(user['_id']);
+                userProvider.updateEmail(user['email']);
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil(HomePage.routeName, (_) => false);
               } catch (exception) {
@@ -194,7 +195,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Future<int> _auth() async {
+  Future<dynamic> _auth() async {
     setState(() {
       _isLoading = true;
     });
@@ -205,6 +206,6 @@ class _SignInPageState extends State<SignInPage> {
       'password': _passwordController.text,
     });
 
-    return response.data['_id'];
+    return response.data;
   }
 }

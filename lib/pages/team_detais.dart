@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 
-class GroupDetails extends StatelessWidget {
+class TeamDetails extends StatelessWidget {
   static const String routeName = '/group-details';
 
   final Group group;
 
-  GroupDetails(this.group);
+  TeamDetails(this.group);
 
   @override
   Widget build(BuildContext context) {

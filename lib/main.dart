@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/group_detais.dart';
+import 'package:museu_vivo/pages/team_detais.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:provider/provider.dart';
@@ -60,9 +60,9 @@ class MyApp extends StatelessWidget {
                 builder: (_) => QuizSubmit(settings.arguments),
               );
               break;
-            case GroupDetails.routeName:
+            case TeamDetails.routeName:
               return MaterialPageRoute(
-                builder: (_) => GroupDetails(settings.arguments),
+                builder: (_) => TeamDetails(settings.arguments),
               );
               break;
             default:
