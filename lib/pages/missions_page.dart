@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:museu_vivo/shared/components/secret_code_field.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,15 @@ class _MissionsPageState extends State<MissionsPage> {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
         child: Column(
           children: <Widget>[
+            ListTile(
+              title: Text(
+                'Minhas equipes',
+                style: TextStyle(),
+              ),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () => Navigator.of(context).pushNamed(TeamsPage.routeName),
+            ),
+            SizedBox(height: 15),
             SecretCodeField(
               label: 'Código secreto da missão',
               onSubmited: (missionId) async {
