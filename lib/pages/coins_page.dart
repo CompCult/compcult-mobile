@@ -22,16 +22,18 @@ class CoinsPage extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 50),
-              child: _buildPoints(userId),
+              child: _buildPoints(context, userId),
             ),
-            Expanded(child: Ranking()),
+            Expanded(
+              child: Ranking(),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPoints(int userId) {
+  Widget _buildPoints(BuildContext context, int userId) {
     return Column(
       children: <Widget>[
         Row(
@@ -53,11 +55,11 @@ class CoinsPage extends StatelessWidget {
         ),
         SizedBox(height: 10),
         FutureBuilder(
-          future: _getCoins(userId),
+          future: _getCoins(context, userId),
           builder: (_, snapshot) {
             return snapshot.hasData
                 ? Text(
-                    '${snapshot.data.data['points']}',
+                    '${snapshot.data['points']}',
                     style: TextStyle(
                       fontSize: 50,
                       color: Colors.red,
@@ -74,7 +76,10 @@ class CoinsPage extends StatelessWidget {
     );
   }
 
-  Future<Response> _getCoins(int userId) {
-    return Dio().get('https://museu-vivo-api.herokuapp.com/users/$userId');
+  Future<dynamic> _getCoins(BuildContext context, int userId) async {
+    final Dio dio = Provider.of<Dio>(context);
+    Response response = await dio.get('/users/$userId');
+
+    return response.data;
   }
 }

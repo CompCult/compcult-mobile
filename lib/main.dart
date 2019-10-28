@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:provider/provider.dart';
@@ -12,13 +13,19 @@ import 'shared/providers/user_provider.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // Raíz da aplicação.
+  final Dio dio = Dio(
+    BaseOptions(baseUrl: 'https://museu-vivo-api.herokuapp.com'),
+  );
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserProvider>.value(
           value: UserProvider(),
+        ),
+        Provider<Dio>.value(
+          value: dio,
         ),
       ],
       child: MaterialApp(
