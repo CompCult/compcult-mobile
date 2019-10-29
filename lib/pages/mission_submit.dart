@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:museu_vivo/shared/models/group.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class MissionSubmit extends StatefulWidget {
 class _MissionSubmitState extends State<MissionSubmit> {
   File _image;
   String _text;
+  String _groupId;
   bool _isLoading = false;
 
   @override
@@ -72,7 +74,34 @@ class _MissionSubmitState extends State<MissionSubmit> {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 15,
+                ),
+                if (widget._mission.isGrupal)
+                  FutureBuilder(
+                    future: _getGroups(context),
+                    builder: (_, snapshot) {
+                      if (!snapshot.hasData) return Container();
+
+                      final Response response = snapshot.data;
+
+                      final List<Group> groups = List<Group>.from(
+                          response.data.map((group) => Group.fromJson(group)));
+
+                      return DropdownButton<String>(
+                        hint: Text('Selecione um grupo'),
+                        items: groups.map((Group group) {
+                          return DropdownMenuItem<String>(
+                            value: group.id.toString(),
+                            child: Text(group.name),
+                          );
+                        }).toList(),
+                        onChanged: (value) => setState(() => _groupId = value),
+                        value: _groupId,
+                      );
+                    },
+                  ),
+                SizedBox(
+                  height: 15,
                 ),
                 if (widget._mission.hasText)
                   TextField(
@@ -176,9 +205,9 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 ),
           // Aqui estarah a funcao para efetuar login. Por enquanto, está só uma validação de campos.
           onPressed: () async {
-            print(_text);
             if (widget._mission.hasImage && _image == null ||
-                widget._mission.hasText && _text == null) return;
+                widget._mission.hasText && _text == null ||
+                widget._mission.isGrupal && _groupId == null) return;
 
             setState(() {
               _isLoading = true;
@@ -196,6 +225,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 '_mission': widget._mission.id,
                 if (widget._mission.hasImage) 'image': base64,
                 if (widget._mission.hasText) 'text_msg': _text,
+                if (widget._mission.isGrupal) '_group': int.parse(_groupId),
               },
             );
 
@@ -222,6 +252,14 @@ class _MissionSubmitState extends State<MissionSubmit> {
         ),
       ),
     );
+  }
+
+  Future<dynamic> _getGroups(BuildContext context) async {
+    final int userId = Provider.of<UserProvider>(context).userId;
+    final Dio dio = Provider.of<Dio>(context);
+    Response response = await dio.get('/group_members/groups?_user=$userId');
+
+    return response;
   }
 
   Future _getImageFromCamera() async {
