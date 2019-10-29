@@ -31,13 +31,24 @@ class _TeamDetailsState extends State<TeamDetails> {
           _buildField("Adicionar membro"),
           SizedBox(height: 20),
           Expanded(
-            child: ListView.builder(
-              itemCount: _teamMembers.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(_teamMembers[index]),
-                  leading: Icon(Icons.person),
-                  trailing: _buildRemoveMemberButton(index),
+            child: FutureBuilder(
+              future: _getMembersGroup(),
+              builder: (_, snapshot) {
+                if (!snapshot.hasData) {
+                  return Container();
+                }
+
+                _teamMembers = snapshot.data.data;
+
+                return ListView.builder(
+                  itemCount: _teamMembers.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(_teamMembers[index]['_user']['name']),
+                      leading: Icon(Icons.person),
+                      trailing: _buildRemoveMemberButton(index),
+                    );
+                  },
                 );
               },
             ),
@@ -66,10 +77,10 @@ class _TeamDetailsState extends State<TeamDetails> {
         fontFamily: "Poppins",
       ),
       onSubmitted: (value) {
-        _teamMembers.add(value);
-        _textFieldController.clear();
-        _createMembersGroup(value);
-        setState(() {});
+        setState(() {
+          _textFieldController.clear();
+          _createMembersGroup(value);
+        });
       },
     );
   }
@@ -79,8 +90,10 @@ class _TeamDetailsState extends State<TeamDetails> {
       focusColor: Colors.transparent,
       icon: Icon(Icons.close),
       onPressed: () {
-        _teamMembers.removeAt(index);
-        setState(() {});
+        setState(() {
+          var member = _teamMembers.removeAt(index);
+          _deleteMemberGroup(member['_id']);
+        });
       },
     );
   }
@@ -89,6 +102,20 @@ class _TeamDetailsState extends State<TeamDetails> {
     final Dio dio = Provider.of<Dio>(context);
     Response response = await dio.post('/group_members/',
         data: {"email": email, "_group": widget.group.id, "is_admin": false});
+
+    return response;
+  }
+
+  Future<dynamic> _deleteMemberGroup(int id) async {
+    final Dio dio = Provider.of<Dio>(context);
+    Response response = await dio.delete('/group_members/$id');
+    return response;
+  }
+
+  Future<dynamic> _getMembersGroup() async {
+    final Dio dio = Provider.of<Dio>(context);
+    Response response =
+        await dio.get('/group_members/query/fields?_group=${widget.group.id}');
 
     return response;
   }
