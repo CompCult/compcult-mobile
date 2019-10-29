@@ -49,7 +49,6 @@ class TeamsPage extends StatelessWidget {
   Future<dynamic> _getGroups(BuildContext context) async {
     final int userId = Provider.of<UserProvider>(context).userId;
     final Dio dio = Provider.of<Dio>(context);
-    print('$userId');
     Response response = await dio.get('/group_members/groups?_user=$userId');
 
     return response;
