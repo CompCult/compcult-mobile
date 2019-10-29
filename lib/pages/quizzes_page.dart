@@ -22,12 +22,31 @@ class QuizzesPage extends StatelessWidget {
             SecretCodeField(
               label: 'Código secreto do quiz',
               onSubmited: (quizId) async {
-                Response response = await Dio().get(
-                    'https://museu-vivo-api.herokuapp.com/quizzes/private?secret_code=$quizId');
-                Quiz quiz = Quiz.fromJson(response.data);
+                try {
+                  Response response = await Dio().get(
+                      'https://museu-vivo-api.herokuapp.com/quizzes/private?secret_code=$quizId');
 
-                Navigator.of(context)
-                    .pushNamed(QuizSubmit.routeName, arguments: quiz);
+                  Quiz quiz = Quiz.fromJson(response.data);
+
+                  Navigator.of(context)
+                      .pushNamed(QuizSubmit.routeName, arguments: quiz);
+                } on DioError catch (e) {
+                  if (e.response.statusCode == 404) {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Quiz não existe'),
+                        backgroundColor: Colors.grey,
+                      ),
+                    );
+                  } else if (e.response.statusCode == 401) {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Esse quiz expirou'),
+                        backgroundColor: Colors.grey,
+                      ),
+                    );
+                  }
+                }
               },
             ),
             SizedBox(height: 15),

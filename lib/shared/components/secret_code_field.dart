@@ -1,7 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/mission_submit.dart';
-import 'package:museu_vivo/shared/models/mission.dart';
 
 class SecretCodeField extends StatelessWidget {
   final String label;
