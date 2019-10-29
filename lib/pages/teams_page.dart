@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/team_detais.dart';
+import 'package:museu_vivo/pages/team_details.dart';
 import 'package:museu_vivo/shared/components/custom_bottom_sheet.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:museu_vivo/shared/providers/user_provider.dart';
@@ -14,17 +14,15 @@ class TeamsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Equipes'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              CustomBottomSheet.showCustomBottomSheet(
-                context: context,
-                child: new TeamNameForm(),
-              );
-            },
-          )
-        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          CustomBottomSheet.showCustomBottomSheet(
+            context: context,
+            child: TeamNameForm(),
+          );
+        },
       ),
       body: Center(
         child: FutureBuilder(

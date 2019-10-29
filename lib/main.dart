@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/team_detais.dart';
+import 'package:museu_vivo/pages/team_details.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:provider/provider.dart';
