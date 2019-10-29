@@ -9,8 +9,14 @@ class CustomBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.9,
-      color: Colors.white,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
+        color: Colors.white,
+      ),
+      height: MediaQuery.of(context).size.height * 0.85,
       child: Column(children: [
         Row(
           children: <Widget>[
