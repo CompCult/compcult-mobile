@@ -43,13 +43,13 @@ class CoinsPage extends StatelessWidget {
               'Suas gemas',
               style: TextStyle(
                 fontSize: 20,
-                color: Colors.red,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             SizedBox(width: 5),
             Icon(
               Icons.monetization_on,
-              color: Colors.red,
+              color: Theme.of(context).primaryColor,
             ),
           ],
         ),
@@ -62,13 +62,14 @@ class CoinsPage extends StatelessWidget {
                     '${snapshot.data['points']}',
                     style: TextStyle(
                       fontSize: 50,
-                      color: Colors.red,
+                      color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
                   )
                 : CircularProgressIndicator(
                     backgroundColor: Colors.white,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor),
                   );
           },
         ),

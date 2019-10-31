@@ -35,7 +35,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Poppins',
-          primarySwatch: Colors.red,
+          primaryColor: Colors.red,
+          accentColor: Colors.red,
+          scaffoldBackgroundColor: Colors.white,
           buttonTheme: ButtonThemeData(minWidth: 10),
           textTheme: TextTheme(
             button: TextStyle(fontSize: 10),

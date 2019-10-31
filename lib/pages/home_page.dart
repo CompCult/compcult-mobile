@@ -36,7 +36,8 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         currentIndex: _currentIndex,
-        items: const <BottomNavigationBarItem>[
+        backgroundColor: Colors.orange,
+        items: <BottomNavigationBarItem>[
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.dashboard),
           //   title: Text('Timeline'),
@@ -45,17 +46,17 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.monetization_on),
             title: Text('Gemas'),
-            backgroundColor: Colors.red,
+            backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.collections_bookmark),
             title: Text('Atividades'),
-            backgroundColor: Colors.red,
+            backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             title: Text('Perfil'),
-            backgroundColor: Colors.red,
+            backgroundColor: Theme.of(context).primaryColor,
           ),
         ],
         onTap: (index) {
