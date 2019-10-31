@@ -159,6 +159,8 @@ class _QuizSubmitState extends State<QuizSubmit> {
   }
 
   Widget _buildButtonSubmit(String label, int userId) {
+    final Dio dio = Provider.of<Dio>(context);
+
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,
@@ -189,12 +191,11 @@ class _QuizSubmitState extends State<QuizSubmit> {
               textAlign: TextAlign.left,
             ),
             onPressed: () {
-              Dio().post('https://museu-vivo-api.herokuapp.com/quiz_answers',
-                  data: {
-                    '_user': userId,
-                    '_quiz': widget.quiz.id,
-                    'answer': _alternative,
-                  });
+              dio.post('/quiz_answers', data: {
+                '_user': userId,
+                '_quiz': widget.quiz.id,
+                'answer': _alternative,
+              });
 
               Navigator.of(context).pop(true);
             }),

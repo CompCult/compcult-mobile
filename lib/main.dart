@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Poppins',
+          primarySwatch: Colors.red,
           primaryColor: Colors.red,
           accentColor: Colors.red,
           scaffoldBackgroundColor: Colors.white,

@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Ranking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Dio dio = Provider.of<Dio>(context);
+
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -33,7 +36,7 @@ class Ranking extends StatelessWidget {
           ),
           Divider(),
           FutureBuilder(
-            future: _getUsers(),
+            future: _getUsers(dio),
             builder: (_, snapshot) {
               if (!snapshot.hasData)
                 return Padding(
@@ -72,7 +75,7 @@ class Ranking extends StatelessWidget {
     );
   }
 
-  Future<Response> _getUsers() {
-    return Dio().get('https://museu-vivo-api.herokuapp.com/users');
+  Future<Response> _getUsers(Dio dio) {
+    return dio.get('/users');
   }
 }

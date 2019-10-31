@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 
 import './sign_in_page.dart';
 
@@ -11,6 +12,8 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Dio dio = Provider.of<Dio>(context);
+
     return Scaffold(
       body: Container(
         // padding: EdgeInsets.only(top: 20, left: 40, right: 40),
@@ -69,7 +72,7 @@ class SignUpPage extends StatelessWidget {
                   ),
                   onPressed: () async {
                     try {
-                      await _createUser();
+                      await _createUser(dio);
                       Navigator.of(context).pushNamed(SignInPage.routeName);
                     } catch (exception) {
                       print(exception);
@@ -133,9 +136,8 @@ class SignUpPage extends StatelessWidget {
     }
   }
 
-  Future _createUser() async {
-    await Dio()
-        .post('https://museu-vivo-api.herokuapp.com/users/register', data: {
+  Future _createUser(Dio dio) async {
+    await dio.post('/users/register', data: {
       'name': _nameController.text,
       'type': 'estudante',
       'institution': _institutionController.text,

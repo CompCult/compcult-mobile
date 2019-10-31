@@ -196,12 +196,13 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Future<dynamic> _auth() async {
+    final Dio dio = Provider.of<Dio>(context);
+
     setState(() {
       _isLoading = true;
     });
 
-    final Response response = await Dio()
-        .post('https://museu-vivo-api.herokuapp.com/users/auth', data: {
+    final Response response = await dio.post('/users/auth', data: {
       'email': _emailController.text,
       'password': _passwordController.text,
     });

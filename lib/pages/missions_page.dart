@@ -18,6 +18,7 @@ class _MissionsPageState extends State<MissionsPage> {
   @override
   Widget build(BuildContext context) {
     final int userId = Provider.of<UserProvider>(context).userId;
+    final Dio dio = Provider.of<Dio>(context);
 
     return SingleChildScrollView(
       child: Padding(
@@ -36,8 +37,8 @@ class _MissionsPageState extends State<MissionsPage> {
             SecretCodeField(
               label: 'Código secreto da missão',
               onSubmited: (missionId) async {
-                Response response = await Dio().get(
-                    'https://museu-vivo-api.herokuapp.com/missions/private?secret_code=$missionId');
+                Response response =
+                    await dio.get('/missions/private?secret_code=$missionId');
                 Mission mission = Mission.fromJson(response.data);
 
                 Navigator.of(context)
@@ -88,7 +89,8 @@ class _MissionsPageState extends State<MissionsPage> {
   }
 
   Future<Response> _getMissions(int userId) {
-    return Dio().get(
-        'https://museu-vivo-api.herokuapp.com/missions/public?user_id=$userId');
+    final Dio dio = Provider.of<Dio>(context);
+
+    return dio.get('/missions/public?user_id=$userId');
   }
 }

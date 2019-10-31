@@ -214,12 +214,14 @@ class _MissionSubmitState extends State<MissionSubmit> {
             });
 
             final int userId = Provider.of<UserProvider>(context).userId;
+            final Dio dio = Provider.of<Dio>(context);
+
             String base64;
 
             if (widget._mission.hasImage) base64 = await _changeFormatImage();
 
-            await Dio().post(
-              'https://museu-vivo-api.herokuapp.com/missions_answers',
+            await dio.post(
+              '/missions_answers',
               data: {
                 '_user': userId,
                 '_mission': widget._mission.id,

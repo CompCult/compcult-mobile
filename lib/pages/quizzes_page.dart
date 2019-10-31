@@ -13,6 +13,7 @@ class QuizzesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int userId = Provider.of<UserProvider>(context).userId;
+    final Dio dio = Provider.of<Dio>(context);
 
     return SingleChildScrollView(
       child: Padding(
@@ -23,8 +24,8 @@ class QuizzesPage extends StatelessWidget {
               label: 'Código secreto do quiz',
               onSubmited: (quizId) async {
                 try {
-                  Response response = await Dio().get(
-                      'https://museu-vivo-api.herokuapp.com/quizzes/private?secret_code=$quizId');
+                  Response response =
+                      await dio.get('/quizzes/private?secret_code=$quizId');
 
                   Quiz quiz = Quiz.fromJson(response.data);
 
@@ -51,7 +52,7 @@ class QuizzesPage extends StatelessWidget {
             ),
             SizedBox(height: 15),
             FutureBuilder(
-              future: _getQuizzes(userId),
+              future: _getQuizzes(userId, dio),
               builder: (_, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
@@ -92,8 +93,7 @@ class QuizzesPage extends StatelessWidget {
     );
   }
 
-  Future<Response> _getQuizzes(int userId) {
-    return Dio().get(
-        'https://museu-vivo-api.herokuapp.com/quizzes/public?user_id=$userId');
+  Future<Response> _getQuizzes(int userId, Dio dio) {
+    return dio.get('/quizzes/public?user_id=$userId');
   }
 }
