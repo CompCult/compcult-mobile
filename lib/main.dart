@@ -11,12 +11,13 @@ import 'pages/sign_in_page.dart';
 import 'pages/mission_submit.dart';
 import 'pages/splash_page.dart';
 import 'shared/providers/user_provider.dart';
+import 'config.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: 'https://museu-vivo-api.herokuapp.com'),
+    BaseOptions(baseUrl: config.apiUrl),
   );
 
   @override
@@ -31,13 +32,13 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Meu Vivo Museu',
+        title: config.name,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Poppins',
-          primarySwatch: Colors.red,
-          primaryColor: Colors.red,
-          accentColor: Colors.red,
+          primarySwatch: config.primaryColor,
+          primaryColor: config.primaryColor,
+          accentColor: config.accentColor,
           scaffoldBackgroundColor: Colors.white,
           buttonTheme: ButtonThemeData(minWidth: 10),
           textTheme: TextTheme(
