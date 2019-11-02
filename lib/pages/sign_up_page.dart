@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 
 import './sign_in_page.dart';
+import '../config.dart';
 
 class SignUpPage extends StatelessWidget {
   final _nameController = TextEditingController();
@@ -27,7 +28,8 @@ class SignUpPage extends StatelessWidget {
               alignment: Alignment(0.0, 1.15),
               decoration: new BoxDecoration(
                 image: new DecorationImage(
-                  image: AssetImage("images/logo.png"),
+                  image: AssetImage(
+                      'assets/${config.assetsDirectoryName}/logo.png'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
