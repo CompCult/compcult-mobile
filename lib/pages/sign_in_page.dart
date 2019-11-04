@@ -154,8 +154,8 @@ class _SignInPageState extends State<SignInPage> {
           end: Alignment.bottomRight,
           stops: [0.3, 1],
           colors: [
-            Color(0xFFf44336),
-            Color(0XFFc62828),
+            Theme.of(context).primaryColor.withOpacity(0.9),
+            Theme.of(context).primaryColor,
           ],
         ),
         borderRadius: BorderRadius.all(

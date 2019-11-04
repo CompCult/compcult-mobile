@@ -50,4 +50,5 @@ Altere o nome do app
 #### 4. Build do apk
 
 Para geral o apk execute
+> flutter packages pub run flutter_launcher_icons:main
 > flutter build apk

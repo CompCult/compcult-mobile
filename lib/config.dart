@@ -28,6 +28,14 @@ final Map<String, Config> _preConfigured = {
     primaryColor: Colors.red,
     accentColor: Colors.red,
   ),
+  'soloAmigo': Config(
+    name: 'Solo Amigo',
+    apiUrl: 'https://solo-amigo.herokuapp.com',
+    assetsDirectoryName: 'solo_amigo',
+    coinName: 'Cults',
+    primaryColor: Color(0xff5e3003),
+    accentColor: Color(0xffce6b01),
+  ),
 };
 
-final Config config = _preConfigured['meuVivoMuseu'];
+final Config config = _preConfigured['soloAmigo'];

@@ -164,20 +164,7 @@ class _QuizSubmitState extends State<QuizSubmit> {
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.3, 1],
-          colors: [
-            Color(0xFFf44336),
-            Color(0XFFc62828),
-          ],
-        ),
-        // borderRadius: BorderRadius.all(
-        //   Radius.circular(5),
-        // ),
-      ),
+      color: Theme.of(context).accentColor,
       child: SizedBox.expand(
         child: FlatButton(
             child: Text(
