@@ -182,6 +182,8 @@ class _SignInPageState extends State<SignInPage> {
                 final Map user = await _auth();
                 userProvider.updateUserId(user['_id']);
                 userProvider.updateEmail(user['email']);
+                userProvider.updateName(user['name']);
+                userProvider.updateInstitution(user['institution']);
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil(HomePage.routeName, (_) => false);
               } catch (exception) {

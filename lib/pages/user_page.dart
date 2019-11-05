@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/home_page.dart';
 import 'package:museu_vivo/pages/sign_in_page.dart';
+import 'package:museu_vivo/shared/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -12,14 +15,24 @@ class _UserPageState extends State<UserPage> {
   final _institutionController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  UserProvider userProvider;
+
+  @override
+  void didChangeDependencies() {
+    userProvider = Provider.of<UserProvider>(context);
+    _nameController.text = userProvider.name;
+    _emailController.text = userProvider.email;
+    _institutionController.text = userProvider.institution;
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          // Exibir o nome do usuário
-          "Olá, fulano!",
+          'Olá, ${userProvider.name}!',
           style: TextStyle(fontFamily: "Poppins", fontSize: 18),
         ),
         actions: <Widget>[
@@ -42,8 +55,8 @@ class _UserPageState extends State<UserPage> {
               _profilePicture(),
               SizedBox(height: 30),
               _buildFormField("Nome", _nameController, false),
-              SizedBox(height: 10),
-              _buildFormField("Instituição", _institutionController, false),
+              // SizedBox(height: 10),
+              // _buildFormField("Instituição", _institutionController, false),
               SizedBox(height: 10),
               _buildFormField("E-mail", _emailController, false),
               SizedBox(height: 10),
@@ -111,15 +124,7 @@ class _UserPageState extends State<UserPage> {
       height: 50,
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.3, 1],
-          colors: [
-            Color(0xFFf44336),
-            Color(0XFFc62828),
-          ],
-        ),
+        color: Theme.of(context).accentColor,
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),
@@ -136,10 +141,22 @@ class _UserPageState extends State<UserPage> {
             ),
             textAlign: TextAlign.center,
           ),
-          onPressed: () {},
+          onPressed: _updateUserData,
         ),
       ),
     );
+  }
+
+  _updateUserData() {
+    final Dio dio = Provider.of<Dio>(context);
+    dio.put('/users/${userProvider.userId}', data: {
+      if (_nameController.text.isNotEmpty) 'name': _nameController.text,
+      if (_institutionController.text.isNotEmpty)
+        'institution': _institutionController.text,
+      if (_emailController.text.isNotEmpty) 'email': _emailController.text,
+      if (_passwordController.text.isNotEmpty)
+        'password': _passwordController.text,
+    });
   }
 
   Icon _iconFormFiel(String label) {

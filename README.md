@@ -47,8 +47,13 @@ Altere o nome do app
 ...
 ```
 
-#### 4. Build do apk
+#### 4. android/app/src/main/res/drawable/launch_img.png
+
+Altere a imagem que ficará na splash screen
+
+#### 5. Build do apk
 
 Para geral o apk execute
 > flutter packages pub run flutter_launcher_icons:main
+  
 > flutter build apk
