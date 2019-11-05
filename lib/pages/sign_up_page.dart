@@ -17,7 +17,6 @@ class SignUpPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        // padding: EdgeInsets.only(top: 20, left: 40, right: 40),
         color: Colors.white,
         child: ListView(
           padding: EdgeInsets.only(top: 45, left: 40, right: 40),
