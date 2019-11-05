@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/coins_page.dart';
 import 'package:museu_vivo/pages/team_details.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Poppins',
-          primarySwatch: config.primaryColor,
+          // primarySwatch: config.primaryColor,
           primaryColor: config.primaryColor,
           accentColor: config.accentColor,
           scaffoldBackgroundColor: Colors.white,
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
             button: TextStyle(fontSize: 10),
           ),
         ),
-        home: SplashPage(),
+        home: SignInPage(),
         routes: {
           SignInPage.routeName: (_) => SignInPage(),
           GamesPage.routeName: (_) => GamesPage(),

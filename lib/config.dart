@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 class Config {
   final String name;
   final String apiUrl;
-  final String logoPath;
+  final String assetsDirectoryName;
   final String coinName;
   final Color primaryColor;
   final Color accentColor;
@@ -12,7 +12,7 @@ class Config {
   Config({
     this.name,
     this.apiUrl,
-    this.logoPath,
+    this.assetsDirectoryName,
     this.coinName,
     this.primaryColor,
     this.accentColor,
@@ -20,14 +20,22 @@ class Config {
 }
 
 final Map<String, Config> _preConfigured = {
-  '_meuVivoMuseu': Config(
+  'meuVivoMuseu': Config(
     name: 'Meu Vivo Museu',
     apiUrl: 'https://museu-vivo-api.herokuapp.com',
-    logoPath: 'assets/splash-logo.flr',
+    assetsDirectoryName: 'meu_vivo_museu',
     coinName: 'Cults',
     primaryColor: Colors.red,
     accentColor: Colors.red,
   ),
+  'soloAmigo': Config(
+    name: 'Solo Amigo',
+    apiUrl: 'https://solo-amigo.herokuapp.com',
+    assetsDirectoryName: 'solo_amigo',
+    coinName: 'Cults',
+    primaryColor: Color(0xff5e3003),
+    accentColor: Color(0xffce6b01),
+  ),
 };
 
-final Config config = _preConfigured['_meuVivoMuseu'];
+final Config config = _preConfigured['soloAmigo'];

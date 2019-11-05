@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'home_page.dart';
 import 'reset_password_page.dart';
 import 'sign_up_page.dart';
+import '../config.dart';
 import '../shared/providers/user_provider.dart';
 
 class SignInPage extends StatefulWidget {
@@ -39,7 +40,8 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     width: 250,
                     height: 250,
-                    child: Image.asset("images/logo.png"),
+                    child: Image.asset(
+                        'assets/${config.assetsDirectoryName}/logo.png'),
                   ),
                   SizedBox(height: 5),
                   if (_showErrorMessage)
@@ -152,8 +154,8 @@ class _SignInPageState extends State<SignInPage> {
           end: Alignment.bottomRight,
           stops: [0.3, 1],
           colors: [
-            Color(0xFFf44336),
-            Color(0XFFc62828),
+            Theme.of(context).primaryColor.withOpacity(0.9),
+            Theme.of(context).primaryColor,
           ],
         ),
         borderRadius: BorderRadius.all(

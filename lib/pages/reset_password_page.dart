@@ -15,7 +15,7 @@ class ResetPasswordPage extends StatelessWidget {
                 SizedBox(
                   width: 200,
                   height: 200,
-                  child: Image.asset("images/reset-password-icon.png"),
+                  child: Image.asset("assets/reset-password-icon.png"),
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -42,7 +42,7 @@ class ResetPasswordPage extends StatelessWidget {
                 SizedBox(height: 15),
                 _buildField("E-mail"),
                 SizedBox(height: 20),
-                _buildButton("CONFIRMAR"),
+                _buildButton("CONFIRMAR", context),
                 // SizedBox(height: 20),
               ],
             ),
@@ -74,7 +74,7 @@ class ResetPasswordPage extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(String label) {
+  Widget _buildButton(String label, BuildContext context) {
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,
@@ -84,8 +84,8 @@ class ResetPasswordPage extends StatelessWidget {
           end: Alignment.bottomRight,
           stops: [0.3, 1],
           colors: [
-            Color(0xFFf44336),
-            Color(0XFFc62828),
+            Theme.of(context).primaryColor.withOpacity(0.9),
+            Theme.of(context).primaryColor,
           ],
         ),
         borderRadius: BorderRadius.all(
