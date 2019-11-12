@@ -207,16 +207,20 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
             if (widget._mission.hasImage) base64 = await _changeFormatImage();
 
-            await dio.post(
-              '/missions_answers',
-              data: {
-                '_user': userId,
-                '_mission': widget._mission.id,
-                if (widget._mission.hasImage) 'image': base64,
-                if (widget._mission.hasText) 'text_msg': _text,
-                if (widget._mission.isGrupal) '_group': int.parse(_groupId),
-              },
-            );
+            try {
+              await dio.post(
+                '/missions_answers',
+                data: {
+                  '_user': userId,
+                  '_mission': widget._mission.id,
+                  if (widget._mission.hasImage) 'image': base64,
+                  if (widget._mission.hasText) 'text_msg': _text,
+                  if (widget._mission.isGrupal) '_group': int.parse(_groupId),
+                },
+              );
+            } on DioError catch (e) {
+              print(e);
+            }
 
             Navigator.of(context).pop(true);
           },
