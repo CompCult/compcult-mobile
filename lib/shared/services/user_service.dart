@@ -14,14 +14,16 @@ class UserService {
     return response.data;
   }
 
-  Future<void> createUser(
+  Future<dynamic> createUser(
       {String name, String institution, String email, String password}) async {
-    await dio.post('/users/register', data: {
+    final response = await dio.post('/users/register', data: {
       'name': name,
       'type': 'estudante',
       'institution': institution,
       'email': email,
       'password': password,
     });
+
+    return response.data;
   }
 }

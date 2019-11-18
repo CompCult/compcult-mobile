@@ -1,9 +1,10 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/sign_up_bloc.dart';
+import 'package:museu_vivo/shared/models/user.dart';
 
-import './sign_in_page.dart';
 import '../config.dart';
+import 'home_page.dart';
 
 class SignUpPage extends StatelessWidget {
   final _nameController = TextEditingController();
@@ -73,13 +74,14 @@ class SignUpPage extends StatelessWidget {
                   ),
                   onPressed: () async {
                     try {
-                      await signUpBloc.createUser(
+                      User user = await signUpBloc.createUser(
                         name: _nameController.text,
                         institution: _institutionController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
                       );
-                      Navigator.of(context).pushNamed(SignInPage.routeName);
+                      signUpBloc.updateUserInfo(context, user);
+                      Navigator.of(context).pushNamed(HomePage.routeName);
                     } catch (exception) {
                       print(exception);
                     }
