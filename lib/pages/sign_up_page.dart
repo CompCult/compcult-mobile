@@ -1,6 +1,6 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:provider/provider.dart';
+import 'package:museu_vivo/pages/sign_up_bloc.dart';
 
 import './sign_in_page.dart';
 import '../config.dart';
@@ -13,7 +13,7 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Dio dio = Provider.of<Dio>(context);
+    SignUpBloc signUpBloc = BlocProvider.getBloc<SignUpBloc>();
 
     return Scaffold(
       body: Container(
@@ -73,7 +73,12 @@ class SignUpPage extends StatelessWidget {
                   ),
                   onPressed: () async {
                     try {
-                      await _createUser(dio);
+                      await signUpBloc.createUser(
+                        name: _nameController.text,
+                        institution: _institutionController.text,
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
                       Navigator.of(context).pushNamed(SignInPage.routeName);
                     } catch (exception) {
                       print(exception);
@@ -135,15 +140,5 @@ class SignUpPage extends StatelessWidget {
       default:
         return null;
     }
-  }
-
-  Future _createUser(Dio dio) async {
-    await dio.post('/users/register', data: {
-      'name': _nameController.text,
-      'type': 'estudante',
-      'institution': _institutionController.text,
-      'email': _emailController.text,
-      'password': _passwordController.text,
-    });
   }
 }
