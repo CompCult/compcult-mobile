@@ -37,12 +37,30 @@ class _MissionsPageState extends State<MissionsPage> {
             SecretCodeField(
               label: 'Código secreto da missão',
               onSubmited: (missionId) async {
-                Response response =
-                    await dio.get('/missions/private?secret_code=$missionId');
-                Mission mission = Mission.fromJson(response.data);
+                try {
+                  Response response =
+                      await dio.get('/missions/private?secret_code=$missionId');
+                  Mission mission = Mission.fromJson(response.data);
 
-                Navigator.of(context)
-                    .pushNamed(MissionSubmit.routeName, arguments: mission);
+                  Navigator.of(context)
+                      .pushNamed(MissionSubmit.routeName, arguments: mission);
+                } on DioError catch (e) {
+                  if (e.response.statusCode == 404) {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Missão não existe'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  } else if (e.response.statusCode == 401) {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Essa missão expirou'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                }
               },
             ),
             SizedBox(height: 15),
