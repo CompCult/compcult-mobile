@@ -36,14 +36,14 @@ class QuizzesPage extends StatelessWidget {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Quiz não existe'),
-                        backgroundColor: Colors.grey,
+                        backgroundColor: Colors.red,
                       ),
                     );
                   } else if (e.response.statusCode == 401) {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Esse quiz expirou'),
-                        backgroundColor: Colors.grey,
+                        backgroundColor: Colors.red,
                       ),
                     );
                   }
