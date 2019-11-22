@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/config.dart';
 import 'package:museu_vivo/pages/ranking.dart';
 import 'package:museu_vivo/shared/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class CoinsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Suas gemas',
+              config.coinName,
               style: TextStyle(
                 fontSize: 20,
                 color: Theme.of(context).primaryColor,

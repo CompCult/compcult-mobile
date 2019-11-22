@@ -1,7 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/coins_page.dart';
 import 'package:museu_vivo/pages/sign_up_bloc.dart';
 import 'package:museu_vivo/pages/team_details.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
