@@ -51,9 +51,17 @@ Altere o nome do app
 
 Altere a imagem que ficará na splash screen
 
-#### 5. Build do apk
+#### 5. Atualize o package name
+
+ * android/app/src/debug/AndroidManifest.xml
+ * android/app/src/main/AndroidManifest.xml
+ * android/app/src/profile/AndroidManifest.xml
+ * android/app/src/main/kotlin/com/example/museu_vivo/MainActivity.kt
+
+#### 6. Build do apk
 
 Para geral o apk execute
+
 > flutter packages pub run flutter_launcher_icons:main
   
 > flutter build apk

@@ -1,4 +1,4 @@
-package com.example.museu_vivo
+package net.compcult.soloamigocompcult
 
 import android.os.Bundle
 
