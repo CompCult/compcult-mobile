@@ -58,7 +58,11 @@ Altere a imagem que ficará na splash screen
  * android/app/src/profile/AndroidManifest.xml
  * android/app/src/main/kotlin/com/example/museu_vivo/MainActivity.kt
 
-#### 6. Build do apk
+ #### 6. Adicione a chave do app
+
+Adicione o arquivo key.jks em android/app/external
+
+#### 7. Build do apk
 
 Para geral o apk execute
 
