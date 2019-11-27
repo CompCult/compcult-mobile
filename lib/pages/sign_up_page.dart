@@ -6,7 +6,12 @@ import 'package:museu_vivo/shared/models/user.dart';
 import '../config.dart';
 import 'home_page.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   final _nameController = TextEditingController();
   final _institutionController = TextEditingController();
   final _emailController = TextEditingController();

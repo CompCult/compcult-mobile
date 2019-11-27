@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/user_page.dart';
 
+import '../config.dart';
 import 'coins_page.dart';
 import 'games_page.dart';
 
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.monetization_on),
-            title: Text('Gemas'),
+            title: Text(config.coinName),
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
