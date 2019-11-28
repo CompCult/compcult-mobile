@@ -1,5 +1,7 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:museu_vivo/pages/missions_bloc.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:museu_vivo/shared/components/secret_code_field.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +19,9 @@ class MissionsPage extends StatefulWidget {
 class _MissionsPageState extends State<MissionsPage> {
   @override
   Widget build(BuildContext context) {
-    final int userId = Provider.of<UserProvider>(context).userId;
     final Dio dio = Provider.of<Dio>(context);
+
+    final MissionsBloc missionsBloc = BlocProvider.getBloc<MissionsBloc>();
 
     return SingleChildScrollView(
       child: Padding(
@@ -65,7 +68,7 @@ class _MissionsPageState extends State<MissionsPage> {
             ),
             SizedBox(height: 15),
             FutureBuilder(
-              future: _getMissions(userId),
+              future: missionsBloc.missions,
               builder: (_, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
@@ -77,11 +80,7 @@ class _MissionsPageState extends State<MissionsPage> {
                   );
                 }
 
-                final Response response = snapshot.data;
-
-                final List<Mission> missions = List<Mission>.from(
-                    response.data.map((mission) => Mission.fromJson(mission)));
-                return _buildList(missions);
+                return _buildList(snapshot.data);
               },
             ),
           ],
@@ -104,11 +103,5 @@ class _MissionsPageState extends State<MissionsPage> {
         );
       },
     );
-  }
-
-  Future<Response> _getMissions(int userId) {
-    final Dio dio = Provider.of<Dio>(context);
-
-    return dio.get('/missions/public?user_id=$userId');
   }
 }

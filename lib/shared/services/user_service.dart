@@ -5,13 +5,13 @@ class UserService {
 
   UserService(this.dio);
 
-  Future<dynamic> authenticate(String email, String password) async {
+  Future<Response> authenticate(String email, String password) async {
     final Response response = await dio.post('/users/auth', data: {
       'email': email,
       'password': password,
     });
 
-    return response.data;
+    return response;
   }
 
   Future<dynamic> createUser(
