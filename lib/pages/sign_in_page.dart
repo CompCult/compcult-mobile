@@ -1,5 +1,7 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/sign_in_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'home_page.dart';
@@ -144,6 +146,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget _buildButton(String label, BuildContext context) {
     final UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
+    SignInBloc signInBloc = BlocProvider.getBloc<SignInBloc>();
 
     return Container(
       height: 50,
@@ -180,6 +183,8 @@ class _SignInPageState extends State<SignInPage> {
             if (_formKey.currentState.validate()) {
               try {
                 final Map user = await _auth();
+                await signInBloc.authenticate(
+                    _emailController.text, _passwordController.text);
                 userProvider.updateUserId(user['_id']);
                 userProvider.updateEmail(user['email']);
                 userProvider.updateName(user['name']);

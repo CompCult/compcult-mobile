@@ -1,11 +1,15 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/missions_bloc.dart';
+import 'package:museu_vivo/pages/sign_in_bloc.dart';
 import 'package:museu_vivo/pages/sign_up_bloc.dart';
 import 'package:museu_vivo/pages/team_details.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
+import 'package:museu_vivo/shared/repositories/mission_repository.dart';
 import 'package:museu_vivo/shared/repositories/user_repository.dart';
+import 'package:museu_vivo/shared/services/mission_service.dart';
 import 'package:museu_vivo/shared/services/user_service.dart';
 import 'package:provider/provider.dart';
 
@@ -28,10 +32,17 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       blocs: [
         Bloc((i) => SignUpBloc(i.get<UserRepository>())),
+        Bloc((i) => SignInBloc(i.get<UserRepository>())),
+        Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
       ],
       dependencies: [
+        Dependency((i) => MissionRepository(
+              i.get<MissionService>(),
+              i.get<UserRepository>(),
+            )),
         Dependency((i) => UserRepository(i.get<UserService>())),
         Dependency((i) => UserService(i.get<Dio>())),
+        Dependency((i) => MissionService(i.get<Dio>())),
         Dependency((i) => Dio(BaseOptions(baseUrl: config.apiUrl))),
       ],
       child: MultiProvider(
