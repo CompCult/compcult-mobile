@@ -1,8 +1,9 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/home_page.dart';
 import 'package:museu_vivo/pages/sign_in_page.dart';
-import 'package:museu_vivo/shared/providers/user_provider.dart';
+import 'package:museu_vivo/pages/user_bloc.dart';
 import 'package:provider/provider.dart';
 
 class UserPage extends StatefulWidget {
@@ -15,33 +16,23 @@ class _UserPageState extends State<UserPage> {
   final _institutionController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  UserProvider userProvider;
-
-  @override
-  void didChangeDependencies() {
-    userProvider = Provider.of<UserProvider>(context);
-    _nameController.text = userProvider.name;
-    _emailController.text = userProvider.email;
-    _institutionController.text = userProvider.institution;
-
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
+    UserBloc userBloc = BlocProvider.getBloc<UserBloc>();
+    _nameController.text = userBloc.user.name;
+    _emailController.text = userBloc.user.email;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Olá, ${userProvider.name}!',
+          'Olá, ${userBloc.user.name}!',
           style: TextStyle(fontFamily: "Poppins", fontSize: 18),
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.exit_to_app),
-            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-              SignInPage.routeName,
-              (_) => false,
-            ),
+            onPressed: () => logout(userBloc),
           ),
         ],
       ),
@@ -55,14 +46,12 @@ class _UserPageState extends State<UserPage> {
               _profilePicture(),
               SizedBox(height: 30),
               _buildFormField("Nome", _nameController, false),
-              // SizedBox(height: 10),
-              // _buildFormField("Instituição", _institutionController, false),
               SizedBox(height: 10),
               _buildFormField("E-mail", _emailController, false),
               SizedBox(height: 10),
               _buildFormField("Senha", _passwordController, true),
               SizedBox(height: 15),
-              _buildButton(),
+              _buildButton(userBloc.user.id),
             ],
           ),
         ),
@@ -119,7 +108,7 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(int userId) {
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,
@@ -141,15 +130,15 @@ class _UserPageState extends State<UserPage> {
             ),
             textAlign: TextAlign.center,
           ),
-          onPressed: _updateUserData,
+          onPressed: () => _updateUserData(userId),
         ),
       ),
     );
   }
 
-  _updateUserData() {
+  _updateUserData(int userId) {
     final Dio dio = Provider.of<Dio>(context);
-    dio.put('/users/${userProvider.userId}', data: {
+    dio.put('/users/${userId}', data: {
       if (_nameController.text.isNotEmpty) 'name': _nameController.text,
       if (_institutionController.text.isNotEmpty)
         'institution': _institutionController.text,
@@ -235,5 +224,13 @@ class _UserPageState extends State<UserPage> {
       //Permite sair automaticamente da tela pressionando o botão "voltar".
       Future.value(true);
     }
+  }
+
+  logout(UserBloc userBloc) {
+    userBloc.logout();
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      SignInPage.routeName,
+      (_) => false,
+    );
   }
 }

@@ -1,14 +1,16 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/config.dart';
 import 'package:museu_vivo/pages/ranking.dart';
-import 'package:museu_vivo/shared/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'coins_bloc.dart';
 
 class CoinsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final int userId = Provider.of<UserProvider>(context).userId;
+    final int userId = BlocProvider.getBloc<CoinsBloc>().user.id;
 
     return Container(
       decoration: BoxDecoration(

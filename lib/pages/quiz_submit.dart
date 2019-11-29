@@ -1,7 +1,8 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/quiz_submit_bloc.dart';
 import 'package:museu_vivo/shared/models/quiz.dart';
-import 'package:museu_vivo/shared/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class QuizSubmit extends StatefulWidget {
@@ -21,7 +22,7 @@ class _QuizSubmitState extends State<QuizSubmit> {
 
   @override
   Widget build(BuildContext context) {
-    final userId = Provider.of<UserProvider>(context).userId;
+    final userId = BlocProvider.getBloc<QuizSubmitBloc>().user.id;
 
     return Scaffold(
       key: _scaffoldState,

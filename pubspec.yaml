@@ -22,6 +22,9 @@ dependencies:
   image_picker: ^0.6.1+8
   bloc_pattern: ^2.3.2
   rxdart: ^0.22.4
+  hive: ^1.0.0
+  hive_flutter: ^0.2.1
+  path_provider: ^1.2.0
   
   flutter:
     sdk: flutter
@@ -39,6 +42,8 @@ dependencies:
 
 
 dev_dependencies:
+  hive_generator: ^0.5.1
+  build_runner: ^1.7.1
   flutter_test:
     sdk: flutter
 

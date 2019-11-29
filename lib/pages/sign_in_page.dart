@@ -8,7 +8,6 @@ import 'home_page.dart';
 import 'reset_password_page.dart';
 import 'sign_up_page.dart';
 import '../config.dart';
-import '../shared/providers/user_provider.dart';
 
 class SignInPage extends StatefulWidget {
   static const String routeName = '/sign-in';
@@ -144,8 +143,6 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Widget _buildButton(String label, BuildContext context) {
-    final UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
     SignInBloc signInBloc = BlocProvider.getBloc<SignInBloc>();
 
     return Container(
@@ -182,13 +179,8 @@ class _SignInPageState extends State<SignInPage> {
           onPressed: () async {
             if (_formKey.currentState.validate()) {
               try {
-                final Map user = await _auth();
                 await signInBloc.authenticate(
                     _emailController.text, _passwordController.text);
-                userProvider.updateUserId(user['_id']);
-                userProvider.updateEmail(user['email']);
-                userProvider.updateName(user['name']);
-                userProvider.updateInstitution(user['institution']);
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil(HomePage.routeName, (_) => false);
               } catch (exception) {

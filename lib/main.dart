@@ -1,102 +1,147 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:museu_vivo/pages/coins_bloc.dart';
+import 'package:museu_vivo/pages/mission_submit_bloc.dart';
 import 'package:museu_vivo/pages/missions_bloc.dart';
+import 'package:museu_vivo/pages/quiz_submit_bloc.dart';
+import 'package:museu_vivo/pages/quizzes_bloc.dart';
 import 'package:museu_vivo/pages/sign_in_bloc.dart';
 import 'package:museu_vivo/pages/sign_up_bloc.dart';
 import 'package:museu_vivo/pages/team_details.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
+import 'package:museu_vivo/pages/teams_bloc.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
+import 'package:museu_vivo/pages/user_bloc.dart';
+import 'package:museu_vivo/shared/models/user.dart';
 import 'package:museu_vivo/shared/repositories/mission_repository.dart';
 import 'package:museu_vivo/shared/repositories/user_repository.dart';
 import 'package:museu_vivo/shared/services/mission_service.dart';
 import 'package:museu_vivo/shared/services/user_service.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/home_page.dart';
 import 'pages/games_page.dart';
 import 'pages/sign_in_page.dart';
 import 'pages/mission_submit.dart';
-import 'shared/providers/user_provider.dart';
 import 'config.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Dio dio = Dio(
     BaseOptions(baseUrl: config.apiUrl),
   );
 
+  Future<Box> openBox() async {
+    final directory = await getApplicationDocumentsDirectory();
+    Hive.init(directory.path);
+    return await Hive.openBox('user');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      blocs: [
-        Bloc((i) => SignUpBloc(i.get<UserRepository>())),
-        Bloc((i) => SignInBloc(i.get<UserRepository>())),
-        Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
-      ],
-      dependencies: [
-        Dependency((i) => MissionRepository(
-              i.get<MissionService>(),
-              i.get<UserRepository>(),
-            )),
-        Dependency((i) => UserRepository(i.get<UserService>())),
-        Dependency((i) => UserService(i.get<Dio>())),
-        Dependency((i) => MissionService(i.get<Dio>())),
-        Dependency((i) => Dio(BaseOptions(baseUrl: config.apiUrl))),
-      ],
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<UserProvider>.value(
-            value: UserProvider(),
-          ),
-          Provider<Dio>.value(
-            value: dio,
-          ),
-        ],
-        child: MaterialApp(
-          title: config.name,
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            fontFamily: 'Poppins',
-            primaryColor: config.primaryColor,
-            accentColor: config.accentColor,
-            scaffoldBackgroundColor: Colors.white,
-            buttonTheme: ButtonThemeData(minWidth: 10),
-            textTheme: TextTheme(
-              button: TextStyle(fontSize: 10),
+    return FutureBuilder(
+      future: openBox(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final lastUser = snapshot.data.get(0);
+          User user;
+
+          if (lastUser != null) {
+            user = User.fromJson(Map<String, dynamic>.from(lastUser));
+          }
+
+          return BlocProvider(
+            blocs: [
+              Bloc((i) => SignUpBloc(i.get<UserRepository>())),
+              Bloc((i) => UserBloc(i.get<UserRepository>())),
+              Bloc((i) => SignInBloc(i.get<UserRepository>())),
+              Bloc((i) => CoinsBloc(i.get<UserRepository>())),
+              Bloc((i) => QuizzesBloc(i.get<UserRepository>())),
+              Bloc((i) => QuizSubmitBloc(i.get<UserRepository>())),
+              Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
+              Bloc((i) => MissionSubmitBloc(i.get<UserRepository>())),
+              Bloc((i) => TeamsBloc(i.get<UserRepository>())),
+            ],
+            dependencies: [
+              Dependency((i) => MissionRepository(
+                    i.get<MissionService>(),
+                    i.get<UserRepository>(),
+                  )),
+              Dependency((i) =>
+                  UserRepository(i.get<UserService>(), user, snapshot.data)),
+              Dependency((i) => UserService(i.get<Dio>())),
+              Dependency((i) => MissionService(i.get<Dio>())),
+              Dependency((i) => Dio(BaseOptions(baseUrl: config.apiUrl))),
+            ],
+            child: MultiProvider(
+              providers: [
+                Provider<Dio>.value(
+                  value: dio,
+                ),
+              ],
+              child: MaterialApp(
+                title: config.name,
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  fontFamily: 'Poppins',
+                  primaryColor: config.primaryColor,
+                  accentColor: config.accentColor,
+                  scaffoldBackgroundColor: Colors.white,
+                  buttonTheme: ButtonThemeData(minWidth: 10),
+                  textTheme: TextTheme(
+                    button: TextStyle(fontSize: 10),
+                  ),
+                ),
+                home: user == null ? SignInPage() : HomePage(),
+                routes: {
+                  SignInPage.routeName: (_) => SignInPage(),
+                  GamesPage.routeName: (_) => GamesPage(),
+                  HomePage.routeName: (_) => HomePage(),
+                  TeamsPage.routeName: (_) => TeamsPage(),
+                },
+                onGenerateRoute: (settings) {
+                  switch (settings.name) {
+                    case MissionSubmit.routeName:
+                      return MaterialPageRoute(
+                        builder: (_) => MissionSubmit(settings.arguments),
+                      );
+                      break;
+                    case QuizSubmit.routeName:
+                      return MaterialPageRoute(
+                        builder: (_) => QuizSubmit(settings.arguments),
+                      );
+                      break;
+                    case TeamDetails.routeName:
+                      return MaterialPageRoute(
+                        builder: (_) => TeamDetails(settings.arguments),
+                      );
+                      break;
+                    default:
+                      return null;
+                  }
+                },
+              ),
             ),
-          ),
-          home: SignInPage(),
-          routes: {
-            SignInPage.routeName: (_) => SignInPage(),
-            GamesPage.routeName: (_) => GamesPage(),
-            HomePage.routeName: (_) => HomePage(),
-            TeamsPage.routeName: (_) => TeamsPage(),
-          },
-          onGenerateRoute: (settings) {
-            switch (settings.name) {
-              case MissionSubmit.routeName:
-                return MaterialPageRoute(
-                  builder: (_) => MissionSubmit(settings.arguments),
-                );
-                break;
-              case QuizSubmit.routeName:
-                return MaterialPageRoute(
-                  builder: (_) => QuizSubmit(settings.arguments),
-                );
-                break;
-              case TeamDetails.routeName:
-                return MaterialPageRoute(
-                  builder: (_) => TeamDetails(settings.arguments),
-                );
-                break;
-              default:
-                return null;
-            }
-          },
-        ),
-      ),
+          );
+        } else {
+          return Container(color: Colors.white);
+        }
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
   }
 }

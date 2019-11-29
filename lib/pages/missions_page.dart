@@ -6,7 +6,6 @@ import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:museu_vivo/shared/components/secret_code_field.dart';
 import 'package:provider/provider.dart';
 
-import '../shared/providers/user_provider.dart';
 import '../shared/components/item_card.dart';
 import './mission_submit.dart';
 import '../shared/models/mission.dart';

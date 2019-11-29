@@ -1,18 +1,19 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
+import 'package:museu_vivo/pages/quizzes_bloc.dart';
 import 'package:museu_vivo/shared/components/secret_code_field.dart';
 import 'package:museu_vivo/shared/models/quiz.dart';
 import 'package:provider/provider.dart';
 
-import '../shared/providers/user_provider.dart';
 import '../shared/components/item_card.dart';
 import '../shared/models/quiz.dart';
 
 class QuizzesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final int userId = Provider.of<UserProvider>(context).userId;
+    final int userId = BlocProvider.getBloc<QuizzesBloc>().user.id;
     final Dio dio = Provider.of<Dio>(context);
 
     return SingleChildScrollView(

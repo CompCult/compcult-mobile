@@ -1,9 +1,11 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/team_details.dart';
+import 'package:museu_vivo/pages/teams_bloc.dart';
 import 'package:museu_vivo/shared/components/custom_bottom_sheet.dart';
 import 'package:museu_vivo/shared/models/group.dart';
-import 'package:museu_vivo/shared/providers/user_provider.dart';
+import 'package:museu_vivo/shared/models/user.dart';
 import 'package:provider/provider.dart';
 
 class TeamsPage extends StatelessWidget {
@@ -11,6 +13,8 @@ class TeamsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User user = BlocProvider.getBloc<TeamsBloc>().user;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Equipes'),
@@ -26,7 +30,7 @@ class TeamsPage extends StatelessWidget {
       ),
       body: Center(
         child: FutureBuilder(
-          future: _getGroups(context),
+          future: _getGroups(context, user.id),
           builder: (_, snapshot) {
             if (!snapshot.hasData) {
               return CircularProgressIndicator();
@@ -44,8 +48,7 @@ class TeamsPage extends StatelessWidget {
     );
   }
 
-  Future<dynamic> _getGroups(BuildContext context) async {
-    final int userId = Provider.of<UserProvider>(context).userId;
+  Future<dynamic> _getGroups(BuildContext context, int userId) async {
     final Dio dio = Provider.of<Dio>(context);
     Response response = await dio.get('/group_members/groups?_user=$userId');
 
@@ -85,6 +88,8 @@ class _TeamNameFormState extends State<TeamNameForm> {
 
   @override
   Widget build(BuildContext context) {
+    User user = BlocProvider.getBloc<TeamsBloc>().user;
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -101,7 +106,7 @@ class _TeamNameFormState extends State<TeamNameForm> {
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ),
-              onPressed: () => _createGroup(context, _teamName),
+              onPressed: () => _createGroup(context, _teamName, user),
             ),
             Spacer(),
           ],
@@ -127,15 +132,15 @@ class _TeamNameFormState extends State<TeamNameForm> {
     );
   }
 
-  Future<dynamic> _createGroup(BuildContext context, String groupName) async {
-    final UserProvider userProvider = Provider.of<UserProvider>(context);
+  Future<dynamic> _createGroup(
+      BuildContext context, String groupName, User user) async {
     final Dio dio = Provider.of<Dio>(context);
     Response response = await dio.post('/groups', data: {'name': groupName});
 
     await dio.post(
       '/group_members',
       data: {
-        'email': userProvider.email,
+        'email': user.email,
         'isAdmin': true,
         '_group': response.data['_id']
       },
