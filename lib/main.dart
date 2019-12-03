@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:museu_vivo/pages/coins_bloc.dart';
+import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/mission_submit_bloc.dart';
 import 'package:museu_vivo/pages/missions_bloc.dart';
 import 'package:museu_vivo/pages/quiz_submit_bloc.dart';
@@ -61,6 +62,7 @@ class _MyAppState extends State<MyApp> {
 
           return BlocProvider(
             blocs: [
+              Bloc((i) => HomeBloc(i.get<MissionRepository>())),
               Bloc((i) => SignUpBloc(i.get<UserRepository>())),
               Bloc((i) => UserBloc(i.get<UserRepository>())),
               Bloc((i) => SignInBloc(i.get<UserRepository>())),

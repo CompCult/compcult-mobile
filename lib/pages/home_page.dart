@@ -1,4 +1,6 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/user_page.dart';
 
 import '../config.dart';
@@ -26,6 +28,14 @@ class _HomePageState extends State<HomePage> {
     GamesPage(),
     UserPage(),
   ];
+
+  @override
+  void didChangeDependencies() {
+    HomeBloc homeBloc = BlocProvider.getBloc<HomeBloc>();
+    homeBloc.fetchMissions();
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

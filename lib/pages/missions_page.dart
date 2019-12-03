@@ -66,8 +66,8 @@ class _MissionsPageState extends State<MissionsPage> {
               },
             ),
             SizedBox(height: 15),
-            FutureBuilder(
-              future: missionsBloc.missions,
+            StreamBuilder(
+              stream: missionsBloc.missions,
               builder: (_, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
