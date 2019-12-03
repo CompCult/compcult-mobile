@@ -79,13 +79,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   onPressed: () async {
                     try {
-                      User user = await signUpBloc.createUser(
+                      await signUpBloc.createUser(
                         name: _nameController.text,
                         institution: _institutionController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
                       );
-                      signUpBloc.updateUserInfo(context, user);
                       Navigator.of(context).pushNamed(HomePage.routeName);
                     } catch (exception) {
                       print(exception);

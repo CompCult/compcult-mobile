@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:provider/provider.dart';
@@ -7,9 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:museu_vivo/shared/providers/user_provider.dart';
 
 import '../shared/models/mission.dart';
+import 'mission_submit_bloc.dart';
 
 class MissionSubmit extends StatefulWidget {
   static const String routeName = '/mission-submit';
@@ -30,6 +31,8 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
   @override
   Widget build(BuildContext context) {
+    int userId = BlocProvider.getBloc<MissionSubmitBloc>().user.id;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -78,7 +81,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 ),
                 if (widget._mission.isGrupal)
                   FutureBuilder(
-                    future: _getGroups(context),
+                    future: _getGroups(userId),
                     builder: (_, snapshot) {
                       if (!snapshot.hasData) return Container();
 
@@ -165,11 +168,11 @@ class _MissionSubmitState extends State<MissionSubmit> {
           ],
         ),
       ),
-      bottomSheet: _buildButton("ENVIAR RESPOSTA"),
+      bottomSheet: _buildButton("ENVIAR RESPOSTA", userId),
     );
   }
 
-  Widget _buildButton(String label) {
+  Widget _buildButton(String label, int userId) {
     return Container(
       height: 50,
       alignment: Alignment.centerLeft,
@@ -200,7 +203,6 @@ class _MissionSubmitState extends State<MissionSubmit> {
               _isLoading = true;
             });
 
-            final int userId = Provider.of<UserProvider>(context).userId;
             final Dio dio = Provider.of<Dio>(context);
 
             String base64;
@@ -247,8 +249,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
     );
   }
 
-  Future<dynamic> _getGroups(BuildContext context) async {
-    final int userId = Provider.of<UserProvider>(context).userId;
+  Future<dynamic> _getGroups(int userId) async {
     final Dio dio = Provider.of<Dio>(context);
     Response response = await dio.get('/group_members/groups?_user=$userId');
 
