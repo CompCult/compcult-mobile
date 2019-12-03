@@ -1,11 +1,12 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:museu_vivo/shared/models/user.dart';
-import 'package:museu_vivo/shared/repositories/user_repository.dart';
+import 'package:museu_vivo/shared/models/quiz.dart';
+import 'package:museu_vivo/shared/repositories/quiz_repository.dart';
+import 'package:rxdart/rxdart.dart';
 
 class QuizzesBloc extends BlocBase {
-  final UserRepository userRepository;
+  final QuizRepository quizRepository;
 
-  QuizzesBloc(this.userRepository);
+  QuizzesBloc(this.quizRepository);
 
-  User get user => userRepository.user;
+  Observable<List<Quiz>> get quizzes => quizRepository.quizzes;
 }

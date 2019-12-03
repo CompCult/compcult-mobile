@@ -13,7 +13,7 @@ import '../shared/models/quiz.dart';
 class QuizzesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final int userId = BlocProvider.getBloc<QuizzesBloc>().user.id;
+    final QuizzesBloc quizzesBloc = BlocProvider.getBloc<QuizzesBloc>();
     final Dio dio = Provider.of<Dio>(context);
 
     return SingleChildScrollView(
@@ -52,8 +52,8 @@ class QuizzesPage extends StatelessWidget {
               },
             ),
             SizedBox(height: 15),
-            FutureBuilder(
-              future: _getQuizzes(userId, dio),
+            StreamBuilder<List<Quiz>>(
+              stream: quizzesBloc.quizzes,
               builder: (_, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
@@ -65,11 +65,7 @@ class QuizzesPage extends StatelessWidget {
                   );
                 }
 
-                final Response response = snapshot.data;
-
-                final List<Quiz> quizzes = List<Quiz>.from(
-                    response.data.map((quiz) => Quiz.fromJson(quiz)));
-                return _buildList(quizzes);
+                return _buildList(snapshot.data);
               },
             ),
           ],
@@ -92,9 +88,5 @@ class QuizzesPage extends StatelessWidget {
         );
       },
     );
-  }
-
-  Future<Response> _getQuizzes(int userId, Dio dio) {
-    return dio.get('/quizzes/public?user_id=$userId');
   }
 }

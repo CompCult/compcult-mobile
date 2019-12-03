@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() {
     HomeBloc homeBloc = BlocProvider.getBloc<HomeBloc>();
     homeBloc.fetchMissions();
+    homeBloc.fetchQuizzes();
 
     super.didChangeDependencies();
   }

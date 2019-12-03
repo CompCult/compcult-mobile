@@ -1,32 +1,32 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
-import 'package:museu_vivo/shared/models/mission.dart';
+import 'package:museu_vivo/shared/models/quiz.dart';
 import 'package:museu_vivo/shared/repositories/user_repository.dart';
-import 'package:museu_vivo/shared/services/mission_service.dart';
+import 'package:museu_vivo/shared/services/quiz_service.dart';
 import 'package:rxdart/rxdart.dart';
 
-class MissionRepository extends BlocBase {
-  final MissionService missionService;
+class QuizRepository extends BlocBase {
+  final QuizService quizService;
   final UserRepository userRepository;
 
-  BehaviorSubject<List<Mission>> _missionController = BehaviorSubject<List<Mission>>();
+  BehaviorSubject<List<Quiz>> _quizController = BehaviorSubject<List<Quiz>>();
 
-  Observable<List<Mission>> get missions => _missionController.stream;
+  Observable<List<Quiz>> get quizzes => _quizController.stream;
 
-  MissionRepository(this.missionService, this.userRepository);
+  QuizRepository(this.quizService, this.userRepository);
 
-  getchMissions() async {
-    final Response missionsReponse =
-        await missionService.fetchMissions(userRepository.user.id);
+  fetchQuizzes() async {
+    final Response quizzesReponse =
+        await quizService.fetchQuizzes(userRepository.user.id);
 
-    _missionController.sink.add(List<Mission>.from(
-      missionsReponse.data.map((mission) => Mission.fromJson(mission)),
+    _quizController.sink.add(List<Quiz>.from(
+      quizzesReponse.data.map((quiz) => Quiz.fromJson(quiz)),
     ));
   }
 
   @override
   void dispose() {
-    _missionController.close();
+    _quizController.close();
     super.dispose();
   }
 }
