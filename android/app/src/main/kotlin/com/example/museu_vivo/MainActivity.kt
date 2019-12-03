@@ -1,4 +1,4 @@
-package net.compcult.soloamigocompcult
+package net.compcult.meuvivomuseucompcult
 
 import android.os.Bundle
 

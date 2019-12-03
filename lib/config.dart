@@ -38,4 +38,4 @@ final Map<String, Config> _preConfigured = {
   ),
 };
 
-final Config config = _preConfigured['soloAmigo'];
+final Config config = _preConfigured['meuVivoMuseu'];
