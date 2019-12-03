@@ -24,6 +24,12 @@ class QuizRepository extends BlocBase {
     ));
   }
 
+  Future<Quiz> fetchSecretQuiz(String quizId) async {
+    final Response quizzesReponse = await quizService.fetchSecretQuiz(quizId);
+
+    return Quiz.fromJson(quizzesReponse.data);
+  }
+
   @override
   void dispose() {
     _quizController.close();

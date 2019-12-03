@@ -9,7 +9,7 @@ class QuizService {
     return dio.get('/quizzes/public?user_id=$userId');
   }
 
-  Future<Response> fetchSecretQuiz(int quizId) {
+  Future<Response> fetchSecretQuiz(String quizId) {
     return dio.get('/quizzes/private?secret_code=$quizId');
   }
 }

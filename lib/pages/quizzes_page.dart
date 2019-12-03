@@ -25,29 +25,14 @@ class QuizzesPage extends StatelessWidget {
               label: 'Código secreto do quiz',
               onSubmited: (quizId) async {
                 try {
-                  Response response =
-                      await dio.get('/quizzes/private?secret_code=$quizId');
-
-                  Quiz quiz = Quiz.fromJson(response.data);
+                  Quiz quiz = await quizzesBloc.secretQuiz(quizId);
 
                   Navigator.of(context)
                       .pushNamed(QuizSubmit.routeName, arguments: quiz);
-                } on DioError catch (e) {
-                  if (e.response.statusCode == 404) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Quiz não existe'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  } else if (e.response.statusCode == 401) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Esse quiz expirou'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
+                } catch (e) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text(e), backgroundColor: Colors.red),
+                  );
                 }
               },
             ),
