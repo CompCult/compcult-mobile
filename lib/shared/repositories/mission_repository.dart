@@ -9,7 +9,8 @@ class MissionRepository extends BlocBase {
   final MissionService missionService;
   final UserRepository userRepository;
 
-  BehaviorSubject<List<Mission>> _missionController = BehaviorSubject<List<Mission>>();
+  BehaviorSubject<List<Mission>> _missionController =
+      BehaviorSubject<List<Mission>>();
 
   Observable<List<Mission>> get missions => _missionController.stream;
 
@@ -22,6 +23,13 @@ class MissionRepository extends BlocBase {
     _missionController.sink.add(List<Mission>.from(
       missionsReponse.data.map((mission) => Mission.fromJson(mission)),
     ));
+  }
+
+  Future<Mission> fetchSecretMission(String missionId) async {
+    final Response missionsReponse =
+        await missionService.fetchSecretMission(missionId);
+
+    return Mission.fromJson(missionsReponse.data);
   }
 
   @override

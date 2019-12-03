@@ -11,7 +11,7 @@ class QuizzesBloc extends BlocBase {
 
   Observable<List<Quiz>> get quizzes => quizRepository.quizzes;
 
-  Future<Quiz> secretQuiz(String quizId) async {
+  Future<Quiz> getSecretQuiz(String quizId) async {
     try {
       return await quizRepository.fetchSecretQuiz(quizId);
     } on DioError catch (e) {
