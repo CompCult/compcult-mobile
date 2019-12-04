@@ -32,6 +32,15 @@ class UserRepository extends BlocBase {
     });
   }
 
+  Future<List<User>> fetchUsers() async {
+    final Response usersResponse = await _userService.fetchUsers();
+    final List<User> users =
+        List<User>.from(usersResponse.data.map((user) => User.fromJson(user)));
+    users.sort((a, b) => b.points - a.points);
+
+    return users;
+  }
+
   Future<User> createUser(
       {String name, String institution, String email, String password}) async {
     _userController.sink.add(User.fromJson(await _userService.createUser(

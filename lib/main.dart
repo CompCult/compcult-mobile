@@ -8,6 +8,7 @@ import 'package:museu_vivo/pages/mission_submit_bloc.dart';
 import 'package:museu_vivo/pages/missions_bloc.dart';
 import 'package:museu_vivo/pages/quiz_submit_bloc.dart';
 import 'package:museu_vivo/pages/quizzes_bloc.dart';
+import 'package:museu_vivo/pages/ranking_bloc.dart';
 import 'package:museu_vivo/pages/sign_in_bloc.dart';
 import 'package:museu_vivo/pages/sign_up_bloc.dart';
 import 'package:museu_vivo/pages/team_details.dart';
@@ -69,6 +70,7 @@ class _MyAppState extends State<MyApp> {
                     i.get<MissionRepository>(),
                     i.get<QuizRepository>(),
                   )),
+              Bloc((i) => RankingBloc(i.get<UserRepository>())),
               Bloc((i) => SignUpBloc(i.get<UserRepository>())),
               Bloc((i) => UserBloc(i.get<UserRepository>())),
               Bloc((i) => SignInBloc(i.get<UserRepository>())),
