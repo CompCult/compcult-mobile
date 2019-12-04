@@ -17,7 +17,7 @@ class MissionRepository extends BlocBase {
   MissionRepository(this.missionService, this.userRepository);
 
   fetchMissions() {
-    userRepository.user.asyncMap((user) async {
+    userRepository.user.listen((user) async {
       final Response missionsReponse =
           await missionService.fetchMissions(user.id);
 

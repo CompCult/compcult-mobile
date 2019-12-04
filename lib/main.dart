@@ -59,9 +59,11 @@ class _MyAppState extends State<MyApp> {
         if (snapshot.connectionState == ConnectionState.done) {
           final lastUser = snapshot.data.get(0);
           User user;
+          final DioRepository dioRepository = DioRepository();
 
           if (lastUser != null) {
             user = User.fromJson(Map<String, dynamic>.from(lastUser));
+            dioRepository.addToken(user.token);
           }
 
           return BlocProvider(
@@ -99,7 +101,7 @@ class _MyAppState extends State<MyApp> {
               Dependency((i) => UserService(i.get<DioRepository>().dio)),
               Dependency((i) => QuizService(i.get<DioRepository>().dio)),
               Dependency((i) => MissionService(i.get<DioRepository>().dio)),
-              Dependency((i) => DioRepository()),
+              Dependency((i) => dioRepository),
             ],
             child: MultiProvider(
               providers: [
