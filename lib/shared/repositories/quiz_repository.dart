@@ -28,7 +28,7 @@ class QuizRepository extends BlocBase {
   Future<Quiz> fetchSecretQuiz(String quizId) async {
     final Response quizzesReponse = await quizService.fetchSecretQuiz(quizId);
 
-    return Quiz.fromJson(quizzesReponse.data);
+    return Quiz.fromJson(quizzesReponse.data[0]);
   }
 
   @override

@@ -18,20 +18,20 @@ class MissionRepository extends BlocBase {
 
   fetchMissions() {
     userRepository.user.listen((user) async {
-      final Response missionsReponse =
+      final Response missionsResponse =
           await missionService.fetchMissions(user.id);
 
       _missionController.sink.add(List<Mission>.from(
-        missionsReponse.data.map((mission) => Mission.fromJson(mission)),
+        missionsResponse.data.map((mission) => Mission.fromJson(mission)),
       ));
     });
   }
 
   Future<Mission> fetchSecretMission(String missionId) async {
-    final Response missionsReponse =
+    final Response missionsResponse =
         await missionService.fetchSecretMission(missionId);
 
-    return Mission.fromJson(missionsReponse.data);
+    return Mission.fromJson(missionsResponse.data[0]);
   }
 
   @override
