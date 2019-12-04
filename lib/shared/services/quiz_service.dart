@@ -6,10 +6,10 @@ class QuizService {
   QuizService(this.dio);
 
   Future<Response> fetchQuizzes(String userId) {
-    return dio.get('/quizzes/public?user_id=$userId');
+    return dio.get('/quizzes?answered=0');
   }
 
   Future<Response> fetchSecretQuiz(String quizId) {
-    return dio.get('/quizzes/private?secret_code=$quizId');
+    return dio.get('/quizzes?secret_code=$quizId');
   }
 }

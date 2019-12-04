@@ -1,5 +1,5 @@
 class Quiz {
-  int id;
+  String id;
   String alternativeE;
   String alternativeD;
   String alternativeC;
@@ -11,7 +11,7 @@ class Quiz {
   String secretCode;
   int points;
   String description;
-  int user;
+  String user;
   String title;
   int iV;
   String createdAt;
