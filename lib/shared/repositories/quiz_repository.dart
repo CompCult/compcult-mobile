@@ -15,13 +15,14 @@ class QuizRepository extends BlocBase {
 
   QuizRepository(this.quizService, this.userRepository);
 
-  fetchQuizzes() async {
-    final Response quizzesReponse =
-        await quizService.fetchQuizzes(userRepository.user.id);
+  fetchQuizzes() {
+    userRepository.user.asyncMap((user) async {
+      final Response quizzesReponse = await quizService.fetchQuizzes(user.id);
 
-    _quizController.sink.add(List<Quiz>.from(
-      quizzesReponse.data.map((quiz) => Quiz.fromJson(quiz)),
-    ));
+      _quizController.sink.add(List<Quiz>.from(
+        quizzesReponse.data.map((quiz) => Quiz.fromJson(quiz)),
+      ));
+    });
   }
 
   Future<Quiz> fetchSecretQuiz(String quizId) async {

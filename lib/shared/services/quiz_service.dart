@@ -5,7 +5,7 @@ class QuizService {
 
   QuizService(this.dio);
 
-  Future<Response> fetchQuizzes(int userId) {
+  Future<Response> fetchQuizzes(String userId) {
     return dio.get('/quizzes/public?user_id=$userId');
   }
 

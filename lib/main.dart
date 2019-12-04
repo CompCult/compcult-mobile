@@ -16,6 +16,7 @@ import 'package:museu_vivo/pages/teams_bloc.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:museu_vivo/pages/user_bloc.dart';
 import 'package:museu_vivo/shared/models/user.dart';
+import 'package:museu_vivo/shared/repositories/dio_repository.dart';
 import 'package:museu_vivo/shared/repositories/mission_repository.dart';
 import 'package:museu_vivo/shared/repositories/quiz_repository.dart';
 import 'package:museu_vivo/shared/repositories/user_repository.dart';
@@ -64,7 +65,10 @@ class _MyAppState extends State<MyApp> {
 
           return BlocProvider(
             blocs: [
-              Bloc((i) => HomeBloc(i.get<MissionRepository>(), i.get<QuizRepository>(),)),
+              Bloc((i) => HomeBloc(
+                    i.get<MissionRepository>(),
+                    i.get<QuizRepository>(),
+                  )),
               Bloc((i) => SignUpBloc(i.get<UserRepository>())),
               Bloc((i) => UserBloc(i.get<UserRepository>())),
               Bloc((i) => SignInBloc(i.get<UserRepository>())),
@@ -84,12 +88,16 @@ class _MyAppState extends State<MyApp> {
                     i.get<MissionService>(),
                     i.get<UserRepository>(),
                   )),
-              Dependency((i) =>
-                  UserRepository(i.get<UserService>(), user, snapshot.data)),
-              Dependency((i) => UserService(i.get<Dio>())),
-              Dependency((i) => QuizService(i.get<Dio>())),
-              Dependency((i) => MissionService(i.get<Dio>())),
-              Dependency((i) => Dio(BaseOptions(baseUrl: config.apiUrl))),
+              Dependency((i) => UserRepository(
+                    i.get<UserService>(),
+                    user,
+                    snapshot.data,
+                    i.get<DioRepository>(),
+                  )),
+              Dependency((i) => UserService(i.get<DioRepository>().dio)),
+              Dependency((i) => QuizService(i.get<DioRepository>().dio)),
+              Dependency((i) => MissionService(i.get<DioRepository>().dio)),
+              Dependency((i) => DioRepository()),
             ],
             child: MultiProvider(
               providers: [

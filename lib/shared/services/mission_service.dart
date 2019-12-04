@@ -5,7 +5,7 @@ class MissionService {
 
   MissionService(this.dio);
 
-  Future<Response> fetchMissions(int userId) {
+  Future<Response> fetchMissions(String userId) {
     return dio.get('/missions/public?user_id=$userId');
   }
 

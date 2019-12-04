@@ -16,13 +16,15 @@ class MissionRepository extends BlocBase {
 
   MissionRepository(this.missionService, this.userRepository);
 
-  fetchMissions() async {
-    final Response missionsReponse =
-        await missionService.fetchMissions(userRepository.user.id);
+  fetchMissions() {
+    userRepository.user.asyncMap((user) async {
+      final Response missionsReponse =
+          await missionService.fetchMissions(user.id);
 
-    _missionController.sink.add(List<Mission>.from(
-      missionsReponse.data.map((mission) => Mission.fromJson(mission)),
-    ));
+      _missionController.sink.add(List<Mission>.from(
+        missionsReponse.data.map((mission) => Mission.fromJson(mission)),
+      ));
+    });
   }
 
   Future<Mission> fetchSecretMission(String missionId) async {
