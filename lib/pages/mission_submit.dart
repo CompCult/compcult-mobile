@@ -1,37 +1,32 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:museu_vivo/shared/models/group.dart';
+import 'package:museu_vivo/shared/models/mission.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../shared/models/mission.dart';
 import 'mission_submit_bloc.dart';
 
 class MissionSubmit extends StatefulWidget {
   static const String routeName = '/mission-submit';
+  final Mission mission;
 
-  final Mission _mission;
-
-  MissionSubmit(this._mission);
+  MissionSubmit(this.mission);
 
   @override
   _MissionSubmitState createState() => _MissionSubmitState();
 }
 
 class _MissionSubmitState extends State<MissionSubmit> {
-  File _image;
-  String _text;
-  String _groupId;
   bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    int userId = BlocProvider.getBloc<MissionSubmitBloc>().user.id;
+    final MissionSubmitBloc missionSubmitBloc =
+        BlocProvider.getBloc<MissionSubmitBloc>();
 
     return Scaffold(
       appBar: AppBar(
@@ -49,133 +44,149 @@ class _MissionSubmitState extends State<MissionSubmit> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                Text(
-                  widget._mission.name,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
+                _buildTitle(missionSubmitBloc, widget.mission),
                 SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 100,
-                  child: SingleChildScrollView(
-                    child: Text(
-                      widget._mission.description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "SourceSansPro",
-                        fontSize: 16,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
-                ),
+                _buildDescription(missionSubmitBloc, widget.mission),
                 SizedBox(
                   height: 15,
                 ),
-                if (widget._mission.isGrupal)
-                  FutureBuilder(
-                    future: _getGroups(userId),
-                    builder: (_, snapshot) {
-                      if (!snapshot.hasData) return Container();
+                // if (widget._mission.isGrupal)
+                //   FutureBuilder(
+                //     future: _getGroups(userId),
+                //     builder: (_, snapshot) {
+                //       if (!snapshot.hasData) return Container();
 
-                      final Response response = snapshot.data;
+                //       final Response response = snapshot.data;
 
-                      final List<Group> groups = List<Group>.from(
-                          response.data.map((group) => Group.fromJson(group)));
+                //       final List<Group> groups = List<Group>.from(
+                //           response.data.map((group) => Group.fromJson(group)));
 
-                      return DropdownButton<String>(
-                        hint: Text('Selecione um grupo'),
-                        items: groups.map((Group group) {
-                          return DropdownMenuItem<String>(
-                            value: group.id.toString(),
-                            child: Text(group.name),
-                          );
-                        }).toList(),
-                        onChanged: (value) => setState(() => _groupId = value),
-                        value: _groupId,
-                      );
-                    },
-                  ),
-                SizedBox(
-                  height: 15,
-                ),
-                if (widget._mission.hasText)
-                  TextField(
-                    maxLines: 5,
-                    keyboardType: TextInputType.multiline,
-                    onChanged: (value) => _text = value,
-                    decoration: InputDecoration(
-                      alignLabelWithHint: true,
-                      labelText: "Resposta",
-                      labelStyle: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
-                      ),
-                      hintText: "Insira um texto...",
-                      hintStyle: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
-                      ),
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                if (widget._mission.hasImage)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      _flatButtonIcon(
-                          "Câmera", Icons.add_a_photo, _getImageFromCamera),
-                      _flatButtonIcon(
-                          "Galeria", Icons.wallpaper, _getImageFromGallery),
-                    ],
-                  ),
-                const SizedBox(
-                  height: 40,
-                ),
-                if (widget._mission.hasImage)
-                  Container(
-                    child: _image == null
-                        ? Text(
-                            "Nenhuma imagem selecionada...",
-                            style: TextStyle(
-                              fontFamily: "Poppins",
-                              color: Colors.red,
-                            ),
-                          )
-                        : Text(
-                            "Imagem carregada!",
-                            style: TextStyle(
-                              fontFamily: "Poppins",
-                              fontWeight: FontWeight.w700,
-                              color: Colors.green,
-                            ),
-                          ),
-                  ),
-                SizedBox(
-                  height: 40,
-                ),
+                //       return DropdownButton<String>(
+                //         hint: Text('Selecione um grupo'),
+                //         items: groups.map((Group group) {
+                //           return DropdownMenuItem<String>(
+                //             value: group.id.toString(),
+                //             child: Text(group.name),
+                //           );
+                //         }).toList(),
+                //         onChanged: (value) => setState(() => _groupId = value),
+                //         value: _groupId,
+                //       );
+                //     },
+                //   ),
+                SizedBox(height: 15),
+                if (widget.mission.hasText)
+                  _buildTextField(missionSubmitBloc),
+                if (widget.mission.hasImage)
+                  _buildImageField(missionSubmitBloc),
+                const SizedBox(height: 40),
+                if (widget.mission.hasImage)
+                  _buildImageValidator(missionSubmitBloc),
+                const SizedBox(height: 40),
               ],
             ),
           ],
         ),
       ),
-      bottomSheet: _buildButton("ENVIAR RESPOSTA", userId),
+      bottomSheet: _buildButton(context, "ENVIAR RESPOSTA", missionSubmitBloc),
     );
   }
 
-  Widget _buildButton(String label, int userId) {
+  Widget _buildImageValidator(MissionSubmitBloc missionSubmitBloc) {
+    return StreamBuilder(
+        stream: missionSubmitBloc.imageAnswer,
+        builder: (context, snapshot) {
+          return !snapshot.hasData
+              ? Text(
+                  "Nenhuma imagem selecionada...",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.red,
+                  ),
+                )
+              : Text(
+                  "Imagem carregada!",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w700,
+                    color: Colors.green,
+                  ),
+                );
+        });
+  }
+
+  Widget _buildImageField(MissionSubmitBloc missionSubmitBloc) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        _flatButtonIcon("Câmera", Icons.add_a_photo,
+            () => _getImageFromCamera(missionSubmitBloc)),
+        _flatButtonIcon("Galeria", Icons.wallpaper,
+            () => _getImageFromGallery(missionSubmitBloc)),
+      ],
+    );
+  }
+
+  Widget _buildTextField(MissionSubmitBloc missionSubmitBloc) {
+    return StreamBuilder<String>(
+        stream: missionSubmitBloc.textAnswer,
+        builder: (context, snapshot) {
+          return TextField(
+            maxLines: 5,
+            keyboardType: TextInputType.multiline,
+            onChanged: missionSubmitBloc.changeTextAnswer,
+            decoration: InputDecoration(
+              alignLabelWithHint: true,
+              labelText: "Resposta",
+              labelStyle: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+              ),
+              hintText: "Insira um texto...",
+              hintStyle: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+              ),
+              border: OutlineInputBorder(),
+            ),
+          );
+        });
+  }
+
+  Widget _buildDescription(
+      MissionSubmitBloc missionSubmitBloc, Mission mission) {
+    return Text(
+      mission.description,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontFamily: "SourceSansPro",
+        fontSize: 16,
+        color: Colors.black54,
+      ),
+    );
+  }
+
+  Widget _buildTitle(MissionSubmitBloc missionSubmitBloc, Mission mission) {
+    return Text(
+      mission.name,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontFamily: "Poppins",
+        fontWeight: FontWeight.w700,
+        color: Colors.black,
+        fontSize: 16,
+      ),
+    );
+  }
+
+  Widget _buildButton(
+      BuildContext context, String label, MissionSubmitBloc bloc) {
     return Container(
       height: 50,
-      alignment: Alignment.centerLeft,
       color: Theme.of(context).accentColor,
       child: SizedBox.expand(
         child: FlatButton(
@@ -193,38 +204,19 @@ class _MissionSubmitState extends State<MissionSubmit> {
                   ),
                   textAlign: TextAlign.left,
                 ),
-          // Aqui estarah a funcao para efetuar login. Por enquanto, está só uma validação de campos.
           onPressed: () async {
-            if (widget._mission.hasImage && _image == null ||
-                widget._mission.hasText && _text == null ||
-                widget._mission.isGrupal && _groupId == null) return;
-
             setState(() {
               _isLoading = true;
             });
 
-            final Dio dio = Provider.of<Dio>(context);
-
-            String base64;
-
-            if (widget._mission.hasImage) base64 = await _changeFormatImage();
-
             try {
-              await dio.post(
-                '/missions_answers',
-                data: {
-                  '_user': userId,
-                  '_mission': widget._mission.id,
-                  if (widget._mission.hasImage) 'image': base64,
-                  if (widget._mission.hasText) 'text_msg': _text,
-                  if (widget._mission.isGrupal) '_group': int.parse(_groupId),
-                },
-              );
-            } on DioError catch (e) {
-              print(e);
+              await bloc.createMissionAnswer(widget.mission);
+              Navigator.of(context).pop(true);
+            } catch (e) {
+              setState(() {
+                _isLoading = false;
+              });
             }
-
-            Navigator.of(context).pop(true);
           },
         ),
       ),
@@ -249,32 +241,20 @@ class _MissionSubmitState extends State<MissionSubmit> {
     );
   }
 
-  Future<dynamic> _getGroups(int userId) async {
+  Future<dynamic> _getGroups(String userId) async {
     final Dio dio = Provider.of<Dio>(context);
     Response response = await dio.get('/group_members/groups?_user=$userId');
 
     return response;
   }
 
-  Future _getImageFromCamera() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = image;
-    });
+  Future _getImageFromCamera(MissionSubmitBloc bloc) async {
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    bloc.changeImageAnswer(image);
   }
 
-  Future _getImageFromGallery() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
-    });
-  }
-
-  // Transforma em Base64
-  // Caso as imagens sejam muito grandes, é necessário usar um Future.
-  Future<String> _changeFormatImage() async {
-    List<int> imageBytes = await _image.readAsBytes();
-    String base64Image = base64Encode(imageBytes);
-    return base64Image;
+  Future _getImageFromGallery(MissionSubmitBloc bloc) async {
+    final image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    bloc.changeImageAnswer(image);
   }
 }

@@ -128,10 +128,14 @@ class _MyAppState extends State<MyApp> {
                   GamesPage.routeName: (_) => GamesPage(),
                   HomePage.routeName: (_) => HomePage(),
                   TeamsPage.routeName: (_) => TeamsPage(),
-                  MissionSubmit.routeName: (_) => MissionSubmit(),
                 },
                 onGenerateRoute: (settings) {
                   switch (settings.name) {
+                    case MissionSubmit.routeName:
+                      return MaterialPageRoute(
+                        builder: (_) => MissionSubmit(settings.arguments),
+                      );
+                      break;
                     case QuizSubmit.routeName:
                       return MaterialPageRoute(
                         builder: (_) => QuizSubmit(settings.arguments),

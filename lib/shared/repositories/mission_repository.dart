@@ -6,22 +6,22 @@ import 'package:museu_vivo/shared/services/mission_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MissionRepository extends BlocBase {
-  final MissionService missionService;
+  final MissionService _missionService;
   final UserRepository userRepository;
 
-  BehaviorSubject<List<Mission>> _missionController =
+  BehaviorSubject<List<Mission>> _missionsController =
       BehaviorSubject<List<Mission>>();
 
-  Observable<List<Mission>> get missions => _missionController.stream;
+  MissionRepository(this._missionService, this.userRepository);
 
-  MissionRepository(this.missionService, this.userRepository);
+  Observable<List<Mission>> get missions => _missionsController.stream;
 
   fetchMissions() {
     userRepository.user.listen((user) async {
       final Response missionsResponse =
-          await missionService.fetchMissions(user.id);
+          await _missionService.fetchMissions(user.id);
 
-      _missionController.sink.add(List<Mission>.from(
+      _missionsController.sink.add(List<Mission>.from(
         missionsResponse.data.map((mission) => Mission.fromJson(mission)),
       ));
     });
@@ -29,14 +29,21 @@ class MissionRepository extends BlocBase {
 
   Future<Mission> fetchSecretMission(String missionId) async {
     final Response missionsResponse =
-        await missionService.fetchSecretMission(missionId);
+        await _missionService.fetchSecretMission(missionId);
 
     return Mission.fromJson(missionsResponse.data[0]);
   }
 
+  Future createMissionAnswer(
+      String missionId, Map<String, dynamic> data) async {
+    userRepository.user.listen((user) async {
+      return await _missionService.createMissionAnswer(missionId, data);
+    });
+  }
+
   @override
   void dispose() {
-    _missionController.close();
+    _missionsController.close();
     super.dispose();
   }
 }

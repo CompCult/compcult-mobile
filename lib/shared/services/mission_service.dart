@@ -1,15 +1,23 @@
 import 'package:dio/dio.dart';
 
 class MissionService {
-  final Dio dio;
+  final Dio _dio;
 
-  MissionService(this.dio);
+  MissionService(this._dio);
 
   Future<Response> fetchMissions(String userId) {
-    return dio.get('/missions?answered=0');
+    return _dio.get('/missions?answered=0');
   }
 
   Future<Response> fetchSecretMission(String missionId) {
-    return dio.get('/missions?secret_code=$missionId');
+    return _dio.get('/missions?secret_code=$missionId');
+  }
+
+  Future<Response> createMissionAnswer(
+      String missionId, Map<String, dynamic> data) {
+    return _dio.post(
+      '/missions/$missionId/answers',
+      data: data,
+    );
   }
 }
