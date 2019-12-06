@@ -78,9 +78,9 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => SignInBloc(i.get<UserRepository>())),
               Bloc((i) => CoinsBloc(i.get<UserRepository>())),
               Bloc((i) => QuizzesBloc(i.get<QuizRepository>())),
-              Bloc((i) => QuizSubmitBloc(i.get<UserRepository>())),
+              Bloc((i) => QuizSubmitBloc(i.get<QuizRepository>())),
               Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
-              Bloc((i) => MissionSubmitBloc(i.get<UserRepository>())),
+              Bloc((i) => MissionSubmitBloc(i.get<MissionRepository>())),
               Bloc((i) => TeamsBloc(i.get<UserRepository>())),
             ],
             dependencies: [
@@ -128,14 +128,10 @@ class _MyAppState extends State<MyApp> {
                   GamesPage.routeName: (_) => GamesPage(),
                   HomePage.routeName: (_) => HomePage(),
                   TeamsPage.routeName: (_) => TeamsPage(),
+                  MissionSubmit.routeName: (_) => MissionSubmit(),
                 },
                 onGenerateRoute: (settings) {
                   switch (settings.name) {
-                    case MissionSubmit.routeName:
-                      return MaterialPageRoute(
-                        builder: (_) => MissionSubmit(settings.arguments),
-                      );
-                      break;
                     case QuizSubmit.routeName:
                       return MaterialPageRoute(
                         builder: (_) => QuizSubmit(settings.arguments),

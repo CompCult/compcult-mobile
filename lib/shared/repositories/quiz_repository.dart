@@ -6,18 +6,18 @@ import 'package:museu_vivo/shared/services/quiz_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class QuizRepository extends BlocBase {
-  final QuizService quizService;
+  final QuizService _quizService;
   final UserRepository userRepository;
 
   BehaviorSubject<List<Quiz>> _quizController = BehaviorSubject<List<Quiz>>();
 
   Observable<List<Quiz>> get quizzes => _quizController.stream;
 
-  QuizRepository(this.quizService, this.userRepository);
+  QuizRepository(this._quizService, this.userRepository);
 
   fetchQuizzes() {
     userRepository.user.listen((user) async {
-      final Response quizzesReponse = await quizService.fetchQuizzes(user.id);
+      final Response quizzesReponse = await _quizService.fetchQuizzes(user.id);
 
       _quizController.sink.add(List<Quiz>.from(
         quizzesReponse.data.map((quiz) => Quiz.fromJson(quiz)),
@@ -26,9 +26,13 @@ class QuizRepository extends BlocBase {
   }
 
   Future<Quiz> fetchSecretQuiz(String quizId) async {
-    final Response quizzesReponse = await quizService.fetchSecretQuiz(quizId);
+    final Response quizzesReponse = await _quizService.fetchSecretQuiz(quizId);
 
     return Quiz.fromJson(quizzesReponse.data[0]);
+  }
+
+  Future createQuizAnswer(String quizId, String answer) {
+    return _quizService.createQuizAnswer(quizId, answer);
   }
 
   @override

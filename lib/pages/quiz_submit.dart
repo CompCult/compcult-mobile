@@ -22,8 +22,6 @@ class _QuizSubmitState extends State<QuizSubmit> {
 
   @override
   Widget build(BuildContext context) {
-    final userId = BlocProvider.getBloc<QuizSubmitBloc>().user.id;
-
     return Scaffold(
       key: _scaffoldState,
       appBar: AppBar(
@@ -79,7 +77,7 @@ class _QuizSubmitState extends State<QuizSubmit> {
         ],
       ),
       // bottomNavigationBar: _buildButtonSubmit("ENVIAR RESPOSTA", userId),
-      bottomSheet: _buildButtonSubmit("ENVIAR RESPOSTA", userId),
+      bottomSheet: _buildButtonSubmit("ENVIAR RESPOSTA"),
     );
   }
 
@@ -159,8 +157,9 @@ class _QuizSubmitState extends State<QuizSubmit> {
     );
   }
 
-  Widget _buildButtonSubmit(String label, int userId) {
-    final Dio dio = Provider.of<Dio>(context);
+  Widget _buildButtonSubmit(String label) {
+    final QuizSubmitBloc quizSubmitBloc =
+        BlocProvider.getBloc<QuizSubmitBloc>();
 
     return Container(
       height: 50,
@@ -178,12 +177,9 @@ class _QuizSubmitState extends State<QuizSubmit> {
               ),
               textAlign: TextAlign.left,
             ),
-            onPressed: () {
-              dio.post('/quiz_answers', data: {
-                '_user': userId,
-                '_quiz': widget.quiz.id,
-                'answer': _alternative,
-              });
+            onPressed: () async {
+              await quizSubmitBloc.createQuizAnswer(
+                  widget.quiz.id, _alternative);
 
               Navigator.of(context).pop(true);
             }),
