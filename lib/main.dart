@@ -80,7 +80,8 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => QuizzesBloc(i.get<QuizRepository>())),
               Bloc((i) => QuizSubmitBloc(i.get<QuizRepository>())),
               Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
-              Bloc((i) => MissionSubmitBloc(i.get<MissionRepository>())),
+              Bloc((i) => MissionSubmitBloc(
+                  i.get<MissionRepository>(), i.get<UserRepository>())),
               Bloc((i) => TeamsBloc(i.get<UserRepository>())),
             ],
             dependencies: [

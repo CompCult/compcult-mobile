@@ -2,6 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:museu_vivo/shared/models/mission.dart';
+import 'package:museu_vivo/shared/models/user.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
@@ -52,33 +53,9 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 SizedBox(
                   height: 15,
                 ),
-                // if (widget._mission.isGrupal)
-                //   FutureBuilder(
-                //     future: _getGroups(userId),
-                //     builder: (_, snapshot) {
-                //       if (!snapshot.hasData) return Container();
-
-                //       final Response response = snapshot.data;
-
-                //       final List<Group> groups = List<Group>.from(
-                //           response.data.map((group) => Group.fromJson(group)));
-
-                //       return DropdownButton<String>(
-                //         hint: Text('Selecione um grupo'),
-                //         items: groups.map((Group group) {
-                //           return DropdownMenuItem<String>(
-                //             value: group.id.toString(),
-                //             child: Text(group.name),
-                //           );
-                //         }).toList(),
-                //         onChanged: (value) => setState(() => _groupId = value),
-                //         value: _groupId,
-                //       );
-                //     },
-                //   ),
+                if (widget.mission.isGrupal) _buildTeamField(missionSubmitBloc),
                 SizedBox(height: 15),
-                if (widget.mission.hasText)
-                  _buildTextField(missionSubmitBloc),
+                if (widget.mission.hasText) _buildTextField(missionSubmitBloc),
                 if (widget.mission.hasImage)
                   _buildImageField(missionSubmitBloc),
                 const SizedBox(height: 40),
@@ -92,6 +69,43 @@ class _MissionSubmitState extends State<MissionSubmit> {
       ),
       bottomSheet: _buildButton(context, "ENVIAR RESPOSTA", missionSubmitBloc),
     );
+  }
+
+  Widget _buildTeamField(MissionSubmitBloc bloc) {
+    return StreamBuilder<User>(
+        stream: bloc.user,
+        builder: (_, userSnapshot) {
+          if (!userSnapshot.hasData) return Container();
+          return FutureBuilder(
+            future: _getGroups(userSnapshot.data.id),
+            builder: (_, snapshot) {
+              if (!snapshot.hasData) return Container();
+
+              final Response response = snapshot.data;
+
+              final List<Group> groups = List<Group>.from(
+                  response.data.map((group) => Group.fromJson(group)));
+
+              var items = groups.map((Group group) {
+                return DropdownMenuItem<String>(
+                  value: group.id.toString(),
+                  child: Text(group.name),
+                );
+              }).toList();
+
+              return StreamBuilder<String>(
+                  stream: bloc.groupAnswer,
+                  builder: (context, groupSnapshot) {
+                    return DropdownButton<String>(
+                      hint: Text('Selecione um grupo'),
+                      items: items,
+                      onChanged: (value) => bloc.changeGroup(int.parse(value)),
+                      value: groupSnapshot.data,
+                    );
+                  });
+            },
+          );
+        });
   }
 
   Widget _buildImageValidator(MissionSubmitBloc missionSubmitBloc) {

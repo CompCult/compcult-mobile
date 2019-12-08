@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/home_page.dart';
 import 'package:museu_vivo/pages/sign_in_page.dart';
 import 'package:museu_vivo/pages/user_bloc.dart';
+import 'package:museu_vivo/shared/models/mission.dart';
 import 'package:museu_vivo/shared/models/user.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class _UserPageState extends State<UserPage> {
         title: StreamBuilder<User>(
             stream: bloc.user,
             builder: (context, snapshot) {
+              if (!snapshot.hasData) return Container();
               return Text(
                 'Olá, ${snapshot.data.name}!',
                 style: TextStyle(fontFamily: "Poppins", fontSize: 18),
@@ -41,23 +43,32 @@ class _UserPageState extends State<UserPage> {
           ),
         ],
       ),
-      body: Container(
-        color: Colors.white,
-        child: ListView(
-          padding: EdgeInsets.only(top: 30, left: 40, right: 40),
-          children: <Widget>[
-            _profilePicture(),
-            SizedBox(height: 30),
-            // _buildFormField("Nome", _nameController, false),
-            SizedBox(height: 10),
-            // _buildFormField("E-mail", _emailController, false),
-            SizedBox(height: 10),
-            // _buildFormField("Senha", _passwordController, true),
-            SizedBox(height: 15),
-            // _buildButton(userBloc.user.id),
-          ],
-        ),
-      ),
+      body: StreamBuilder<User>(
+          stream: bloc.user,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return Container();
+            return Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(top: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // padding: EdgeInsets.only(top: 30, left: 40, right: 40),
+                children: <Widget>[
+                  _profilePicture(),
+                  SizedBox(height: 30),
+                  Text(snapshot.data.name),
+                  // _buildFormField("Nome", _nameController, false),
+                  SizedBox(height: 10),
+                  Text(snapshot.data.email),
+                  // _buildFormField("E-mail", _emailController, false),
+                  SizedBox(height: 10),
+                  // _buildFormField("Senha", _passwordController, true),
+                  SizedBox(height: 15),
+                  // _buildButton(userBloc.user.id),
+                ],
+              ),
+            );
+          }),
     );
   }
 
