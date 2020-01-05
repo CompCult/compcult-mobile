@@ -1,11 +1,9 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:museu_vivo/pages/quizzes_bloc.dart';
 import 'package:museu_vivo/shared/components/secret_code_field.dart';
 import 'package:museu_vivo/shared/models/quiz.dart';
-import 'package:provider/provider.dart';
 
 import '../shared/components/item_card.dart';
 import '../shared/models/quiz.dart';
@@ -13,8 +11,7 @@ import '../shared/models/quiz.dart';
 class QuizzesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final int userId = BlocProvider.getBloc<QuizzesBloc>().user.id;
-    final Dio dio = Provider.of<Dio>(context);
+    final QuizzesBloc quizzesBloc = BlocProvider.getBloc<QuizzesBloc>();
 
     return SingleChildScrollView(
       child: Padding(
@@ -25,35 +22,20 @@ class QuizzesPage extends StatelessWidget {
               label: 'Código secreto do quiz',
               onSubmited: (quizId) async {
                 try {
-                  Response response =
-                      await dio.get('/quizzes/private?secret_code=$quizId');
-
-                  Quiz quiz = Quiz.fromJson(response.data);
+                  Quiz quiz = await quizzesBloc.getSecretQuiz(quizId);
 
                   Navigator.of(context)
                       .pushNamed(QuizSubmit.routeName, arguments: quiz);
-                } on DioError catch (e) {
-                  if (e.response.statusCode == 404) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Quiz não existe'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  } else if (e.response.statusCode == 401) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Esse quiz expirou'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
+                } catch (e) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text(e), backgroundColor: Colors.red),
+                  );
                 }
               },
             ),
             SizedBox(height: 15),
-            FutureBuilder(
-              future: _getQuizzes(userId, dio),
+            StreamBuilder<List<Quiz>>(
+              stream: quizzesBloc.quizzes,
               builder: (_, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
@@ -65,11 +47,7 @@ class QuizzesPage extends StatelessWidget {
                   );
                 }
 
-                final Response response = snapshot.data;
-
-                final List<Quiz> quizzes = List<Quiz>.from(
-                    response.data.map((quiz) => Quiz.fromJson(quiz)));
-                return _buildList(quizzes);
+                return _buildList(snapshot.data);
               },
             ),
           ],
@@ -92,9 +70,5 @@ class QuizzesPage extends StatelessWidget {
         );
       },
     );
-  }
-
-  Future<Response> _getQuizzes(int userId, Dio dio) {
-    return dio.get('/quizzes/public?user_id=$userId');
   }
 }

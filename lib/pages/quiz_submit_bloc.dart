@@ -1,11 +1,11 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:museu_vivo/shared/models/user.dart';
-import 'package:museu_vivo/shared/repositories/user_repository.dart';
+import 'package:museu_vivo/shared/repositories/quiz_repository.dart';
 
 class QuizSubmitBloc extends BlocBase {
-  final UserRepository userRepository;
+  final QuizRepository _quizRepository;
 
-  QuizSubmitBloc(this.userRepository);
+  QuizSubmitBloc(this._quizRepository);
 
-  User get user => userRepository.user;
+  Future createQuizAnswer(quizId, answer) =>
+      _quizRepository.createQuizAnswer(quizId, answer);
 }

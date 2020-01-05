@@ -43,6 +43,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                 return ListView.builder(
                   itemCount: _teamMembers.length,
                   itemBuilder: (BuildContext context, int index) {
+                    print(_teamMembers[index]);
                     return ListTile(
                       title: Text(_teamMembers[index]['_user']['name']),
                       leading: Icon(Icons.person),
@@ -106,7 +107,7 @@ class _TeamDetailsState extends State<TeamDetails> {
     return response;
   }
 
-  Future<dynamic> _deleteMemberGroup(int id) async {
+  Future<dynamic> _deleteMemberGroup(String id) async {
     final Dio dio = Provider.of<Dio>(context);
     Response response = await dio.delete('/group_members/$id');
     return response;

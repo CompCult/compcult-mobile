@@ -1,10 +1,14 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:museu_vivo/pages/ranking_bloc.dart';
+import 'package:museu_vivo/shared/models/user.dart';
 import 'package:provider/provider.dart';
 
 class Ranking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final RankingBloc rankingBloc = BlocProvider.getBloc<RankingBloc>();
     final Dio dio = Provider.of<Dio>(context);
 
     return Container(
@@ -36,7 +40,7 @@ class Ranking extends StatelessWidget {
           ),
           Divider(),
           FutureBuilder(
-            future: _getUsers(dio),
+            future: rankingBloc.fetchUsers(),
             builder: (_, snapshot) {
               if (!snapshot.hasData)
                 return Padding(
@@ -46,8 +50,7 @@ class Ranking extends StatelessWidget {
                   ),
                 );
 
-              final List users = snapshot.data.data;
-              users.sort((a, b) => b['points'] - a['points']);
+              final List<User> users = snapshot.data;
 
               return Expanded(
                 child: ListView.builder(
@@ -59,9 +62,9 @@ class Ranking extends StatelessWidget {
                         '#${i + 1}',
                         style: TextStyle(fontSize: 18),
                       ),
-                      title: Text(users[i]['name']),
+                      title: Text(users[i].name),
                       trailing: Text(
-                        '${users[i]['points']}',
+                        '${users[i].points}',
                         style: TextStyle(fontSize: 18),
                       ),
                     );

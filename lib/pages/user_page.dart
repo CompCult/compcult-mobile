@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/home_page.dart';
 import 'package:museu_vivo/pages/sign_in_page.dart';
 import 'package:museu_vivo/pages/user_bloc.dart';
+import 'package:museu_vivo/shared/models/mission.dart';
+import 'package:museu_vivo/shared/models/user.dart';
 import 'package:provider/provider.dart';
 
 class UserPage extends StatefulWidget {
@@ -12,50 +14,61 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  final _nameController = TextEditingController();
-  final _institutionController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  // final _nameController = TextEditingController();
+  // final _institutionController = TextEditingController();
+  // final _emailController = TextEditingController();
+  // final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    UserBloc userBloc = BlocProvider.getBloc<UserBloc>();
-    _nameController.text = userBloc.user.name;
-    _emailController.text = userBloc.user.email;
+    UserBloc bloc = BlocProvider.getBloc<UserBloc>();
+    // _nameController.text = userBloc.user.name;
+    // _emailController.text = userBloc.user.email;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Olá, ${userBloc.user.name}!',
-          style: TextStyle(fontFamily: "Poppins", fontSize: 18),
-        ),
+        title: StreamBuilder<User>(
+            stream: bloc.user,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Container();
+              return Text(
+                'Olá, ${snapshot.data.name}!',
+                style: TextStyle(fontFamily: "Poppins", fontSize: 18),
+              );
+            }),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.exit_to_app),
-            onPressed: () => logout(userBloc),
+            onPressed: () => logout(bloc),
           ),
         ],
       ),
-      body: WillPopScope(
-        onWillPop: _requestPop,
-        child: Container(
-          color: Colors.white,
-          child: ListView(
-            padding: EdgeInsets.only(top: 30, left: 40, right: 40),
-            children: <Widget>[
-              _profilePicture(),
-              SizedBox(height: 30),
-              _buildFormField("Nome", _nameController, false),
-              SizedBox(height: 10),
-              _buildFormField("E-mail", _emailController, false),
-              SizedBox(height: 10),
-              _buildFormField("Senha", _passwordController, true),
-              SizedBox(height: 15),
-              _buildButton(userBloc.user.id),
-            ],
-          ),
-        ),
-      ),
+      body: StreamBuilder<User>(
+          stream: bloc.user,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return Container();
+            return Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(top: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // padding: EdgeInsets.only(top: 30, left: 40, right: 40),
+                children: <Widget>[
+                  _profilePicture(),
+                  SizedBox(height: 30),
+                  Text(snapshot.data.name),
+                  // _buildFormField("Nome", _nameController, false),
+                  SizedBox(height: 10),
+                  Text(snapshot.data.email),
+                  // _buildFormField("E-mail", _emailController, false),
+                  SizedBox(height: 10),
+                  // _buildFormField("Senha", _passwordController, true),
+                  SizedBox(height: 15),
+                  // _buildButton(userBloc.user.id),
+                ],
+              ),
+            );
+          }),
     );
   }
 
@@ -120,6 +133,7 @@ class _UserPageState extends State<UserPage> {
       ),
       child: SizedBox.expand(
         child: FlatButton(
+          onPressed: () {},
           child: Text(
             "ATUALIZAR DADOS",
             style: TextStyle(
@@ -130,23 +144,23 @@ class _UserPageState extends State<UserPage> {
             ),
             textAlign: TextAlign.center,
           ),
-          onPressed: () => _updateUserData(userId),
+          // onPressed: () => _updateUserData(userId),
         ),
       ),
     );
   }
 
-  _updateUserData(int userId) {
-    final Dio dio = Provider.of<Dio>(context);
-    dio.put('/users/${userId}', data: {
-      if (_nameController.text.isNotEmpty) 'name': _nameController.text,
-      if (_institutionController.text.isNotEmpty)
-        'institution': _institutionController.text,
-      if (_emailController.text.isNotEmpty) 'email': _emailController.text,
-      if (_passwordController.text.isNotEmpty)
-        'password': _passwordController.text,
-    });
-  }
+  // _updateUserData(int userId) {
+  //   final Dio dio = Provider.of<Dio>(context);
+  //   dio.put('/users/${userId}', data: {
+  //     if (_nameController.text.isNotEmpty) 'name': _nameController.text,
+  //     if (_institutionController.text.isNotEmpty)
+  //       'institution': _institutionController.text,
+  //     if (_emailController.text.isNotEmpty) 'email': _emailController.text,
+  //     if (_passwordController.text.isNotEmpty)
+  //       'password': _passwordController.text,
+  //   });
+  // }
 
   Icon _iconFormFiel(String label) {
     switch (label.toLowerCase()) {
@@ -167,67 +181,67 @@ class _UserPageState extends State<UserPage> {
     }
   }
 
-  Future<bool> _requestPop() {
-    // Se o campo de nome for mudado (só por exemplo)...
-    if (_nameController.value != null) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            // Diálogo que aparece no centro da tela
-            return AlertDialog(
-              title: Text("Descartar alterações?"),
-              content: Text(
-                "Se você sair, as suas modificações serão perdidas.",
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontFamily: "SourceSansPro",
-                  fontSize: 15,
-                ),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text(
-                    "Sim",
-                    style: TextStyle(
-                      fontFamily: "SourceSansPro",
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context); // Remove o diálogo
-                    // Remove o diálogo e vai para HomePage()
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                        (_) => false);
-                  },
-                ),
-                FlatButton(
-                  child: Text(
-                    "Cancelar",
-                    style: TextStyle(
-                      fontFamily: "SourceSansPro",
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context); // Remove o diálogo
-                  },
-                ),
-              ],
-            );
-          });
-      // Não permite sair automaticamente da tela, caso pressione o botão "voltar".
-      Future.value(false);
-    } else {
-      //Permite sair automaticamente da tela pressionando o botão "voltar".
-      Future.value(true);
-    }
-  }
+  // Future<bool> _requestPop() {
+  //   // Se o campo de nome for mudado (só por exemplo)...
+  //   if (_nameController.value != null) {
+  //     showDialog(
+  //         context: context,
+  //         builder: (context) {
+  //           // Diálogo que aparece no centro da tela
+  //           return AlertDialog(
+  //             title: Text("Descartar alterações?"),
+  //             content: Text(
+  //               "Se você sair, as suas modificações serão perdidas.",
+  //               textAlign: TextAlign.justify,
+  //               style: TextStyle(
+  //                 fontFamily: "SourceSansPro",
+  //                 fontSize: 15,
+  //               ),
+  //             ),
+  //             actions: <Widget>[
+  //               FlatButton(
+  //                 child: Text(
+  //                   "Sim",
+  //                   style: TextStyle(
+  //                     fontFamily: "SourceSansPro",
+  //                     fontSize: 17,
+  //                     fontWeight: FontWeight.w700,
+  //                   ),
+  //                 ),
+  //                 onPressed: () {
+  //                   Navigator.pop(context); // Remove o diálogo
+  //                   // Remove o diálogo e vai para HomePage()
+  //                   Navigator.of(context).pushAndRemoveUntil(
+  //                       MaterialPageRoute(builder: (context) => HomePage()),
+  //                       (_) => false);
+  //                 },
+  //               ),
+  //               FlatButton(
+  //                 child: Text(
+  //                   "Cancelar",
+  //                   style: TextStyle(
+  //                     fontFamily: "SourceSansPro",
+  //                     fontSize: 17,
+  //                     fontWeight: FontWeight.w700,
+  //                   ),
+  //                 ),
+  //                 onPressed: () {
+  //                   Navigator.pop(context); // Remove o diálogo
+  //                 },
+  //               ),
+  //             ],
+  //           );
+  //         });
+  //     // Não permite sair automaticamente da tela, caso pressione o botão "voltar".
+  //     Future.value(false);
+  //   } else {
+  //     //Permite sair automaticamente da tela pressionando o botão "voltar".
+  //     Future.value(true);
+  //   }
+  // }
 
-  logout(UserBloc userBloc) {
-    userBloc.logout();
+  logout(UserBloc bloc) {
+    bloc.logout();
     Navigator.of(context).pushNamedAndRemoveUntil(
       SignInPage.routeName,
       (_) => false,

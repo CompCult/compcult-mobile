@@ -38,4 +38,11 @@ final Map<String, Config> _preConfigured = {
   ),
 };
 
-final Config config = _preConfigured['soloAmigo'];
+final Config config = Config(
+  name: 'Solo Amigo',
+  apiUrl: 'https://cine-porto-api.herokuapp.com',
+  assetsDirectoryName: 'solo_amigo',
+  coinName: 'Cults',
+  primaryColor: Color(0xff5e3003),
+  accentColor: Color(0xffce6b01),
+);

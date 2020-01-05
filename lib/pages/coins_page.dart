@@ -1,17 +1,26 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/config.dart';
 import 'package:museu_vivo/pages/ranking.dart';
-import 'package:provider/provider.dart';
+import 'package:museu_vivo/shared/models/user.dart';
 
 import 'coins_bloc.dart';
 
-class CoinsPage extends StatelessWidget {
+class CoinsPage extends StatefulWidget {
+  @override
+  _CoinsPageState createState() => _CoinsPageState();
+}
+
+class _CoinsPageState extends State<CoinsPage> {
+  @override
+  void initState() {
+    final coinsBloc = BlocProvider.getBloc<CoinsBloc>();
+    coinsBloc.updateUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final int userId = BlocProvider.getBloc<CoinsBloc>().user.id;
-
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -25,7 +34,7 @@ class CoinsPage extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 50),
-              child: _buildPoints(context, userId),
+              child: _buildPoints(context),
             ),
             Expanded(
               child: Ranking(),
@@ -36,7 +45,9 @@ class CoinsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPoints(BuildContext context, int userId) {
+  Widget _buildPoints(BuildContext context) {
+    CoinsBloc coinsBloc = BlocProvider.getBloc<CoinsBloc>();
+
     return Column(
       children: <Widget>[
         Row(
@@ -57,12 +68,12 @@ class CoinsPage extends StatelessWidget {
           ],
         ),
         SizedBox(height: 10),
-        FutureBuilder(
-          future: _getCoins(context, userId),
+        StreamBuilder<User>(
+          stream: coinsBloc.user,
           builder: (_, snapshot) {
             return snapshot.hasData
                 ? Text(
-                    '${snapshot.data['points']}',
+                    '${snapshot.data.points}',
                     style: TextStyle(
                       fontSize: 50,
                       color: Theme.of(context).primaryColor,
@@ -78,12 +89,5 @@ class CoinsPage extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  Future<dynamic> _getCoins(BuildContext context, int userId) async {
-    final Dio dio = Provider.of<Dio>(context);
-    Response response = await dio.get('/users/$userId');
-
-    return response.data;
   }
 }
