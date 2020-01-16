@@ -5,6 +5,14 @@ class UserService {
 
   UserService(this.dio);
 
+  Future<Response> fetchUser(String userId) {
+    return dio.get('/users/$userId');
+  }
+
+  Future<Response> fetchUsers() {
+    return dio.get('/users');
+  }
+
   Future<Response> authenticate(String email, String password) async {
     final Response response = await dio.post('/users/auth', data: {
       'email': email,

@@ -1,5 +1,5 @@
 class Mission {
-  int id;
+  String id;
   String endTime;
   String endMessage;
   bool hasGeolocation;
@@ -12,7 +12,7 @@ class Mission {
   String secretCode;
   int points;
   String description;
-  int user;
+  String user;
   String name;
   int v;
   String createdAt;

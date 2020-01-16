@@ -13,7 +13,7 @@ class TeamsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User user = BlocProvider.getBloc<TeamsBloc>().user;
+    TeamsBloc bloc = BlocProvider.getBloc<TeamsBloc>();
 
     return Scaffold(
       appBar: AppBar(
@@ -29,26 +29,32 @@ class TeamsPage extends StatelessWidget {
         },
       ),
       body: Center(
-        child: FutureBuilder(
-          future: _getGroups(context, user.id),
-          builder: (_, snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator();
-            }
+        child: StreamBuilder<User>(
+            stream: bloc.user,
+            builder: (context, userSnapshot) {
+              if (!userSnapshot.hasData) return Container();
 
-            final Response response = snapshot.data;
+              return FutureBuilder(
+                future: _getGroups(context, userSnapshot.data.id),
+                builder: (_, snapshot) {
+                  if (!snapshot.hasData) {
+                    return CircularProgressIndicator();
+                  }
 
-            final List<Group> groups = List<Group>.from(
-                response.data.map((group) => Group.fromJson(group)));
+                  final Response response = snapshot.data;
 
-            return _buildGroupList(context, groups);
-          },
-        ),
+                  final List<Group> groups = List<Group>.from(
+                      response.data.map((group) => Group.fromJson(group)));
+
+                  return _buildGroupList(context, groups);
+                },
+              );
+            }),
       ),
     );
   }
 
-  Future<dynamic> _getGroups(BuildContext context, int userId) async {
+  Future<dynamic> _getGroups(BuildContext context, String userId) async {
     final Dio dio = Provider.of<Dio>(context);
     Response response = await dio.get('/group_members/groups?_user=$userId');
 
@@ -88,7 +94,7 @@ class _TeamNameFormState extends State<TeamNameForm> {
 
   @override
   Widget build(BuildContext context) {
-    User user = BlocProvider.getBloc<TeamsBloc>().user;
+    TeamsBloc bloc = BlocProvider.getBloc<TeamsBloc>();
 
     return Expanded(
       child: Padding(
@@ -98,16 +104,21 @@ class _TeamNameFormState extends State<TeamNameForm> {
           children: <Widget>[
             _buildTeamForm(),
             SizedBox(height: 30),
-            RaisedButton(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'Criar Equipe',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
-                ),
-              ),
-              onPressed: () => _createGroup(context, _teamName, user),
-            ),
+            StreamBuilder<User>(
+                stream: bloc.user,
+                builder: (context, snapshot) {
+                  return RaisedButton(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        'Criar Equipe',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                    onPressed: () =>
+                        _createGroup(context, _teamName, snapshot.data),
+                  );
+                }),
             Spacer(),
           ],
         ),

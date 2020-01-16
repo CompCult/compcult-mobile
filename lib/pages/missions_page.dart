@@ -40,34 +40,21 @@ class _MissionsPageState extends State<MissionsPage> {
               label: 'Código secreto da missão',
               onSubmited: (missionId) async {
                 try {
-                  Response response =
-                      await dio.get('/missions/private?secret_code=$missionId');
-                  Mission mission = Mission.fromJson(response.data);
+                  Mission mission =
+                      await missionsBloc.getSecretMission(missionId);
 
                   Navigator.of(context)
                       .pushNamed(MissionSubmit.routeName, arguments: mission);
-                } on DioError catch (e) {
-                  if (e.response.statusCode == 404) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Missão não existe'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  } else if (e.response.statusCode == 401) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Essa missão expirou'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
+                } catch (e) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text(e), backgroundColor: Colors.red),
+                  );
                 }
               },
             ),
             SizedBox(height: 15),
-            FutureBuilder(
-              future: missionsBloc.missions,
+            StreamBuilder(
+              stream: missionsBloc.missions,
               builder: (_, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(

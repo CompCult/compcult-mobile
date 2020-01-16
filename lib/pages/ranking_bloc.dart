@@ -1,14 +1,11 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:museu_vivo/shared/models/user.dart';
 import 'package:museu_vivo/shared/repositories/user_repository.dart';
-import 'package:rxdart/rxdart.dart';
 
-class CoinsBloc extends BlocBase {
+class RankingBloc extends BlocBase {
   final UserRepository _userRepository;
 
-  CoinsBloc(this._userRepository);
+  RankingBloc(this._userRepository);
 
-  Observable<User> get user => _userRepository.user;
-
-  updateUser() => _userRepository.updateUser();
+  Future<List<User>> fetchUsers() => _userRepository.fetchUsers();
 }

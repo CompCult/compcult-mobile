@@ -3,10 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:museu_vivo/pages/coins_bloc.dart';
+import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/mission_submit_bloc.dart';
 import 'package:museu_vivo/pages/missions_bloc.dart';
 import 'package:museu_vivo/pages/quiz_submit_bloc.dart';
 import 'package:museu_vivo/pages/quizzes_bloc.dart';
+import 'package:museu_vivo/pages/ranking_bloc.dart';
 import 'package:museu_vivo/pages/sign_in_bloc.dart';
 import 'package:museu_vivo/pages/sign_up_bloc.dart';
 import 'package:museu_vivo/pages/team_details.dart';
@@ -15,9 +17,12 @@ import 'package:museu_vivo/pages/teams_bloc.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:museu_vivo/pages/user_bloc.dart';
 import 'package:museu_vivo/shared/models/user.dart';
+import 'package:museu_vivo/shared/repositories/dio_repository.dart';
 import 'package:museu_vivo/shared/repositories/mission_repository.dart';
+import 'package:museu_vivo/shared/repositories/quiz_repository.dart';
 import 'package:museu_vivo/shared/repositories/user_repository.dart';
 import 'package:museu_vivo/shared/services/mission_service.dart';
+import 'package:museu_vivo/shared/services/quiz_service.dart';
 import 'package:museu_vivo/shared/services/user_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -54,33 +59,50 @@ class _MyAppState extends State<MyApp> {
         if (snapshot.connectionState == ConnectionState.done) {
           final lastUser = snapshot.data.get(0);
           User user;
+          final DioRepository dioRepository = DioRepository();
 
           if (lastUser != null) {
             user = User.fromJson(Map<String, dynamic>.from(lastUser));
+            dioRepository.addToken(user.token);
           }
 
           return BlocProvider(
             blocs: [
+              Bloc((i) => HomeBloc(
+                    i.get<MissionRepository>(),
+                    i.get<QuizRepository>(),
+                  )),
+              Bloc((i) => RankingBloc(i.get<UserRepository>())),
               Bloc((i) => SignUpBloc(i.get<UserRepository>())),
               Bloc((i) => UserBloc(i.get<UserRepository>())),
               Bloc((i) => SignInBloc(i.get<UserRepository>())),
               Bloc((i) => CoinsBloc(i.get<UserRepository>())),
-              Bloc((i) => QuizzesBloc(i.get<UserRepository>())),
-              Bloc((i) => QuizSubmitBloc(i.get<UserRepository>())),
+              Bloc((i) => QuizzesBloc(i.get<QuizRepository>())),
+              Bloc((i) => QuizSubmitBloc(i.get<QuizRepository>())),
               Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
-              Bloc((i) => MissionSubmitBloc(i.get<UserRepository>())),
+              Bloc((i) => MissionSubmitBloc(
+                  i.get<MissionRepository>(), i.get<UserRepository>())),
               Bloc((i) => TeamsBloc(i.get<UserRepository>())),
             ],
             dependencies: [
+              Dependency((i) => QuizRepository(
+                    i.get<QuizService>(),
+                    i.get<UserRepository>(),
+                  )),
               Dependency((i) => MissionRepository(
                     i.get<MissionService>(),
                     i.get<UserRepository>(),
                   )),
-              Dependency((i) =>
-                  UserRepository(i.get<UserService>(), user, snapshot.data)),
-              Dependency((i) => UserService(i.get<Dio>())),
-              Dependency((i) => MissionService(i.get<Dio>())),
-              Dependency((i) => Dio(BaseOptions(baseUrl: config.apiUrl))),
+              Dependency((i) => UserRepository(
+                    i.get<UserService>(),
+                    user,
+                    snapshot.data,
+                    i.get<DioRepository>(),
+                  )),
+              Dependency((i) => UserService(i.get<DioRepository>().dio)),
+              Dependency((i) => QuizService(i.get<DioRepository>().dio)),
+              Dependency((i) => MissionService(i.get<DioRepository>().dio)),
+              Dependency((i) => dioRepository),
             ],
             child: MultiProvider(
               providers: [
