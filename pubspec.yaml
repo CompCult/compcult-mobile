@@ -34,6 +34,11 @@ dependencies:
   cupertino_icons: ^0.1.2
   flare_flutter: ^1.6.2
   flutter_launcher_icons: ^0.7.3
+  flip_card: ^0.4.4
+  mobx:
+  flutter_mobx:
+  build_runner:
+  mobx_codegen:
   
   # Testanto outra forma de acesso a camera
   # camera:
