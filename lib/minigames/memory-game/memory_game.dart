@@ -4,18 +4,18 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'controller_game.dart';
 
-int level = 8;
-
 class MemoryGamePage extends StatefulWidget {
-  final int size;
+  static const String routeName = '/memory-game';
 
-  const MemoryGamePage({Key key, this.size = 8});
+  const MemoryGamePage({Key key});
 
   @override
   _MemoryGamePageState createState() => _MemoryGamePageState();
 }
 
 class _MemoryGamePageState extends State<MemoryGamePage> {
+  // Quantidade dos cards
+  int size = 16;
   final controller = Controller();
 
   List<bool> cardFlips = [];
@@ -29,12 +29,12 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
   void initState() {
     super.initState();
 
-    for (var i = 0; i < widget.size; i++) {
+    for (var i = 0; i < this.size; i++) {
       cardStateKeys.add(GlobalKey<FlipCardState>());
       cardFlips.add(true);
     }
 
-    for (var i = 0; i < widget.size ~/ 2; i++) {
+    for (var i = 0; i < this.size ~/ 2; i++) {
       data.add(i.toString());
       data.add(i.toString());
     }
@@ -136,7 +136,7 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
   }
 
   showResult() {
-    controller.timer.cancel();
+    this.controller.endTime();
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -151,15 +151,11 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
         actions: <Widget>[
           FlatButton(
             onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => MemoryGamePage(
-                    size: level,
-                  ),
-                ),
-              );
               // Condição para os cards se multiplicarem até 24 cards
-              level <= 24 ? level *= 2 : level = level;
+              // size <= 24 ? size *= 2 : size = size;
+              this.controller.endTime();
+              Navigator.of(context).pop();
+              Navigator.of(context).popAndPushNamed(MemoryGamePage.routeName);
             },
             child: Text(
               "Continuar",
