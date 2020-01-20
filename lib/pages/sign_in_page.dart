@@ -179,6 +179,9 @@ class _SignInPageState extends State<SignInPage> {
           onPressed: () async {
             if (_formKey.currentState.validate()) {
               try {
+                setState(() {
+                  _isLoading = true;
+                });
                 await signInBloc.authenticate(
                     _emailController.text, _passwordController.text);
                 Navigator.of(context)
