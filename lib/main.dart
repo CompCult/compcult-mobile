@@ -2,6 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:museu_vivo/minigames/memory-game/memory_game.dart';
 import 'package:museu_vivo/pages/coins_bloc.dart';
 import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/mission_submit_bloc.dart';
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
             dioRepository.addToken(user.token);
           }
 
+          var routeName;
           return BlocProvider(
             blocs: [
               Bloc((i) => HomeBloc(
@@ -129,6 +131,7 @@ class _MyAppState extends State<MyApp> {
                   GamesPage.routeName: (_) => GamesPage(),
                   HomePage.routeName: (_) => HomePage(),
                   TeamsPage.routeName: (_) => TeamsPage(),
+                  MemoryGamePage.routeName: (_) => MemoryGamePage(),
                 },
                 onGenerateRoute: (settings) {
                   switch (settings.name) {
