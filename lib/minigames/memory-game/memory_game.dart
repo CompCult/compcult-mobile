@@ -109,13 +109,22 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
                       },
                       direction: FlipDirection.HORIZONTAL,
                       flipOnTouch: cardFlips[index],
-                      front: Container(
+                      front: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        elevation: 10,
                         margin: EdgeInsets.all(4),
-                        color: Colors.deepOrange.withOpacity(0.3),
+                        color: Color(0xff00036c),
+                        child: Image.asset('assets/leratos/memory_borda_cinza.png'),
                       ),
-                      back: Container(
+                      back: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        elevation: 10,
                         margin: EdgeInsets.all(4),
-                        color: Colors.deepOrange,
+                        color: Colors.blue,
                         child: Center(
                           child: Text(
                             "${data[index]}",

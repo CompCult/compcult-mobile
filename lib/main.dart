@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:museu_vivo/minigames/memory-game/memory_game.dart';
+import 'package:museu_vivo/minigames/memory-game/minigame_bloc.dart';
 import 'package:museu_vivo/pages/coins_bloc.dart';
 import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/mission_submit_bloc.dart';
@@ -19,9 +20,11 @@ import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:museu_vivo/pages/user_bloc.dart';
 import 'package:museu_vivo/shared/models/user.dart';
 import 'package:museu_vivo/shared/repositories/dio_repository.dart';
+import 'package:museu_vivo/shared/repositories/minigame_repository.dart';
 import 'package:museu_vivo/shared/repositories/mission_repository.dart';
 import 'package:museu_vivo/shared/repositories/quiz_repository.dart';
 import 'package:museu_vivo/shared/repositories/user_repository.dart';
+import 'package:museu_vivo/shared/services/minigame_service.dart';
 import 'package:museu_vivo/shared/services/mission_service.dart';
 import 'package:museu_vivo/shared/services/quiz_service.dart';
 import 'package:museu_vivo/shared/services/user_service.dart';
@@ -73,6 +76,7 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => HomeBloc(
                     i.get<MissionRepository>(),
                     i.get<QuizRepository>(),
+                    i.get<MinigameRepository>(),
                   )),
               Bloc((i) => RankingBloc(i.get<UserRepository>())),
               Bloc((i) => SignUpBloc(i.get<UserRepository>())),
@@ -84,6 +88,7 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
               Bloc((i) => MissionSubmitBloc(
                   i.get<MissionRepository>(), i.get<UserRepository>())),
+              Bloc((i) => MinigamesBloc(i.get<MinigameRepository>())),
               Bloc((i) => TeamsBloc(i.get<UserRepository>())),
             ],
             dependencies: [
@@ -95,6 +100,10 @@ class _MyAppState extends State<MyApp> {
                     i.get<MissionService>(),
                     i.get<UserRepository>(),
                   )),
+              Dependency((i) => MinigameRepository(
+                    i.get<MinigameService>(),
+                    i.get<UserRepository>(),
+                  )),
               Dependency((i) => UserRepository(
                     i.get<UserService>(),
                     user,
@@ -104,6 +113,7 @@ class _MyAppState extends State<MyApp> {
               Dependency((i) => UserService(i.get<DioRepository>().dio)),
               Dependency((i) => QuizService(i.get<DioRepository>().dio)),
               Dependency((i) => MissionService(i.get<DioRepository>().dio)),
+              Dependency((i) => MinigameService(i.get<DioRepository>().dio)),
               Dependency((i) => dioRepository),
             ],
             child: MultiProvider(
