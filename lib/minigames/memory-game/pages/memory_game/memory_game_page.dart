@@ -38,6 +38,8 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
       data.add(imageUrl);
       data.add(imageUrl);
     });
+
+    data.shuffle();
   }
 
   @override
