@@ -3,17 +3,18 @@ import 'dart:async';
 import 'package:mobx/mobx.dart';
 
 import 'memory_game_repository.dart';
-part 'controller_game.g.dart';
+part 'memory_game_controller.g.dart';
 
-class ControllerMemoryGame = ControllerBase with _$Controller;
+class MemoryGameController = _MemoryGameControllerBase
+    with _$MemoryGameController;
 
-abstract class ControllerBase with Store {
+abstract class _MemoryGameControllerBase with Store {
   MemoryGameRepository _minigameRepository;
   Timer timer;
-  ControllerBase(this._minigameRepository);
+  _MemoryGameControllerBase(this._minigameRepository);
 
-  Future getMemoryGames(){
-     return _minigameRepository.fetchSecretMemoryGame('YUMr2E');
+  Future getMemoryGames() {
+    return _minigameRepository.fetchSecretMemoryGame('YUMr2E');
   }
 
   @observable

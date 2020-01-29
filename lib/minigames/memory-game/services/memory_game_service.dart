@@ -5,12 +5,12 @@ class MemoryGameService {
 
   MemoryGameService(this._dio);
 
-  Future<Response> fetchMemoryGames(String userId) {
+  Future<Response> getAll() {
     return _dio.get('/minigames/memories?answered=0');
   }
 
-  Future<Response> fetchSecretMemoryGame(String memoryGameId) {
-    return _dio.get('/minigames/memories?secret_code=$memoryGameId');
+  Future<Response> getSecret(String secretCode) {
+    return _dio.get('/minigames/memories?secret_code=$secretCode');
   }
 
   Future<Response> createMemoryGameAnswer(

@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:museu_vivo/minigames/memory-game/memory_game.dart';
-import 'package:museu_vivo/minigames/memory-game/minigame_bloc.dart';
 import 'package:museu_vivo/pages/coins_bloc.dart';
 import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/mission_submit_bloc.dart';
@@ -28,7 +27,6 @@ import 'package:museu_vivo/shared/services/quiz_service.dart';
 import 'package:museu_vivo/shared/services/user_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'minigames/memory-game/controller_game.dart';
 import 'minigames/memory-game/memory_game_repository.dart';
 import 'minigames/memory-game/memory_game_service.dart';
 import 'pages/home_page.dart';
@@ -88,9 +86,7 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
               Bloc((i) => MissionSubmitBloc(
                   i.get<MissionRepository>(), i.get<UserRepository>())),
-              Bloc((i) => MemoryGamesBloc(i.get<MemoryGameRepository>())),
               Bloc((i) => TeamsBloc(i.get<UserRepository>())),
-              Bloc((i) => ControllerMemoryGame(i.get<MemoryGameRepository>()))
             ],
             dependencies: [
               Dependency((i) => QuizRepository(

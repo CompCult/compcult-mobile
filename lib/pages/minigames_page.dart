@@ -1,10 +1,5 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:dio/dio.dart';
 import "package:flutter/material.dart";
-import 'package:museu_vivo/minigames/memory-game/memory_game.dart';
-import 'package:museu_vivo/minigames/memory-game/memory_games_pages.dart';
-import 'package:museu_vivo/shared/components/secret_code_field.dart';
-import 'package:provider/provider.dart';
+import 'package:museu_vivo/minigames/memory-game/pages/memory_game_dashboard/memory_game_dashboard_module.dart';
 
 class MiniGames extends StatefulWidget {
   @override
@@ -14,7 +9,6 @@ class MiniGames extends StatefulWidget {
 class _MiniGamesState extends State<MiniGames> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Minigames"),
@@ -33,7 +27,7 @@ class _MiniGamesState extends State<MiniGames> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MemoryGamesPage(),
+                    builder: (context) => MemoryGameDashboardModule(),
                   ),
                 );
               },
