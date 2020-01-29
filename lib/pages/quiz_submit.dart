@@ -1,9 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/quiz_submit_bloc.dart';
 import 'package:museu_vivo/shared/models/quiz.dart';
-import 'package:provider/provider.dart';
 
 class QuizSubmit extends StatefulWidget {
   static const String routeName = '/quiz-submission';

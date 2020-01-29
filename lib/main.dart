@@ -2,7 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:museu_vivo/minigames/memory-game/memory_game.dart';
+import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_module.dart';
 import 'package:museu_vivo/pages/coins_bloc.dart';
 import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/mission_submit_bloc.dart';
@@ -27,8 +27,6 @@ import 'package:museu_vivo/shared/services/quiz_service.dart';
 import 'package:museu_vivo/shared/services/user_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'minigames/memory-game/memory_game_repository.dart';
-import 'minigames/memory-game/memory_game_service.dart';
 import 'pages/home_page.dart';
 import 'pages/games_page.dart';
 import 'pages/sign_in_page.dart';
@@ -68,13 +66,11 @@ class _MyAppState extends State<MyApp> {
             dioRepository.addToken(user.token);
           }
 
-          var routeName;
           return BlocProvider(
             blocs: [
               Bloc((i) => HomeBloc(
                     i.get<MissionRepository>(),
                     i.get<QuizRepository>(),
-                    i.get<MemoryGameRepository>(),
                   )),
               Bloc((i) => RankingBloc(i.get<UserRepository>())),
               Bloc((i) => SignUpBloc(i.get<UserRepository>())),
@@ -97,10 +93,6 @@ class _MyAppState extends State<MyApp> {
                     i.get<MissionService>(),
                     i.get<UserRepository>(),
                   )),
-              Dependency((i) => MemoryGameRepository(
-                    i.get<MemoryGameService>(),
-                    i.get<UserRepository>(),
-                  )),
               Dependency((i) => UserRepository(
                     i.get<UserService>(),
                     user,
@@ -110,7 +102,6 @@ class _MyAppState extends State<MyApp> {
               Dependency((i) => UserService(i.get<DioRepository>().dio)),
               Dependency((i) => QuizService(i.get<DioRepository>().dio)),
               Dependency((i) => MissionService(i.get<DioRepository>().dio)),
-              Dependency((i) => MemoryGameService(i.get<DioRepository>().dio)),
               Dependency((i) => dioRepository),
             ],
             child: MultiProvider(
@@ -138,10 +129,14 @@ class _MyAppState extends State<MyApp> {
                   GamesPage.routeName: (_) => GamesPage(),
                   HomePage.routeName: (_) => HomePage(),
                   TeamsPage.routeName: (_) => TeamsPage(),
-                  MemoryGamePage.routeName: (_) => MemoryGamePage(),
                 },
                 onGenerateRoute: (settings) {
                   switch (settings.name) {
+                    case MemoryGameModule.routeName:
+                      return MaterialPageRoute(
+                        builder: (_) => MemoryGameModule(settings.arguments),
+                      );
+                      break;
                     case MissionSubmit.routeName:
                       return MaterialPageRoute(
                         builder: (_) => MissionSubmit(settings.arguments),

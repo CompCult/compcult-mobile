@@ -1,8 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/sign_in_bloc.dart';
-import 'package:provider/provider.dart';
 
 import 'home_page.dart';
 import 'reset_password_page.dart';
@@ -197,20 +195,5 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
-  }
-
-  Future<dynamic> _auth() async {
-    final Dio dio = Provider.of<Dio>(context);
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    final Response response = await dio.post('/users/auth', data: {
-      'email': _emailController.text,
-      'password': _passwordController.text,
-    });
-
-    return response.data;
   }
 }

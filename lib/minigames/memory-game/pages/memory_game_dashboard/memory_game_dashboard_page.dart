@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:museu_vivo/minigames/memory-game/models/memory_game.dart';
+import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_module.dart';
 
 import 'memory_game_dashboard_controller.dart';
 import 'memory_game_dashboard_module.dart';
@@ -56,7 +57,8 @@ class _MemoryGameDashboardPageState extends State<MemoryGameDashboardPage> {
               contentPadding: EdgeInsets.symmetric(vertical: 10),
               title: Text(memoryGame.title),
               trailing: Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () => Navigator.of(context)
+                  .pushNamed(MemoryGameModule.routeName, arguments: memoryGame),
             ),
             Divider(height: 0),
           ],

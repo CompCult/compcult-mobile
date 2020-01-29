@@ -1,25 +1,22 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import 'memory_game_controller.dart';
+import 'package:museu_vivo/minigames/memory-game/models/memory_game.dart';
+import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_controller.dart';
+import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_module.dart';
 
 class MemoryGamePage extends StatefulWidget {
   static const String routeName = '/memory-game';
 
-  final List<String> images;
+  final MemoryGame memoryGame;
 
-  const MemoryGamePage({Key key, this.images});
+  const MemoryGamePage(this.memoryGame);
   @override
   _MemoryGamePageState createState() => _MemoryGamePageState();
 }
 
 class _MemoryGamePageState extends State<MemoryGamePage> {
-  // Quantidade dos cards
-  int size = 16;
-
-  final controller = BlocProvider.getBloc<MemoryGameController>();
+  final controller = MemoryGameModule.to.getBloc<MemoryGameController>();
 
   List<bool> cardFlips = [];
   List<String> data = [];
@@ -32,12 +29,12 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
   void initState() {
     super.initState();
 
-    for (var i = 0; i < this.size; i++) {
+    for (var i = 0; i < widget.memoryGame.images.length * 2; i++) {
       cardStateKeys.add(GlobalKey<FlipCardState>());
       cardFlips.add(true);
     }
 
-    widget.images.forEach((imageUrl) {
+    widget.memoryGame.images.forEach((imageUrl) {
       data.add(imageUrl);
       data.add(imageUrl);
     });
@@ -127,7 +124,10 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
                         margin: EdgeInsets.all(4),
                         color: Colors.blue,
                         child: Center(
-                          child: Image.network(data[index]),
+                          child: Image.network(
+                            data[index],
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -158,11 +158,9 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
         actions: <Widget>[
           FlatButton(
             onPressed: () {
-              // Condição para os cards se multiplicarem até 24 cards
-              // size <= 24 ? size *= 2 : size = size;
               this.controller.endTime();
               Navigator.of(context).pop();
-              Navigator.of(context).popAndPushNamed(MemoryGamePage.routeName);
+              Navigator.of(context).pop();
             },
             child: Text(
               "Continuar",
