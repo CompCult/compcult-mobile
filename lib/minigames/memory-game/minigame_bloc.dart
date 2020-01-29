@@ -1,19 +1,21 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:museu_vivo/shared/models/minigame.dart';
-import 'package:museu_vivo/shared/repositories/minigame_repository.dart';
+import 'package:museu_vivo/minigames/memory-game/memory.dart';
+import 'package:museu_vivo/minigames/memory-game/memory_game_repository.dart';
+
+
 import 'package:rxdart/rxdart.dart';
 import 'package:dio/dio.dart';
 
-class MinigamesBloc extends BlocBase {
-  final MinigameRepository _minigameRepository;
+class MemoryGamesBloc extends BlocBase {
+  final MemoryGameRepository _memoryGameRepository;
 
-  MinigamesBloc(this._minigameRepository);
+  MemoryGamesBloc(this._memoryGameRepository);
 
-  Observable<List<Minigame>> get missions => _minigameRepository.minigames;
+  Observable<List<MemoryGame>> get memoryGames => _memoryGameRepository.memorygames;
 
-  Future<Minigame> getSecretMinigame(String minigameId) async {
+  Future<MemoryGame> getSecretMemoryGame(String memoryGameId) async {
     try {
-      return await _minigameRepository.fetchSecretMinigame(minigameId);
+      return await _memoryGameRepository.fetchSecretMemoryGame(memoryGameId);
     } on DioError catch (e) {
       final statusCode = e.response.statusCode;
       String errorMessage = "Erro no servidor";

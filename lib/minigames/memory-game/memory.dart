@@ -1,4 +1,4 @@
-class Minigame{
+class MemoryGame{
   String id;
   String title;
   String description;
@@ -6,12 +6,12 @@ class Minigame{
   bool isPublic;
   String secretCode;
   List<String> users;
-  List<String> images;
+  List images;
   String user; 
   String createdAt;
   String updatedAt;
   
-  Minigame(
+  MemoryGame(
     { this.id,  
       this.title,
       this.description,
@@ -25,14 +25,14 @@ class Minigame{
       this.updatedAt
     });
 
-  Minigame.fromJson(Map<String, dynamic> json) {
+  MemoryGame.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     title = json['title'];
     description = json['description'];
     points = json['points'];
     isPublic = json['is_public'];
     secretCode = json['secret_code'];
-    users = json['users'];
+    /*users = json['users'];*/
     images = json['images'];
     user = json['_user'];
     createdAt = json['createdAt'];

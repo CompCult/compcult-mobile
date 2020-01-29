@@ -2,9 +2,8 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import "package:flutter/material.dart";
 import 'package:museu_vivo/minigames/memory-game/memory_game.dart';
-import 'package:museu_vivo/minigames/memory-game/minigame_bloc.dart';
+import 'package:museu_vivo/minigames/memory-game/memory_games_pages.dart';
 import 'package:museu_vivo/shared/components/secret_code_field.dart';
-import 'package:museu_vivo/shared/models/minigame.dart';
 import 'package:provider/provider.dart';
 
 class MiniGames extends StatefulWidget {
@@ -15,9 +14,6 @@ class MiniGames extends StatefulWidget {
 class _MiniGamesState extends State<MiniGames> {
   @override
   Widget build(BuildContext context) {
-    
-    final Dio dio = Provider.of<Dio>(context);
-    final MinigamesBloc minigamesBloc = BlocProvider.getBloc<MinigamesBloc>();
 
     return Scaffold(
       appBar: AppBar(
@@ -28,24 +24,6 @@ class _MiniGamesState extends State<MiniGames> {
         child: Column(
           children: <Widget>[
             SizedBox(height: 15),
-            SecretCodeField(
-              label: 'Código secreto da missão',
-              onSubmited: (minigameId) async {
-                try {
-                  Minigame minigame =
-                      await minigamesBloc.getSecretMinigame(minigameId);
-
-                  /*Navigator.of(context)
-                      .pushNamed(MinigameSubmit.routeName, arguments:minigame);*/
-                      
-                } catch (e) {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text(e), backgroundColor: Colors.red),
-                  );
-                }
-              },
-            ),
-            SizedBox(height: 15),
             ListTile(
               title: Text("Jogo da Memória"),
               trailing: Icon(Icons.keyboard_arrow_right),
@@ -55,7 +33,7 @@ class _MiniGamesState extends State<MiniGames> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MemoryGamePage(),
+                    builder: (context) => MemoryGamesPage(),
                   ),
                 );
               },

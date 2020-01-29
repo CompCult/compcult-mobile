@@ -1,14 +1,17 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 
 import 'controller_game.dart';
 
 class MemoryGamePage extends StatefulWidget {
   static const String routeName = '/memory-game';
 
-  const MemoryGamePage({Key key});
-
+  final List<String> images;
+  
+  const MemoryGamePage({Key key, this.images});
   @override
   _MemoryGamePageState createState() => _MemoryGamePageState();
 }
@@ -16,7 +19,8 @@ class MemoryGamePage extends StatefulWidget {
 class _MemoryGamePageState extends State<MemoryGamePage> {
   // Quantidade dos cards
   int size = 16;
-  final controller = Controller();
+  
+  final controller = BlocProvider.getBloc<ControllerMemoryGame>();
 
   List<bool> cardFlips = [];
   List<String> data = [];
@@ -34,11 +38,12 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
       cardFlips.add(true);
     }
 
-    for (var i = 0; i < this.size ~/ 2; i++) {
-      data.add(i.toString());
-      data.add(i.toString());
-    }
-    data.shuffle();
+   widget.images.forEach((imageUrl){
+     data.add(imageUrl);
+     data.add(imageUrl);
+   });
+   
+    
   }
 
   @override
@@ -50,99 +55,98 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
   @override
   Widget build(BuildContext context) {
     controller.startTimer();
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 50,
-                  bottom: 30,
-                ),
-                child: Center(
-                  child: Observer(
-                    builder: (_) {
-                      return Text(
-                        "Tempo: ${controller.time}",
-                        style: Theme.of(context).textTheme.display1,
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Theme(
-                data: ThemeData.dark(),
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
+        return Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 50,
+                      bottom: 30,
                     ),
-                    // Itens da grade do jogo da memória (flip cards)
-                    itemBuilder: (context, index) => FlipCard(
-                      key: cardStateKeys[index],
-                      onFlip: () {
-                        if (!flip) {
-                          flip = true;
-                          previousIndex = index;
-                        } else {
-                          flip = false;
-                          if (previousIndex != index) {
-                            if (data[previousIndex] != data[index]) {
-                              cardStateKeys[previousIndex]
-                                  .currentState
-                                  .toggleCard();
+                    child: Center(
+                      child: Observer(
+                        builder: (_) {
+                          return Text(
+                            "Tempo: ${controller.time}",
+                            style: Theme.of(context).textTheme.display1,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Theme(
+                    data: ThemeData.dark(),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                        ),
+                        // Itens da grade do jogo da memória (flip cards)
+                        itemBuilder: (context, index) => FlipCard(
+                          key: cardStateKeys[index],
+                          onFlip: () {
+                            if (!flip) {
+                              flip = true;
                               previousIndex = index;
                             } else {
-                              cardFlips[previousIndex] = false;
-                              cardFlips[index] = false;
+                              flip = false;
+                              if (previousIndex != index) {
+                                if (data[previousIndex] != data[index]) {
+                                  cardStateKeys[previousIndex]
+                                      .currentState
+                                      .toggleCard();
+                                  previousIndex = index;
+                                } else {
+                                  cardFlips[previousIndex] = false;
+                                  cardFlips[index] = false;
 
-                              if (cardFlips.every((test) => test == false)) {
-                                showResult();
+                                  if (cardFlips.every((test) => test == false)) {
+                                    showResult();
+                                  }
+                                }
                               }
                             }
-                          }
-                        }
-                      },
-                      direction: FlipDirection.HORIZONTAL,
-                      flipOnTouch: cardFlips[index],
-                      front: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        elevation: 10,
-                        margin: EdgeInsets.all(4),
-                        color: Color(0xff00036c),
-                        child: Image.asset('assets/leratos/memory_borda_cinza.png'),
-                      ),
-                      back: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        elevation: 10,
-                        margin: EdgeInsets.all(4),
-                        color: Colors.blue,
-                        child: Center(
-                          child: Text(
-                            "${data[index]}",
-                            style: Theme.of(context).textTheme.display1,
+                          },
+                          direction: FlipDirection.HORIZONTAL,
+                          flipOnTouch: cardFlips[index],
+                          front: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            elevation: 10,
+                            margin: EdgeInsets.all(4),
+                            color: Color(0xff00036c),
+                            child: Image.asset('assets/leratos/memory_borda_cinza.png'),
+                          ),
+                          back: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            elevation: 10,
+                            margin: EdgeInsets.all(4),
+                            color: Colors.blue,
+                            child: Center(
+                              child: Image.network(data[index]),
+                    
+                            ),
                           ),
                         ),
+                        itemCount: data.length,
                       ),
                     ),
-                    itemCount: data.length,
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
+        );
+      }
+  
 
   showResult() {
     this.controller.endTime();
