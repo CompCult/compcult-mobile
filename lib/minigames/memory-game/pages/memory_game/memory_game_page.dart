@@ -5,6 +5,9 @@ import 'package:museu_vivo/minigames/memory-game/models/memory_game.dart';
 import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_controller.dart';
 import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_module.dart';
 
+import '../memory_game_dashboard/memory_game_dashboard_controller.dart';
+import '../memory_game_dashboard/memory_game_dashboard_module.dart';
+
 class MemoryGamePage extends StatefulWidget {
   static const String routeName = '/memory-game';
 
@@ -17,6 +20,8 @@ class MemoryGamePage extends StatefulWidget {
 
 class _MemoryGamePageState extends State<MemoryGamePage> {
   final controller = MemoryGameModule.to.getBloc<MemoryGameController>();
+   final controllerDashBoard =
+      MemoryGameDashboardModule.to.getBloc<MemoryGameDashboardController>();
 
   List<bool> cardFlips = [];
   List<String> data = [];
@@ -161,6 +166,7 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
           FlatButton(
             onPressed: () {
               this.controller.endTime();
+              this.controllerDashBoard.createMemoryGameAnswer(widget.memoryGame);
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             },

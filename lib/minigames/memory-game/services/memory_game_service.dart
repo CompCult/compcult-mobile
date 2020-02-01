@@ -14,10 +14,10 @@ class MemoryGameService {
   }
 
   Future<Response> createMemoryGameAnswer(
-      String memoryGameId, Map<String, dynamic> data) {
+      String memoryGameId) {
     return _dio.post(
       '/minigames/memories/:$memoryGameId/answers',
-      data: data,
+      
     );
   }
 }

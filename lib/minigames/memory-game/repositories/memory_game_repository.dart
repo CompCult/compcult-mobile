@@ -3,6 +3,9 @@ import 'package:mobx/mobx.dart';
 import 'package:museu_vivo/minigames/memory-game/models/memory_game.dart';
 import 'package:museu_vivo/minigames/memory-game/services/memory_game_service.dart';
 
+import '../../../shared/repositories/user_repository.dart';
+import '../models/memory_game.dart';
+
 part 'memory_game_repository.g.dart';
 
 class MemoryGameRepository = _MemoryGameRepositoryBase
@@ -24,6 +27,22 @@ abstract class _MemoryGameRepositoryBase with Store {
     memoryGames.clear();
     memoryGames.addAll(memoryGamesList);
   }
+
+
+  @action
+  Future fetchSecretMemoryGame(String memoryGameId) async {
+     final Response memoryGamesResponse =
+         await _memoryGameService.getSecret(memoryGameId);
+
+     return MemoryGame.fromJson(memoryGamesResponse.data[0]);
+   }
+
+  @action 
+  Future createMemoryGameAnswer(
+      String memoryGameId) async {
+          return await _memoryGameService.createMemoryGameAnswer(memoryGameId);
+  }
+
 }
 
 // class MemoryGameRepository extends BlocBase {
