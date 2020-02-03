@@ -1,4 +1,4 @@
-package net.compcult.soloamigocompcult
+package net.compcult.leratoscompcult
 
 import android.os.Bundle
 

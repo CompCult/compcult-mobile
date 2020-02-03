@@ -1,10 +1,8 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:museu_vivo/pages/missions_bloc.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
 import 'package:museu_vivo/shared/components/secret_code_field.dart';
-import 'package:provider/provider.dart';
 
 import '../shared/components/item_card.dart';
 import './mission_submit.dart';
@@ -18,8 +16,6 @@ class MissionsPage extends StatefulWidget {
 class _MissionsPageState extends State<MissionsPage> {
   @override
   Widget build(BuildContext context) {
-    final Dio dio = Provider.of<Dio>(context);
-
     final MissionsBloc missionsBloc = BlocProvider.getBloc<MissionsBloc>();
 
     return SingleChildScrollView(

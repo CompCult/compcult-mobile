@@ -1,6 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/home_bloc.dart';
+import 'package:museu_vivo/pages/minigames_page.dart';
 import 'package:museu_vivo/pages/user_page.dart';
 
 import '../config.dart';
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     // DashboardPage(),
     CoinsPage(),
     GamesPage(),
+    MiniGames(),
     UserPage(),
   ];
 
@@ -63,6 +65,11 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.collections_bookmark),
             title: Text('Atividades'),
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.games),
+            title: Text('Minijogos'),
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(

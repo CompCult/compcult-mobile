@@ -1,15 +1,12 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/ranking_bloc.dart';
 import 'package:museu_vivo/shared/models/user.dart';
-import 'package:provider/provider.dart';
 
 class Ranking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RankingBloc rankingBloc = BlocProvider.getBloc<RankingBloc>();
-    final Dio dio = Provider.of<Dio>(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -76,9 +73,5 @@ class Ranking extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<Response> _getUsers(Dio dio) {
-    return dio.get('/users');
   }
 }

@@ -2,6 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_module.dart';
 import 'package:museu_vivo/pages/coins_bloc.dart';
 import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/mission_submit_bloc.dart';
@@ -26,7 +27,6 @@ import 'package:museu_vivo/shared/services/quiz_service.dart';
 import 'package:museu_vivo/shared/services/user_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-
 import 'pages/home_page.dart';
 import 'pages/games_page.dart';
 import 'pages/sign_in_page.dart';
@@ -132,6 +132,11 @@ class _MyAppState extends State<MyApp> {
                 },
                 onGenerateRoute: (settings) {
                   switch (settings.name) {
+                    case MemoryGameModule.routeName:
+                      return MaterialPageRoute(
+                        builder: (_) => MemoryGameModule(settings.arguments),
+                      );
+                      break;
                     case MissionSubmit.routeName:
                       return MaterialPageRoute(
                         builder: (_) => MissionSubmit(settings.arguments),
