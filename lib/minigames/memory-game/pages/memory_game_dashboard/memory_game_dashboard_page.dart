@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:museu_vivo/minigames/memory-game/models/memory_game.dart';
 import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_module.dart';
 
+import '../../../../shared/components/item_card.dart';
 import '../../../../shared/components/secret_code_field.dart';
 import '../../models/memory_game.dart';
 import 'memory_game_dashboard_controller.dart';
