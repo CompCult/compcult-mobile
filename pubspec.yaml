@@ -34,6 +34,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   flare_flutter: ^1.6.2
   flutter_launcher_icons: ^0.7.3
+  geolocator: ^5.2.1
+  geocoder: ^0.2.1
   
   # Testanto outra forma de acesso a camera
   # camera:
