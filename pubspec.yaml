@@ -37,6 +37,9 @@ dependencies:
   flip_card: ^0.4.4
   mobx:
   flutter_mobx:
+  geolocator: ^5.2.1
+  geocoder: ^0.2.1
+
   
   # Testanto outra forma de acesso a camera
   # camera:

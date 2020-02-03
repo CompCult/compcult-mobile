@@ -1,5 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:museu_vivo/shared/models/mission.dart';
 import 'package:museu_vivo/shared/models/user.dart';
@@ -23,6 +25,26 @@ class MissionSubmit extends StatefulWidget {
 
 class _MissionSubmitState extends State<MissionSubmit> {
   bool _isLoading = false;
+  Address addressCurrent;
+
+  _getLocation() async {
+    // Habilitar o GPS
+    var statusLocationEnabled = await Geolocator().isLocationServiceEnabled();
+    print(statusLocationEnabled);
+
+    if (statusLocationEnabled) {
+      Position position = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      debugPrint('location: ${position.latitude} - ${position.longitude}');
+
+      final coordinates =
+          new Coordinates(position.latitude, position.longitude);
+      var addresses =
+          await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      addressCurrent = addresses.first;
+      print("---- ${addressCurrent.addressLine} ----");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +76,21 @@ class _MissionSubmitState extends State<MissionSubmit> {
                   height: 15,
                 ),
                 if (widget.mission.isGrupal) _buildTeamField(missionSubmitBloc),
-                SizedBox(height: 15),
+                SizedBox(
+                  height: 10,
+                ),
+                if (widget.mission.hasGeolocation)
+                  _buildLocationLabel("* Requer localização", Colors.red),
                 if (widget.mission.hasText) _buildTextField(missionSubmitBloc),
                 if (widget.mission.hasImage)
                   _buildImageField(missionSubmitBloc),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
                 if (widget.mission.hasImage)
                   _buildImageValidator(missionSubmitBloc),
-                const SizedBox(height: 40),
+                const SizedBox(height: 5),
+                if (widget.mission.hasGeolocation)
+                  _buildLocationField(
+                      "Certifique-se que seu GPS está habilitado e clique aqui"),
               ],
             ),
           ],
@@ -69,6 +98,38 @@ class _MissionSubmitState extends State<MissionSubmit> {
       ),
       bottomSheet: _buildButton(context, "ENVIAR RESPOSTA", missionSubmitBloc),
     );
+  }
+
+  Widget _buildLocationLabel(String label, Color color) {
+    return Row(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            label,
+            style: TextStyle(fontSize: 11, color: color),
+          ),
+        ),
+      ],
+      mainAxisAlignment: MainAxisAlignment.end,
+    );
+  }
+
+  Widget _buildLocationField(String value) {
+    if (addressCurrent == null) {
+      return RaisedButton(
+        color: Theme.of(context).accentColor,
+        child: Text(
+          value,
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () {
+          print("Entrou no else");
+          _getLocation();
+        },
+      );
+    }
+    return null;
   }
 
   Widget _buildTeamField(MissionSubmitBloc bloc) {
