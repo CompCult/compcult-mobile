@@ -2,11 +2,12 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/team_details.dart';
-import 'package:museu_vivo/pages/teams_bloc.dart';
 import 'package:museu_vivo/shared/components/custom_bottom_sheet.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:museu_vivo/shared/models/user.dart';
 import 'package:provider/provider.dart';
+
+import 'bloc/teams_bloc.dart';
 
 class TeamsPage extends StatelessWidget {
   static const String routeName = '/teams';

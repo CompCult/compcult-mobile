@@ -1,7 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/sign_in_bloc.dart';
 
+import 'bloc/sign_in_bloc.dart';
 import 'home_page.dart';
 import 'reset_password_page.dart';
 import 'sign_up_page.dart';

@@ -1,10 +1,10 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/home_bloc.dart';
 import 'package:museu_vivo/pages/minigames_page.dart';
 import 'package:museu_vivo/pages/user_page.dart';
 
 import '../config.dart';
+import 'bloc/home_bloc.dart';
 import 'coins_page.dart';
 import 'games_page.dart';
 

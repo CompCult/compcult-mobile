@@ -1,8 +1,8 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/sign_up_bloc.dart';
 
 import '../config.dart';
+import 'bloc/sign_up_bloc.dart';
 import 'home_page.dart';
 
 class SignUpPage extends StatefulWidget {

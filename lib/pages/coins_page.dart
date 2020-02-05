@@ -4,7 +4,8 @@ import 'package:museu_vivo/config.dart';
 import 'package:museu_vivo/pages/ranking.dart';
 import 'package:museu_vivo/shared/models/user.dart';
 
-import 'coins_bloc.dart';
+import 'bloc/coins_bloc.dart';
+
 
 class CoinsPage extends StatefulWidget {
   @override

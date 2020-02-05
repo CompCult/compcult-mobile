@@ -1,12 +1,12 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
-import 'package:museu_vivo/pages/quizzes_bloc.dart';
 import 'package:museu_vivo/shared/components/secret_code_field.dart';
 import 'package:museu_vivo/shared/models/quiz.dart';
 
 import '../shared/components/item_card.dart';
 import '../shared/models/quiz.dart';
+import 'bloc/quizzes_bloc.dart';
 
 class QuizzesPage extends StatelessWidget {
   @override

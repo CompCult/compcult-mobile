@@ -1,8 +1,9 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/sign_in_page.dart';
-import 'package:museu_vivo/pages/user_bloc.dart';
 import 'package:museu_vivo/shared/models/user.dart';
+
+import 'bloc/user_bloc.dart';
 
 class UserPage extends StatefulWidget {
   @override
