@@ -1,6 +1,5 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:museu_vivo/shared/models/mission.dart';
@@ -25,26 +24,7 @@ class MissionSubmit extends StatefulWidget {
 
 class _MissionSubmitState extends State<MissionSubmit> {
   bool _isLoading = false;
-  Address addressCurrent;
-
-  _getLocation() async {
-    // Habilitar o GPS
-    var statusLocationEnabled = await Geolocator().isLocationServiceEnabled();
-    print(statusLocationEnabled);
-
-    if (statusLocationEnabled) {
-      Position position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      debugPrint('location: ${position.latitude} - ${position.longitude}');
-
-      final coordinates =
-          new Coordinates(position.latitude, position.longitude);
-      var addresses =
-          await Geocoder.local.findAddressesFromCoordinates(coordinates);
-      addressCurrent = addresses.first;
-      print("---- ${addressCurrent.addressLine} ----");
-    }
-  }
+  Position _currentPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +69,12 @@ class _MissionSubmitState extends State<MissionSubmit> {
                   _buildImageValidator(missionSubmitBloc),
                 const SizedBox(height: 5),
                 if (widget.mission.hasGeolocation)
-                  _buildLocationField(
-                      "Certifique-se que seu GPS está habilitado e clique aqui"),
+                  _buildLocationButton(
+                      "Certifique-se que seu GPS está habilitado e clique aqui",
+                      missionSubmitBloc),
+                const SizedBox(height: 5),
+                if (widget.mission.hasGeolocation)
+                  _buildLocationValidator(missionSubmitBloc)
               ],
             ),
           ],
@@ -115,21 +99,33 @@ class _MissionSubmitState extends State<MissionSubmit> {
     );
   }
 
-  Widget _buildLocationField(String value) {
-    if (addressCurrent == null) {
-      return RaisedButton(
-        color: Theme.of(context).accentColor,
-        child: Text(
-          value,
-          style: TextStyle(color: Colors.white),
-        ),
-        onPressed: () {
-          print("Entrou no else");
-          _getLocation();
-        },
-      );
-    }
-    return null;
+  Widget _buildLocationButton(String value, MissionSubmitBloc bloc) {
+    return FlatButton(
+      color: Theme.of(context).accentColor,
+      child: Text(
+        value,
+        style: TextStyle(color: Colors.white),
+      ),
+      onPressed: () {
+        print("Entrou no botão");
+        _getCurrentLocation(bloc);
+      },
+    );
+  }
+
+  _getCurrentLocation(MissionSubmitBloc bloc) {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      bloc.changePositionAnswer(position);
+      setState(() {
+        _currentPosition = position;
+      });
+    }).catchError((e) {
+      print(e);
+    });
   }
 
   Widget _buildTeamField(MissionSubmitBloc bloc) {
@@ -190,6 +186,22 @@ class _MissionSubmitState extends State<MissionSubmit> {
                   ),
                 );
         });
+  }
+
+  Widget _buildLocationValidator(MissionSubmitBloc missionSubmitBloc) {
+    return _currentPosition != null
+        ? Text(
+            "Localização: ${_currentPosition.toString()}",
+            style: TextStyle(
+              color: Colors.green,
+            ),
+          )
+        : Text(
+            "Localização não encontrada. Verifique seu GPS.",
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          );
   }
 
   Widget _buildImageField(MissionSubmitBloc missionSubmitBloc) {
