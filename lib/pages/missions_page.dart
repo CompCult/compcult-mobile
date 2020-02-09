@@ -18,7 +18,12 @@ class _MissionsPageState extends State<MissionsPage> {
   Widget build(BuildContext context) {
     final MissionsBloc missionsBloc = BlocProvider.getBloc<MissionsBloc>();
 
-    return SingleChildScrollView(
+    return Scaffold(
+    
+    appBar: AppBar(
+      title: Text("Missões"),
+    ),
+     body: SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
         child: Column(
@@ -68,6 +73,7 @@ class _MissionsPageState extends State<MissionsPage> {
           ],
         ),
       ),
+    )
     );
   }
 

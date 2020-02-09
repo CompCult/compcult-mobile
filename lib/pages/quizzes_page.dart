@@ -13,7 +13,12 @@ class QuizzesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final QuizzesBloc quizzesBloc = BlocProvider.getBloc<QuizzesBloc>();
 
-    return SingleChildScrollView(
+    return Scaffold(
+    appBar: AppBar(
+      title: Text("Quizzes"),
+    ),
+
+    body: SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
         child: Column(
@@ -53,6 +58,7 @@ class QuizzesPage extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 

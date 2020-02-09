@@ -2,6 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/minigames_page.dart';
 import 'package:museu_vivo/pages/user_page.dart';
+import 'package:museu_vivo/store/store_page.dart';
 
 import '../config.dart';
 import 'bloc/home_bloc.dart';
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     // DashboardPage(),
     CoinsPage(),
     GamesPage(),
-    MiniGames(),
+    StorePage(),
     UserPage(),
   ];
 
@@ -47,43 +48,71 @@ class _HomePageState extends State<HomePage> {
         bucket: bucket,
         child: tabs[_currentIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _currentIndex,
-        backgroundColor: Colors.orange,
-        items: <BottomNavigationBarItem>[
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.dashboard),
-          //   title: Text('Timeline'),
-          //   backgroundColor: Colors.red,
-          // ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.monetization_on),
-            title: Text(config.coinName),
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.collections_bookmark),
-            title: Text('Atividades'),
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.games),
-            title: Text('Minijogos'),
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Perfil'),
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 4,
+            spreadRadius: 2,
+            offset: Offset(0, 0),
+          )
         ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20),
+          topLeft: Radius.circular(20)
+        ),
+        ),
+        child: BottomNavigationBar(
+          
+          type: BottomNavigationBarType.shifting,
+          
+          currentIndex: _currentIndex,
+
+          items: <BottomNavigationBarItem>[
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.dashboard),
+            //   title: Text('Timeline'),
+            //   backgroundColor: Colors.red,
+            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: _currentIndex == 0 ? Color(0xff00036c) : Colors.black,),
+              title: Text("Home", 
+                style: TextStyle(color: Colors.black),
+              ),
+              backgroundColor: Colors.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.videogame_asset, color: _currentIndex == 1 ? Color(0xff00036c) : Colors.black),
+              title: Text('Minijogos', 
+                style: TextStyle(color: Colors.black),
+              ),
+              backgroundColor: Colors.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.remove_shopping_cart,color: _currentIndex == 2 ? Color(0xff00036c) : Colors.black),
+              title: Text('Loja', 
+                style: TextStyle(color: Colors.black),
+              ),
+              backgroundColor: Colors.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: _currentIndex == 3 ? Color(0xff00036c) : Colors.black),
+              title: Text('Perfil', 
+                style: TextStyle(color: Colors.black),
+              ),
+              
+              backgroundColor: Colors.white,
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }
+  
 }
