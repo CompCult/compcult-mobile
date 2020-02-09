@@ -127,15 +127,15 @@ class _MemoryGamePageState extends State<MemoryGamePage> {
                       back: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        elevation: 10,
+                        elevation: 0 ,
                         margin: EdgeInsets.all(4),
                         color: Colors.blue,
-                        child: Center(
-                          child: Image.network(
+                        child:
+                           Image.network(
                             data[index],
                             fit: BoxFit.cover,
                           ),
-                        ),
+                        
                       ),
                     ),
                     itemCount: data.length,
