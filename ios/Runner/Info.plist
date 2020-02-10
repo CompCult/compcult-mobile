@@ -42,7 +42,7 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
-	<!-- Para a Geolocalização -->
+	<!-- Para acesso da geolocalização -->
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
 
@@ -51,6 +51,13 @@
 
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open and in the background.</string>
+
+	<!-- Para acesso do microfone -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This application needs to access your microphone</string>
+
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This application needs the speed recognition permissions</string>
 
 </dict>
 </plist>
