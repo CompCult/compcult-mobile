@@ -161,6 +161,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
   Future _stopRecording() async {
     var result = await _recorder.stop();
     _timer.cancel();
+    io.File(_recording.path);
 
     setState(() {
       _recording = result;
@@ -461,6 +462,8 @@ class _MissionSubmitState extends State<MissionSubmit> {
             });
 
             try {
+              // Envio de áudio
+              await bloc.changeAudioAnswer(io.File(_recording.path));
               await bloc.createMissionAnswer(widget.mission);
               Navigator.of(context).pop(true);
             } catch (e) {
