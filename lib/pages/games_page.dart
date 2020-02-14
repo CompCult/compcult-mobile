@@ -13,6 +13,7 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -21,64 +22,63 @@ class _GamesPageState extends State<GamesPage> {
         appBar: AppBar(
           title: Text("Games"),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 90,
+        body:Padding(
+          padding: const EdgeInsets.only(left: 25),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 15,),
+              GestureDetector(
+                child: Image.asset("assets/leratos/aba_minigames.png",
+                    height: 150,
+                    width: 370,
                 ),
-                Container(
-                  height: 40,
-                  width: 145,
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 1,
-                          spreadRadius: 1,
-                          offset: Offset(0, 0),
-                        )
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Row(
-                    children: <Widget>[
-                      IconButton(
-                          icon: Icon(Icons.assistant_photo),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MissionsPage()));
-                          }),
-                      IconButton(
-                          icon: Icon(Icons.extension),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MiniGames()));
-                          }),
-                      IconButton(
-                          icon: Icon(Icons.forum),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => QuizzesPage()));
-                          })
-                    ],
-                  ),
+                onTap: (){
+                  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MiniGames(),
+                              ),
+                            );
+                },
+              ),
+              SizedBox(height: 8,),
+              GestureDetector(
+                child: Image.asset("assets/leratos/aba_missoes.png",
+                    height: 150,
+                    width: 370,
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            )
-          ],
-        ));
+                onTap: (){
+                  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MissionsPage(),
+                              ),
+                            );
+                },
+              ),
+              SizedBox(height: 8,),
+              GestureDetector(
+                child: Image.asset("assets/leratos/aba_quizzes.png",
+                    height: 150,
+                    width: 370,
+                ),
+                onTap: (){
+                  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    QuizzesPage(),
+                              ),
+                            );
+                },
+              ),
+              SizedBox(height: 8,),
+            ],
+          ),
+        )
+        );
     /*DefaultTabController(
       length: 2,
       child: Scaffold(

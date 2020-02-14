@@ -1,6 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/minigames_page.dart';
+import 'package:museu_vivo/pages/quizzes_page.dart';
 import 'package:museu_vivo/pages/user_page.dart';
 import 'package:museu_vivo/store/store_page.dart';
 
@@ -8,6 +9,7 @@ import '../config.dart';
 import 'bloc/home_bloc.dart';
 import 'coins_page.dart';
 import 'games_page.dart';
+import 'missions_page.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';
@@ -23,6 +25,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget currentScreen = GamesPage(); // A view inicial
   int _currentIndex = 0;
+
+  
 
   final tabs = [
     // DashboardPage(),
@@ -76,28 +80,32 @@ class _HomePageState extends State<HomePage> {
             //   backgroundColor: Colors.red,
             // ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: _currentIndex == 0 ? Color(0xff00036c) : Colors.black,),
+              icon: Icon(Icons.home, color: _currentIndex == 0 ? Color(0xff60B3FC) : Colors.black,),
               title: Text("Home", 
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: Colors.white,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.videogame_asset, color: _currentIndex == 1 ? Color(0xff00036c) : Colors.black),
+              icon: Icon(Icons.videogame_asset, color: _currentIndex == 1 ? Color(0xff60B3FC) : Colors.black),
               title: Text('Minijogos', 
                 style: TextStyle(color: Colors.black),
               ),
+              
               backgroundColor: Colors.white,
+
+              
+
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.remove_shopping_cart,color: _currentIndex == 2 ? Color(0xff00036c) : Colors.black),
+              icon: Icon(Icons.remove_shopping_cart,color: _currentIndex == 2 ? Color(0xff60B3FC) : Colors.black),
               title: Text('Loja', 
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: Colors.white,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: _currentIndex == 3 ? Color(0xff00036c) : Colors.black),
+              icon: Icon(Icons.person, color: _currentIndex == 3 ? Color(0xff60B3FC) : Colors.black),
               title: Text('Perfil', 
                 style: TextStyle(color: Colors.black),
               ),
@@ -114,5 +122,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  
 }
