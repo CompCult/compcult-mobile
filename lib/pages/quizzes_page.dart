@@ -18,44 +18,66 @@ class QuizzesPage extends StatelessWidget {
       title: Text("Quizzes"),
     ),
 
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-        child: Column(
-          children: <Widget>[
-            SecretCodeField(
-              label: 'Código secreto do quiz',
-              onSubmited: (quizId) async {
-                try {
-                  Quiz quiz = await quizzesBloc.getSecretQuiz(quizId);
+    body: Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(image: AssetImage(
+          "assets/leratos/fundo_quizzes.jpg",
+        ),
+        fit: BoxFit.cover
+        ),
+        
+      ),
+      child: SingleChildScrollView(
+        child: Padding(
+          
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.white,),
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(width:60,),
+                  SecretCodeField(
+                    label: 'Código secreto do quiz',
+                    onSubmited: (quizId) async {
+                      try {
+                        Quiz quiz = await quizzesBloc.getSecretQuiz(quizId);
 
-                  Navigator.of(context)
-                      .pushNamed(QuizSubmit.routeName, arguments: quiz);
-                } catch (e) {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text(e), backgroundColor: Colors.red),
-                  );
-                }
-              },
-            ),
-            SizedBox(height: 15),
-            StreamBuilder<List<Quiz>>(
-              stream: quizzesBloc.quizzes,
-              builder: (_, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                }
+                        Navigator.of(context)
+                            .pushNamed(QuizSubmit.routeName, arguments: quiz);
+                      } catch (e) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text(e), backgroundColor: Colors.red),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
+              StreamBuilder<List<Quiz>>(
+                stream: quizzesBloc.quizzes,
+                builder: (_, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
 
-                return _buildList(snapshot.data);
-              },
-            ),
-          ],
+                  return _buildList(snapshot.data);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     )

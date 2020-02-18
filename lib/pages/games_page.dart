@@ -13,7 +13,6 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -22,63 +21,76 @@ class _GamesPageState extends State<GamesPage> {
         appBar: AppBar(
           title: Text("Games"),
         ),
-        body:Padding(
-          padding: const EdgeInsets.only(left: 25),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/background.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
               GestureDetector(
-                child: Image.asset("assets/leratos/aba_minigames.png",
-                    height: 150,
-                    width: 370,
+                child: Image.asset(
+                  "assets/leratos/aba_minigames.png",
+                  height: 150,
+                  width: 500,
                 ),
-                onTap: (){
+                onTap: () {
                   Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    MiniGames(),
-                              ),
-                            );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MiniGames(),
+                    ),
+                  );
                 },
               ),
-              SizedBox(height: 8,),
+              SizedBox(
+                height: 8,
+              ),
               GestureDetector(
-                child: Image.asset("assets/leratos/aba_missoes.png",
-                    height: 150,
-                    width: 370,
+                child: Image.asset(
+                  "assets/leratos/aba_missoes.png",
+                  height: 150,
+                  width: 500,
                 ),
-                onTap: (){
+                onTap: () {
                   Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    MissionsPage(),
-                              ),
-                            );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MissionsPage(),
+                    ),
+                  );
                 },
               ),
-              SizedBox(height: 8,),
+              SizedBox(
+                height: 8,
+              ),
               GestureDetector(
-                child: Image.asset("assets/leratos/aba_quizzes.png",
-                    height: 150,
-                    width: 370,
+                child: Image.asset(
+                  "assets/leratos/aba_quizzes.png",
+                  height: 150,
+                  width: 500,
                 ),
-                onTap: (){
+                onTap: () {
                   Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    QuizzesPage(),
-                              ),
-                            );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizzesPage(),
+                    ),
+                  );
                 },
               ),
-              SizedBox(height: 8,),
+              SizedBox(
+                height: 8,
+              ),
             ],
           ),
-        )
-        );
+        ));
     /*DefaultTabController(
       length: 2,
       child: Scaffold(

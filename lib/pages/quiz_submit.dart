@@ -32,51 +32,120 @@ class _QuizSubmitState extends State<QuizSubmit> {
           ),
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
-        children: <Widget>[
-          Column(
+      body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/leratos/fundo_quizzes.jpg"),
+                  fit: BoxFit.cover)),
+          child: Column(
             children: <Widget>[
-              Text(
-                "${widget.quiz.title}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 70,),
               Container(
-                height: 80,
-                child: SingleChildScrollView(
-                  child: Text(
-                    "${widget.quiz.description}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: "SourceSansPro",
-                      color: Colors.black54,
+                height: 500,
+                width: 600,
+                margin: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    color: Colors.white.withOpacity(0.7)),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          child: Center(
+                              child: Text(
+                            "...",
+                            style: TextStyle(color: Colors.white, fontSize: 30),
+                          )),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                              color: Colors.blue),
+                          height: 100,
+                          width: 100,
+                        ),
+                        SizedBox(width: 65,),
+                        Column(
+                       
+                          children: <Widget>[
+                            Text(
+                              "${widget.quiz.title}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: "Poppins",
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(height: 10,),
+                            Text(
+                          "${widget.quiz.description}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "SourceSansPro",
+                            color: Colors.black54,
+                          ),
+                        ),
+                          ],
+                        ),
+                        
+                      ],
                     ),
-                  ),
+                    
+
+                    /*Column(
+                  children: <Widget>[
+                    Text(
+                      "${widget.quiz.title}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 80,
+                      child: SingleChildScrollView(
+                        child: Text(
+                          "${widget.quiz.description}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "SourceSansPro",
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),*/
+                    SizedBox(height: 10,),
+                    _buildQuizForm(),
+                    SizedBox(height: 50,),
+                    _buildButtonSubmit("ENVIAR RESPOSTA")
+                    
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 20,
+                
               ),
             ],
+          )
           ),
-          _buildQuizForm(),
-          // const SizedBox(
-          //   height: 20,
-          // ),
-        ],
-      ),
+      //bottomSheet: _buildButtonSubmit("ENVIAR RESPOSTA"),
       // bottomNavigationBar: _buildButtonSubmit("ENVIAR RESPOSTA", userId),
-      bottomSheet: _buildButtonSubmit("ENVIAR RESPOSTA"),
     );
   }
 
@@ -161,9 +230,13 @@ class _QuizSubmitState extends State<QuizSubmit> {
         BlocProvider.getBloc<QuizSubmitBloc>();
 
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+        color: Colors.blue
+      ),
       height: 50,
+      width: 200,
       alignment: Alignment.centerLeft,
-      color: Theme.of(context).accentColor,
       child: SizedBox.expand(
         child: FlatButton(
             child: Text(
