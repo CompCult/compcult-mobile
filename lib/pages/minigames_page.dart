@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:museu_vivo/minigames/memory-game/pages/memory_game_dashboard/memory_game_dashboard_module.dart';
+import 'package:museu_vivo/pages/appbar_custom.dart';
 
 class MiniGames extends StatefulWidget {
   @override
@@ -18,15 +19,14 @@ class _MiniGamesState extends State<MiniGames> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Minigames"),
-        ),
+        appBar: AppBar(title: AppBarCustom(),),
         body: Container(
           padding: EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+
               Padding(
                 padding: EdgeInsets.only(top: 32),
                 child: Row(

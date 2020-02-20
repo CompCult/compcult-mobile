@@ -48,7 +48,7 @@ class _SignInPageState extends State<SignInPage> {
                       'Usuário ou senha incorretos',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).accentColor,
                       ),
                     ),
                   SizedBox(height: 15),
@@ -152,8 +152,8 @@ class _SignInPageState extends State<SignInPage> {
           end: Alignment.bottomRight,
           stops: [0.3, 1],
           colors: [
-            Theme.of(context).primaryColor.withOpacity(0.9),
-            Theme.of(context).primaryColor,
+            Theme.of(context).accentColor.withOpacity(0.9),
+            Theme.of(context).accentColor,
           ],
         ),
         borderRadius: BorderRadius.all(

@@ -58,13 +58,13 @@ class _CoinsPageState extends State<CoinsPage> {
               config.coinName,
               style: TextStyle(
                 fontSize: 20,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
               ),
             ),
             SizedBox(width: 5),
             Icon(
               Icons.monetization_on,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).accentColor,
             ),
           ],
         ),
@@ -77,14 +77,14 @@ class _CoinsPageState extends State<CoinsPage> {
                     '${snapshot.data.points}',
                     style: TextStyle(
                       fontSize: 50,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).accentColor,
                       fontWeight: FontWeight.bold,
                     ),
                   )
                 : CircularProgressIndicator(
                     backgroundColor: Colors.white,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).primaryColor),
+                        Theme.of(context).accentColor),
                   );
           },
         ),

@@ -62,7 +62,7 @@ class ItemCard extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    '${item.description.length > 140 ? item.description.substring(0, 140) : item.description}...',
+                    '${item.description.length > 35 ? item.description.substring(0, 35) : item.description}...',
                     style: TextStyle(
                       fontFamily: "SourceSansPro",
                       color: Colors.grey,

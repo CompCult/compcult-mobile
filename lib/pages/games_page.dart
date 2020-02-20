@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:museu_vivo/pages/appbar_custom.dart';
 import 'package:museu_vivo/pages/minigames_page.dart';
 
 import './missions_page.dart';
@@ -18,9 +19,7 @@ class _GamesPageState extends State<GamesPage> {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Games"),
-        ),
+        appBar: AppBar(title: AppBarCustom(),),
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -31,6 +30,7 @@ class _GamesPageState extends State<GamesPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              
               SizedBox(
                 height: 15,
               ),

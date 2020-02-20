@@ -1,6 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:museu_vivo/pages/appbar_custom.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:museu_vivo/shared/models/mission.dart';
 import 'package:museu_vivo/shared/models/user.dart';
@@ -33,18 +34,13 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Submeter resposta",
-          style: TextStyle(
-            fontFamily: "Poppins",
-            fontSize: 16,
-          ),
-        ),
+        title: AppBarCustom(),
       ),
       body: Container(
         child: ListView(
           padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
           children: <Widget>[
+            
             Column(
               children: <Widget>[
                 _buildTitle(missionSubmitBloc, widget.mission),
