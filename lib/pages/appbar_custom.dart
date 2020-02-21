@@ -14,23 +14,29 @@ class _AppBarCustomState extends State<AppBarCustom> {
         Row(
           children: <Widget>[
             Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                color: Colors.green,
+              ),
               height: 20,
-              width: 20,
-              color: Colors.green,
+              width: 25,
               child: Text("."),
             ),
             SizedBox(
               width: 5,
             ),
-            Text("120"),
+            Text("FASE XL"),
           ],
         ),
         Row(
           children: <Widget>[
             Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                color: Colors.yellow,
+              ),
               height: 20,
-              width: 20,
-              color: Colors.yellow,
+              width: 25,
               child: Text("."),
             ),
             SizedBox(
@@ -42,9 +48,12 @@ class _AppBarCustomState extends State<AppBarCustom> {
         Row(
           children: <Widget>[
             Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                color: Colors.red,
+              ),
               height: 20,
-              width: 20,
-              color: Colors.red,
+              width: 25,
               child: Text("."),
             ),
             SizedBox(
@@ -56,9 +65,12 @@ class _AppBarCustomState extends State<AppBarCustom> {
         Row(
           children: <Widget>[
             Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                color: Colors.blue,
+              ),
               height: 20,
-              width: 20,
-              color: Colors.blue,
+              width: 25,
               child: Text("."),
             ),
             SizedBox(
