@@ -1,7 +1,10 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/config.dart';
+import 'package:museu_vivo/pages/appbar_custom.dart';
+import 'package:museu_vivo/pages/challenges.dart';
 import 'package:museu_vivo/pages/ranking.dart';
+import 'package:museu_vivo/pages/thematic_title.dart';
 import 'package:museu_vivo/shared/models/user.dart';
 
 import 'bloc/coins_bloc.dart';
@@ -22,7 +25,30 @@ class _CoinsPageState extends State<CoinsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      appBar: AppBar(
+        title: AppBarCustom(),
+      ),
+      body: SingleChildScrollView(
+              child: Container(
+          
+          child:Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                Ranking(),
+                SizedBox(height: 8,),
+                ThematicTitle(),
+                SizedBox(height: 8,),
+                Challenges()
+              ],
+            ),
+          )
+
+        ),
+      ),
+    );
+   /* Container(
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/background.png'),
@@ -89,6 +115,6 @@ class _CoinsPageState extends State<CoinsPage> {
           },
         ),
       ],
-    );
+    );*/
   }
 }
