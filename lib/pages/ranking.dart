@@ -18,38 +18,53 @@ class Ranking extends StatelessWidget {
           child: ExpansionTile(
             title: PersonalRank(),
             children: <Widget>[
-                FutureBuilder(
-            future: rankingBloc.fetchUsers(),
-            builder: (_, snapshot) {
-              if (!snapshot.hasData)
-                return Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
+              Container(
+                height: 300,
+                child: FutureBuilder(
+                  future: rankingBloc.fetchUsers(),
+                  builder: (_, snapshot) {
+                    if (!snapshot.hasData)
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
 
-              final List<User> users = snapshot.data;
+                    final List<User> users = snapshot.data;
 
-              return ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: users.length,
-                itemBuilder: (_, i) {
-                  return ListTile(
-                    leading: Text(
-                      '#${i + 1}',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    title: Text(users[i].name),
-                    trailing: Text(
-                      '${users[i].points}',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: users.length,
+                      itemBuilder: (_, i) {
+                        return ListTile(
+                          leading: Text(
+                            '#${i + 1}',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          title: Text(
+                            users[i].name,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          trailing: Text(
+                            '${users[i].points}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w200
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -121,7 +136,6 @@ class Ranking extends StatelessWidget {
         ],
       ),
     );*/
-    
   }
 }
 
