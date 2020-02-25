@@ -25,6 +25,8 @@ dependencies:
   hive: ^1.0.0
   hive_flutter: ^0.2.1
   path_provider: ^1.2.0
+  flutter_audio_recorder: ^0.5.2
+  audioplayers:
   
   flutter:
     sdk: flutter
