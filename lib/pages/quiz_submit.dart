@@ -37,126 +37,60 @@ class _QuizSubmitState extends State<QuizSubmit> {
       ),
       body: Container(
           decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/leratos/fundo_quizzes.jpg"),
-                  fit: BoxFit.cover)),
+            image: DecorationImage(
+                image: AssetImage("assets/leratos/fundo_quizzes.jpg"),
+                fit: BoxFit.cover),
+          ),
           child: ListView(
             children: <Widget>[
               SizedBox(
-                height: 70,
+                height: 20,
               ),
               Container(
                 width: 600,
                 margin: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    color: Colors.white.withOpacity(0.7)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30),
+                  ),
+                  color: Colors.white.withOpacity(0.7),
+                ),
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          child: Center(
-                              child: Text(
-                            "...",
-                            style: TextStyle(color: Colors.white, fontSize: 30),
-                          )),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                              color: Colors.blue),
-                          height: 100,
-                          width: 100,
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              "${widget.quiz.title}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 200,
-                              child: Text(
-                                "${widget.quiz.description}",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "SourceSansPro",
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-
-                    /*Column(
-                  children: <Widget>[
-                    Text(
-                      "${widget.quiz.title}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 80,
-                      child: SingleChildScrollView(
-                        child: Text(
-                          "${widget.quiz.description}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "SourceSansPro",
-                            color: Colors.black54,
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        "${widget.quiz.title}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontSize: 16,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        "${widget.quiz.description}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "SourceSansPro",
+                          color: Colors.black54,
+                        ),
+                      ),
                     ),
-                  ],
-                ),*/
-                    SizedBox(
-                      height: 35,
-                    ),
+                    SizedBox(height: 20),
                     _buildQuizForm(),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    _buildButtonSubmit("ENVIAR RESPOSTA")
-
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
+                    SizedBox(height: 20),
+                    _buildButtonSubmit("ENVIAR RESPOSTA"),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
             ],
           )),
-      //bottomSheet: _buildButtonSubmit("ENVIAR RESPOSTA"),
-      // bottomNavigationBar: _buildButtonSubmit("ENVIAR RESPOSTA", userId),
     );
   }
 
@@ -166,17 +100,6 @@ class _QuizSubmitState extends State<QuizSubmit> {
         Column(
           children: <Widget>[
             if (widget.quiz.alternativeA != null)
-              /*RadioListTile(
-                groupValue: _alternative,
-                value: 'a',
-                title: Text(
-                  widget.quiz.alternativeA,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
-                ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),*/
               FlatButton(
                 onPressed: () {
                   setState(() {
@@ -205,19 +128,6 @@ class _QuizSubmitState extends State<QuizSubmit> {
               height: 5,
             ),
             if (widget.quiz.alternativeB != null)
-
-              /*RadioListTile(
-                groupValue: _alternative,
-                value: 'b',
-                title: Text(
-                  widget.quiz.alternativeB,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
-                ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),*/
-
               FlatButton(
                 onPressed: () {
                   setState(() {
@@ -246,20 +156,6 @@ class _QuizSubmitState extends State<QuizSubmit> {
               height: 5,
             ),
             if (widget.quiz.alternativeC != null)
-
-              /*RadioListTile(
-                groupValue: _alternative,
-                value: 'c',
-                title: Text(
-                  widget.quiz.alternativeC,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
-                ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),
-              */
-
               FlatButton(
                 color: colors[2] == false
                     ? Colors.white
@@ -288,19 +184,6 @@ class _QuizSubmitState extends State<QuizSubmit> {
               height: 5,
             ),
             if (widget.quiz.alternativeD != null)
-
-              /* RadioListTile(
-                groupValue: _alternative,
-                value: 'd',
-                title: Text(
-                  widget.quiz.alternativeD,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
-                ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),*/
-
               FlatButton(
                 onPressed: () {
                   setState(() {
@@ -329,19 +212,6 @@ class _QuizSubmitState extends State<QuizSubmit> {
               height: 5,
             ),
             if (widget.quiz.alternativeE != null)
-
-              /*RadioListTile(
-                groupValue: _alternative,
-                value: 'e',
-                title: Text(
-                  widget.quiz.alternativeE,
-                  style: TextStyle(fontFamily: "Poppins", fontSize: 13),
-                ),
-                onChanged: (value) => setState(() {
-                  _alternative = value;
-                }),
-              ),*/
-
               FlatButton(
                 onPressed: () {
                   setState(() {
@@ -364,7 +234,8 @@ class _QuizSubmitState extends State<QuizSubmit> {
                   ),
                 ),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
           ],
         ),
@@ -377,28 +248,30 @@ class _QuizSubmitState extends State<QuizSubmit> {
         BlocProvider.getBloc<QuizSubmitBloc>();
 
     return FlatButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        color: Colors.blue,
-        child: Container(
-          height: 45,
-          width: 150,
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                fontSize: 16,
-              ),
-              textAlign: TextAlign.center,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      color: Colors.blue,
+      child: Container(
+        height: 45,
+        width: 150,
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              fontSize: 16,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
-        onPressed: () async {
-          await quizSubmitBloc.createQuizAnswer(widget.quiz.id, _alternative);
-
-          Navigator.of(context).pop(true);
-        });
+      ),
+      onPressed: () async {
+        await quizSubmitBloc.createQuizAnswer(widget.quiz.id, _alternative);
+        Navigator.of(context).pop(true);
+      },
+    );
   }
 }
