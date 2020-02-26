@@ -46,14 +46,13 @@ class _MissionSubmitState extends State<MissionSubmit> {
   void initState() {
     super.initState();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: CustomAppBar(),
-      initPlayer();
+    initPlayer();
 
     Future.microtask(() {
       _prepare();
     });
+
+
   }
 
   // ==================================================
@@ -515,13 +514,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Submeter resposta",
-          style: TextStyle(
-            fontFamily: "Poppins",
-            fontSize: 16,
-          ),
-        ),
+        title: CustomAppBar(),
       ),
       body: ListView(
         padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
