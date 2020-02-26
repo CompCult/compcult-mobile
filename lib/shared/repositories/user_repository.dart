@@ -36,7 +36,7 @@ class UserRepository extends BlocBase {
     final Response usersResponse = await _userService.fetchUsers();
     final List<User> users =
         List<User>.from(usersResponse.data.map((user) => User.fromJson(user)));
-    users.sort((a, b) => b.points - a.points);
+    users.sort((a, b) => b.lux - a.lux);
 
     return users;
   }

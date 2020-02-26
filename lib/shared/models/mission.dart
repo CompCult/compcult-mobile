@@ -10,7 +10,6 @@ class Mission {
   bool isGrupal;
   bool isPublic;
   String secretCode;
-  int points;
   String description;
   String user;
   String name;
@@ -18,6 +17,8 @@ class Mission {
   String createdAt;
   String startTime;
   bool singleAnswer;
+  int lux;
+  int resources;
 
   Mission(
       {this.id,
@@ -31,14 +32,15 @@ class Mission {
       this.isGrupal,
       this.isPublic,
       this.secretCode,
-      this.points,
       this.description,
       this.user,
       this.name,
       this.v,
       this.createdAt,
       this.startTime,
-      this.singleAnswer});
+      this.singleAnswer,
+      this.lux,
+      this.resources});
 
   Mission.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
@@ -52,7 +54,6 @@ class Mission {
     isGrupal = json['is_grupal'];
     isPublic = json['is_public'];
     secretCode = json['secret_code'];
-    points = json['points'];
     description = json['description'];
     user = json['_user'];
     name = json['name'];
@@ -60,6 +61,8 @@ class Mission {
     createdAt = json['created_at'];
     startTime = json['start_time'];
     singleAnswer = json['single_answer'];
+    lux = json['lux'];
+    resources = json['resources'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,7 +78,6 @@ class Mission {
     data['is_grupal'] = this.isGrupal;
     data['is_public'] = this.isPublic;
     data['secret_code'] = this.secretCode;
-    data['points'] = this.points;
     data['description'] = this.description;
     data['_user'] = this.user;
     data['name'] = this.name;
@@ -83,6 +85,9 @@ class Mission {
     data['created_at'] = this.createdAt;
     data['start_time'] = this.startTime;
     data['single_answer'] = this.singleAnswer;
+    data['lux'] = this.lux;
+    data['resources'] = this.resources;
+
     return data;
   }
 }

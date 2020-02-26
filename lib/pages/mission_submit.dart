@@ -1,7 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:museu_vivo/pages/appbar_custom.dart';
+import 'package:museu_vivo/shared/components/custom_appbar.dart';
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:museu_vivo/shared/models/mission.dart';
 import 'package:museu_vivo/shared/models/user.dart';
@@ -34,7 +34,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
     return Scaffold(
       appBar: AppBar(
-        title: AppBarCustom(),
+        title: CustomAppBar(),
       ),
       body: Container(
         child: ListView(

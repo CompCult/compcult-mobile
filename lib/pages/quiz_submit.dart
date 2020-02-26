@@ -1,6 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:museu_vivo/pages/appbar_custom.dart';
+import 'package:museu_vivo/shared/components/custom_appbar.dart';
 import 'package:museu_vivo/shared/models/quiz.dart';
 
 import 'bloc/quiz_submit_bloc.dart';
@@ -32,7 +32,9 @@ class _QuizSubmitState extends State<QuizSubmit> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldState,
-      appBar: AppBar(title: AppBarCustom(),),
+      appBar: AppBar(
+        title: CustomAppBar(),
+      ),
       body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
@@ -40,12 +42,10 @@ class _QuizSubmitState extends State<QuizSubmit> {
                   fit: BoxFit.cover)),
           child: ListView(
             children: <Widget>[
-              
               SizedBox(
                 height: 70,
               ),
               Container(
-                
                 width: 600,
                 margin: EdgeInsets.all(20),
                 decoration: BoxDecoration(

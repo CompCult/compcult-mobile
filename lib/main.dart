@@ -6,14 +6,14 @@ import 'package:museu_vivo/minigames/memory-game/pages/memory_game/memory_game_m
 import 'package:museu_vivo/pages/bloc/coins_bloc.dart';
 import 'package:museu_vivo/pages/bloc/home_bloc.dart';
 import 'package:museu_vivo/pages/bloc/mission_submit_bloc.dart';
+import 'package:museu_vivo/pages/bloc/missions_bloc.dart';
 import 'package:museu_vivo/pages/bloc/quiz_submit_bloc.dart';
 import 'package:museu_vivo/pages/bloc/quizzes_bloc.dart';
+import 'package:museu_vivo/pages/bloc/ranking_bloc.dart';
 import 'package:museu_vivo/pages/bloc/sign_in_bloc.dart';
 import 'package:museu_vivo/pages/bloc/sign_up_bloc.dart';
 import 'package:museu_vivo/pages/bloc/teams_bloc.dart';
 import 'package:museu_vivo/pages/bloc/user_bloc.dart';
-import 'package:museu_vivo/pages/missions_bloc.dart';
-import 'package:museu_vivo/pages/ranking_bloc.dart';
 import 'package:museu_vivo/pages/team_details.dart';
 import 'package:museu_vivo/pages/quiz_submit.dart';
 import 'package:museu_vivo/pages/teams_page.dart';
