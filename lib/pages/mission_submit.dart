@@ -7,6 +7,9 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:geolocator/geolocator.dart';
+
+import 'package:museu_vivo/shared/components/custom_appbar.dart';
+
 import 'package:museu_vivo/shared/models/group.dart';
 import 'package:museu_vivo/shared/models/mission.dart';
 import 'package:museu_vivo/shared/models/user.dart';
@@ -43,7 +46,10 @@ class _MissionSubmitState extends State<MissionSubmit> {
   void initState() {
     super.initState();
 
-    initPlayer();
+    return Scaffold(
+      appBar: AppBar(
+        title: CustomAppBar(),
+      initPlayer();
 
     Future.microtask(() {
       _prepare();

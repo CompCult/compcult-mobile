@@ -11,10 +11,7 @@ class ItemCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30)
-        ),
-
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         color: Colors.white,
         elevation: 5,
         child: InkWell(
@@ -38,16 +35,24 @@ class ItemCard extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Container(
-                child: Center(child: Text("...",style: TextStyle(color: Colors.white, fontSize: 30),)),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  color: Colors.blue
+                child: Center(
+                  child: Text(
+                    "...",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                    ),
+                  ),
                 ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                    color: Colors.blue),
                 height: 100,
                 width: 100,
-                
               ),
-              SizedBox(width: 10,),
+              SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -62,7 +67,7 @@ class ItemCard extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    '${item.description.length > 35 ? item.description.substring(0, 35) : item.description}...',
+                    '${item.description.length > 30 ? item.description.substring(0, 30) : item.description}...',
                     style: TextStyle(
                       fontFamily: "SourceSansPro",
                       color: Colors.grey,
@@ -72,14 +77,11 @@ class ItemCard extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-
-                      '${item.points} PONTOS',
-                    
+                      '${item.lux} LUX | ${item.resources} RSC',
                       style: TextStyle(
                         fontFamily: "Poppins",
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
-                        
                       ),
                     ),
                   )

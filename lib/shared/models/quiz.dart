@@ -9,7 +9,6 @@ class Quiz {
   String alternativeA;
   bool isPublic;
   String secretCode;
-  int points;
   String description;
   String user;
   String title;
@@ -17,6 +16,8 @@ class Quiz {
   String createdAt;
   String startTime;
   bool singleAnswer;
+  int lux;
+  int resources;
 
   String get name => this.title;
 
@@ -31,14 +32,15 @@ class Quiz {
       this.alternativeA,
       this.isPublic,
       this.secretCode,
-      this.points,
       this.description,
       this.user,
       this.title,
       this.iV,
       this.createdAt,
       this.startTime,
-      this.singleAnswer});
+      this.singleAnswer,
+      this.lux,
+      this.resources});
 
   Quiz.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
@@ -51,7 +53,6 @@ class Quiz {
     alternativeA = json['alternative_a'];
     isPublic = json['is_public'];
     secretCode = json['secret_code'];
-    points = json['points'];
     description = json['description'];
     user = json['_user'];
     title = json['title'];
@@ -73,7 +74,6 @@ class Quiz {
     data['alternative_a'] = this.alternativeA;
     data['is_public'] = this.isPublic;
     data['secret_code'] = this.secretCode;
-    data['points'] = this.points;
     data['description'] = this.description;
     data['_user'] = this.user;
     data['title'] = this.title;
@@ -81,6 +81,9 @@ class Quiz {
     data['created_at'] = this.createdAt;
     data['start_time'] = this.startTime;
     data['single_answer'] = this.singleAnswer;
+    data['lux'] = this.lux;
+    data['resources'] = this.resources;
+
     return data;
   }
 }
