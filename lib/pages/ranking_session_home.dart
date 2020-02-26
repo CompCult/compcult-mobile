@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:museu_vivo/pages/bloc/ranking_bloc.dart';
 import 'package:museu_vivo/shared/models/user.dart';
 
+import 'bloc/user_bloc.dart';
+
 class Ranking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class Ranking extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(top: 2, left: 10, right: 10),
           child: ExpansionTile(
-            title: PersonalRank(),
+            title:PersonalRank(),
             children: <Widget>[
               Container(
                 height: 300,
@@ -75,11 +77,17 @@ class Ranking extends StatelessWidget {
   }
 }
 
-class PersonalRank extends StatelessWidget {
+class PersonalRank extends StatefulWidget {
   const PersonalRank({
     Key key,
   }) : super(key: key);
 
+  @override
+  _PersonalRankState createState() => _PersonalRankState();
+}
+
+class _PersonalRankState extends State<PersonalRank> {
+  UserBloc bloc = BlocProvider.getBloc<UserBloc>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -93,10 +101,30 @@ class PersonalRank extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        Text(
-          "#3 Italo Miguel",
-          style: TextStyle(
-              fontStyle: FontStyle.italic, fontSize: 14, color: Colors.white),
+        Row(
+          children: <Widget>[
+            StreamBuilder<User>(
+                stream: bloc.user,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return Container();
+                  return Text(
+                    '# posicao ${snapshot.data.name}',
+                    style: TextStyle(
+                        fontFamily: "Poppins", fontSize: 18, color: Colors.white),
+                  );
+                }),
+                SizedBox(width: 90,),
+            StreamBuilder<User>(
+                stream: bloc.user,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return Container();
+                  return Text(
+                    '${snapshot.data.lux}',
+                    style: TextStyle(
+                        fontFamily: "Poppins", fontSize: 18, color: Colors.white),
+                  );
+                }),
+          ],
         ),
         SizedBox(
           height: 7,

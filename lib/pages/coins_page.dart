@@ -36,6 +36,7 @@ class _CoinsPageState extends State<CoinsPage> {
                 SizedBox(
                   height: 8,
                 ),
+                
                 ThematicSession(),
                 SizedBox(
                   height: 8,
