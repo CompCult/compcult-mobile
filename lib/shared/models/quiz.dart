@@ -60,6 +60,8 @@ class Quiz {
     createdAt = json['created_at'];
     startTime = json['start_time'];
     singleAnswer = json['single_answer'];
+    lux = json['lux'];
+    resources = json['resources'];
   }
 
   Map<String, dynamic> toJson() {
