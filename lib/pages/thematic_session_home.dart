@@ -15,84 +15,82 @@ class _ThematicSessionState extends State<ThematicSession> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Color(0xff60B3FC),
-        ),
-        child: Stack(
-          overflow: Overflow.visible,
-          children: <Widget>[
-            Positioned(
-              left: -50,
-              child: Image.asset("assets/leratos/arara.png"),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 20,
-                    right: 10,
-                    bottom: 15,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Color(0xff60B3FC),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Expanded(
+            flex: 4,
+            child: Image.asset("assets/leratos/arara.png"),
+          ),
+          Expanded(
+            flex: 6,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 20,
+                right: 10,
+                bottom: 15,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black38,
+                      blurRadius: 7,
+                      spreadRadius: 1,
+                      offset: Offset(4, 6),
+                    )
+                  ],
+                  color: Color(0xff0071D5),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
                   ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
                   child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black38,
-                          blurRadius: 7,
-                          spreadRadius: 1,
-                          offset: Offset(4, 6),
+                    
+                    child: Column(
+                      children: <Widget>[
+                        StreamBuilder<User>(
+                            stream: bloc.user,
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) return Container();
+                              return Text(
+                                'Olá, ${snapshot.data.name}!',
+                                style: TextStyle(
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    color: Colors.white),
+                              );
+                            }),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Me chamo Lara Arara e vou te ajudar e te dar algumas instruções sobre "
+                          "este jogo.  "
+                          "\nLogo abaixo de mim, você vai ter novas missões, quizzes e minigames para jogar."
+                          "\nLogo acima de mim, é onde está localizado o ranking, aonde você vai poder "
+                          "ver a sua posição e a posição de alguns outros jogadores que você"
+                          "está competindo."
+                          "\n E ai? Vamos Jogar?",
+                          style: TextStyle(fontSize: 11, color: Colors.white),
                         )
                       ],
-                      color: Color(0xff0071D5),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        bottomLeft: Radius.circular(25),
-                        bottomRight: Radius.circular(25),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Container(
-                        width: 200,
-                        child: Column(
-                          children: <Widget>[
-                            StreamBuilder<User>(
-                                stream: bloc.user,
-                                builder: (context, snapshot) {
-                                  if (!snapshot.hasData) return Container();
-                                  return Text(
-                                    'Olá, ${snapshot.data.name}!',
-                                    style: TextStyle(
-                                        fontFamily: "Poppins",
-                                        fontSize: 18,
-                                        color: Colors.white),
-                                  );
-                                }),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Me chamo Lara Arara e vou te ajudar e te dar algumas instruções sobre "
-                              "este jogo.  "
-                              "\nLogo abaixo de mim, você vai ter novas missões, quizzes e minigames para jogar."
-                              "\nLogo acima de mim, é onde está localizado o ranking, aonde você vai poder "
-                              "ver a sua posição e a posição de alguns outros jogadores que você"
-                              "está competindo."
-                              "\n E ai? Vamos Jogar?",
-                              style:
-                                  TextStyle(fontSize: 11, color: Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
                     ),
                   ),
-                )
-              ],
+                ),
+              ),
             ),
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 }
