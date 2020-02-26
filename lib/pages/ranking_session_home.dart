@@ -108,12 +108,12 @@ class _PersonalRankState extends State<PersonalRank> {
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) return Container();
                   return Text(
-                    '# posicao ${snapshot.data.name}',
+                    '${snapshot.data.name}',
                     style: TextStyle(
                         fontFamily: "Poppins", fontSize: 18, color: Colors.white),
                   );
                 }),
-                SizedBox(width: 90,),
+                SizedBox(width: 10,),
             StreamBuilder<User>(
                 stream: bloc.user,
                 builder: (context, snapshot) {
