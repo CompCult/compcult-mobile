@@ -184,7 +184,8 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
   Widget _buildRecordButton(MissionSubmitBloc bloc) {
     return FlatButton(
-      color: Theme.of(context).accentColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      color: Color(0xff60B3FC),
       child: Text(
         _textRecordButton,
         style: TextStyle(color: Colors.white),
@@ -195,29 +196,40 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
   Widget _buildRecorderButtons() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         RaisedButton(
+          shape: RoundedRectangleBorder(  
+            borderRadius: BorderRadius.circular(10)
+          ),
           color: Theme.of(context).accentColor,
-          child: Text('Play', style: TextStyle(color: Colors.white)),
+          child: Icon(Icons.play_arrow,color: Colors.white),
           disabledTextColor: Colors.white,
-          disabledColor: Colors.grey.withOpacity(0.5),
+          disabledColor: Color(0xff60B3FC),
           onPressed:
               _recording?.status == RecordingStatus.Stopped ? _play : null,
         ),
+        SizedBox(width: 4),
         RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
           color: Theme.of(context).accentColor,
-          child: Text('Pause', style: TextStyle(color: Colors.white)),
+          child: Icon(Icons.pause, color: Colors.white,),
           disabledTextColor: Colors.white,
-          disabledColor: Colors.grey.withOpacity(0.5),
+          disabledColor: Color(0xff60B3FC),
           onPressed:
               _recording?.status == RecordingStatus.Stopped ? _pause : null,
         ),
+        SizedBox(width: 4),
         RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
           color: Theme.of(context).accentColor,
-          child: Text('Stop', style: TextStyle(color: Colors.white)),
+          child: Icon(Icons.stop,color: Colors.white,),
           disabledTextColor: Colors.white,
-          disabledColor: Colors.grey.withOpacity(0.5),
+          disabledColor: Color(0xff60B3FC),
           onPressed:
               _recording?.status == RecordingStatus.Stopped ? _stop : null,
         ),
@@ -246,10 +258,11 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
   Widget _buildLocationButton(String value, MissionSubmitBloc bloc) {
     return FlatButton(
-      color: Theme.of(context).accentColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      color: Color(0xff60B3FC),
       child: Text(
         value,
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white, fontSize: 8),
       ),
       onPressed: () {
         _getCurrentLocation(bloc);
@@ -359,7 +372,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        _flatButtonIcon("Câmera", Icons.add_a_photo,
+        _flatButtonIcon("Camera", Icons.add_a_photo,
             () => _getImageFromCamera(missionSubmitBloc)),
         _flatButtonIcon("Galeria", Icons.wallpaper,
             () => _getImageFromGallery(missionSubmitBloc)),
@@ -440,8 +453,12 @@ class _MissionSubmitState extends State<MissionSubmit> {
   Widget _buildButton(
       BuildContext context, String label, MissionSubmitBloc bloc) {
     return Container(
-      height: 50,
-      color: Theme.of(context).accentColor,
+      width: 180,
+      height: 35,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Color(0xff60B3FC),
+      ),
       child: SizedBox.expand(
         child: FlatButton(
           child: _isLoading
@@ -480,7 +497,27 @@ class _MissionSubmitState extends State<MissionSubmit> {
   }
 
   Widget _flatButtonIcon(String label, IconData icon, Function func) {
-    return FlatButton.icon(
+    return Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: Container(
+        width: 35,
+        height: 35,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: Color(0xff60B3FC)),
+        child: Center(
+          child: IconButton(
+            icon: Icon(
+              icon,
+              size: 19,
+              color: Colors.white,
+            ),
+            onPressed: func,
+          ),
+        ),
+      ),
+    );
+    /*FlatButton.icon(
       padding: EdgeInsets.only(left: 10, right: 10),
       onPressed: func,
       icon: Icon(icon),
@@ -494,7 +531,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
           ),
         ),
       ),
-    );
+    );*/
   }
 
   Future<dynamic> _getGroups(String userId) async {
@@ -513,48 +550,77 @@ class _MissionSubmitState extends State<MissionSubmit> {
       appBar: AppBar(
         title: CustomAppBar(),
       ),
-      body: ListView(
-        padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              _buildTitle(missionSubmitBloc, widget.mission),
-              SizedBox(
-                height: 20,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                "assets/leratos/fundo_quizzes.jpg",
               ),
-              _buildDescription(missionSubmitBloc, widget.mission),
-              SizedBox(
-                height: 15,
+              fit: BoxFit.cover),
+        ),
+        child: ListView(
+          padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: Colors.white.withOpacity(0.7)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    _buildTitle(missionSubmitBloc, widget.mission),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _buildDescription(missionSubmitBloc, widget.mission),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    if (widget.mission.isGrupal)
+                      _buildTeamField(missionSubmitBloc),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (widget.mission.hasGeolocation)
+                      _buildLocationLabel("* Requer localização", Colors.red),
+                    if (widget.mission.hasText)
+                      _buildTextField(missionSubmitBloc),
+                    Row(
+                      children: <Widget>[
+                        if (widget.mission.hasGeolocation)
+                          _buildLocationButton(
+                              "Certifique-se que seu GPS está habilitado e clique aqui",
+                              missionSubmitBloc),
+                        if (widget.mission.hasImage)
+                          _buildImageField(missionSubmitBloc),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                    /*if (widget.mission.hasImage)
+                      _buildImageValidator(missionSubmitBloc),
+                    const SizedBox(height: 5),*/
+                    if (widget.mission.hasGeolocation)
+                      _buildLocationValidator(missionSubmitBloc),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        if (widget.mission.hasAudio)
+                          _buildRecordButton(missionSubmitBloc),
+                        const SizedBox(height: 10),
+                        if (widget.mission.hasAudio) _buildRecorderButtons(),
+                        const SizedBox(height: 80),
+                      ],
+                    ),
+                    _buildButton(context, "ENVIAR RESPOSTA", missionSubmitBloc),
+                  ],
+                ),
               ),
-              if (widget.mission.isGrupal) _buildTeamField(missionSubmitBloc),
-              SizedBox(
-                height: 10,
-              ),
-              if (widget.mission.hasGeolocation)
-                _buildLocationLabel("* Requer localização", Colors.red),
-              if (widget.mission.hasText) _buildTextField(missionSubmitBloc),
-              if (widget.mission.hasImage) _buildImageField(missionSubmitBloc),
-              const SizedBox(height: 20),
-              if (widget.mission.hasImage)
-                _buildImageValidator(missionSubmitBloc),
-              const SizedBox(height: 5),
-              if (widget.mission.hasGeolocation)
-                _buildLocationButton(
-                    "Certifique-se que seu GPS está habilitado e clique aqui",
-                    missionSubmitBloc),
-              const SizedBox(height: 5),
-              if (widget.mission.hasGeolocation)
-                _buildLocationValidator(missionSubmitBloc),
-              if (widget.mission.hasAudio)
-                _buildRecordButton(missionSubmitBloc),
-              const SizedBox(height: 10),
-              if (widget.mission.hasAudio) _buildRecorderButtons(),
-              const SizedBox(height: 80),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
-      bottomSheet: _buildButton(context, "ENVIAR RESPOSTA", missionSubmitBloc),
+      
     );
   }
 }
