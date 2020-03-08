@@ -99,7 +99,7 @@ class _ChallengesState extends State<Challenges> {
                     ),
                     onTap: () {
                       Navigator.of(context)
-                          .pushNamed(MissionSubmit.routeName, arguments: item);
+                        .pushNamed(MissionSubmit.routeName, arguments: item);
                     },
                   ),
                 ),
