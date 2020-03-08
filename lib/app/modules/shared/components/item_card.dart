@@ -74,7 +74,48 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Align(
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 17,
+                        height: 15,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Colors.green,
+                        ),
+                      ),
+                      SizedBox(width: 3,),
+                      Text(
+                      '${item.lux}',
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      )),
+                      SizedBox(width: 7,),
+                      Container(
+                        width: 17,
+                        height: 15,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Colors.yellow
+                        ),
+                      ),
+                      SizedBox(width: 3,),
+                      Text(
+                      '${item.resources}',
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      )),
+                      
+
+
+                    ],
+                  )
+                  
+                  /*Align(
                     alignment: Alignment.centerRight,
                     child: Text(
                       '${item.lux} LUX | ${item.resources} RSC',
@@ -84,7 +125,7 @@ class ItemCard extends StatelessWidget {
                         fontSize: 13,
                       ),
                     ),
-                  )
+                  )*/
                 ],
               ),
             ],

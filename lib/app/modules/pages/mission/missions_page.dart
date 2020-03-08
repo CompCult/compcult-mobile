@@ -36,31 +36,72 @@ class _MissionsPageState extends State<MissionsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
             child: Column(
               children: <Widget>[
-                ListTile(
-                  title: Text(
-                    'Minhas equipes',
-                    style: TextStyle(),
-                  ),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () =>
-                      Navigator.of(context).pushNamed(TeamsPage.routeName),
-                ),
                 SizedBox(height: 15),
-                SecretCodeField(
-                  label: 'Código secreto da missão',
-                  onSubmited: (missionId) async {
-                    try {
-                      Mission mission =
-                          await missionsBloc.getSecretMission(missionId);
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    
+                    Container(
+                      width: 200,
+                      child: SecretCodeField(
+                        label: 'Código secreto da missão',
+                        onSubmited: (missionId) async {
+                          try {
+                            Mission mission =
+                                await missionsBloc.getSecretMission(missionId);
 
-                      Navigator.of(context)
-                          .pushNamed(MissionSubmit.routeName, arguments: mission);
-                    } catch (e) {
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text(e), backgroundColor: Colors.red),
-                      );
-                    }
-                  },
+                            Navigator.of(context).pushNamed(
+                                MissionSubmit.routeName,
+                                arguments: mission);
+                          } catch (e) {
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(e),
+                                  backgroundColor: Colors.red),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black38)
+                          ),
+                      height: 35,
+                      width: 170,
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(TeamsPage.routeName),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Icon(
+                              Icons.group,
+                              color: Color(0xff60B3FC),
+                            ),
+                            SizedBox(width: 5,),
+                            Text(
+                              "Minhas Equipes",
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontFamily: "Poppins",
+                                color: Colors.black38
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                              color: Color(0xff60B3FC),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 15),
                 StreamBuilder(

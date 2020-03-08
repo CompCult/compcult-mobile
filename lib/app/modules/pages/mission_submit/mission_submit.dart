@@ -183,14 +183,17 @@ class _MissionSubmitState extends State<MissionSubmit> {
   }
 
   Widget _buildRecordButton(MissionSubmitBloc bloc) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      color: Color(0xff60B3FC),
-      child: Text(
-        _textRecordButton,
-        style: TextStyle(color: Colors.white),
+    return Padding(
+      padding: EdgeInsets.only(right: 10),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        color: Color(0xff60B3FC),
+        child: Text(
+          _textRecordButton,
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: _recorderOptions,
       ),
-      onPressed: _recorderOptions,
     );
   }
 
@@ -199,11 +202,10 @@ class _MissionSubmitState extends State<MissionSubmit> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         RaisedButton(
-          shape: RoundedRectangleBorder(  
-            borderRadius: BorderRadius.circular(10)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           color: Theme.of(context).accentColor,
-          child: Icon(Icons.play_arrow,color: Colors.white),
+          child: Icon(Icons.play_arrow, color: Colors.white),
           disabledTextColor: Colors.white,
           disabledColor: Color(0xff60B3FC),
           onPressed:
@@ -211,11 +213,13 @@ class _MissionSubmitState extends State<MissionSubmit> {
         ),
         SizedBox(width: 4),
         RaisedButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           color: Theme.of(context).accentColor,
-          child: Icon(Icons.pause, color: Colors.white,),
+          child: Icon(
+            Icons.pause,
+            color: Colors.white,
+          ),
           disabledTextColor: Colors.white,
           disabledColor: Color(0xff60B3FC),
           onPressed:
@@ -223,11 +227,13 @@ class _MissionSubmitState extends State<MissionSubmit> {
         ),
         SizedBox(width: 4),
         RaisedButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           color: Theme.of(context).accentColor,
-          child: Icon(Icons.stop,color: Colors.white,),
+          child: Icon(
+            Icons.stop,
+            color: Colors.white,
+          ),
           disabledTextColor: Colors.white,
           disabledColor: Color(0xff60B3FC),
           onPressed:
@@ -262,7 +268,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
       color: Color(0xff60B3FC),
       child: Text(
         value,
-        style: TextStyle(color: Colors.white, fontSize: 8),
+        style: TextStyle(color: Colors.white, fontSize: 11),
       ),
       onPressed: () {
         _getCurrentLocation(bloc);
@@ -450,6 +456,49 @@ class _MissionSubmitState extends State<MissionSubmit> {
     );
   }
 
+  Widget _points() {
+    return Row(
+      children: <Widget>[
+        Container(
+          width: 17,
+          height: 15,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: Colors.green,
+          ),
+        ),
+        SizedBox(
+          width: 3,
+        ),
+        Text('',
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            )),
+        SizedBox(
+          width: 7,
+        ),
+        Container(
+          width: 17,
+          height: 15,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              color: Colors.yellow),
+        ),
+        SizedBox(
+          width: 3,
+        ),
+        Text('',
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            )),
+      ],
+    );
+  }
+
   Widget _buildButton(
       BuildContext context, String label, MissionSubmitBloc bloc) {
     return Container(
@@ -587,23 +636,25 @@ class _MissionSubmitState extends State<MissionSubmit> {
                     if (widget.mission.hasText)
                       _buildTextField(missionSubmitBloc),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         if (widget.mission.hasGeolocation)
                           _buildLocationButton(
-                              "Certifique-se que seu GPS está habilitado e clique aqui",
+                              "Clique aqui para enviar sua posição",
                               missionSubmitBloc),
                         if (widget.mission.hasImage)
                           _buildImageField(missionSubmitBloc),
                         const SizedBox(height: 20),
                       ],
                     ),
-                    /*if (widget.mission.hasImage)
+                    if (widget.mission.hasImage)
                       _buildImageValidator(missionSubmitBloc),
-                    const SizedBox(height: 5),*/
+                    const SizedBox(height: 5),
                     if (widget.mission.hasGeolocation)
                       _buildLocationValidator(missionSubmitBloc),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         if (widget.mission.hasAudio)
                           _buildRecordButton(missionSubmitBloc),
@@ -612,7 +663,16 @@ class _MissionSubmitState extends State<MissionSubmit> {
                         const SizedBox(height: 80),
                       ],
                     ),
-                    _buildButton(context, "ENVIAR RESPOSTA", missionSubmitBloc),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      
+                      children: <Widget>[
+                        _points(),
+                        SizedBox(width: 60,),
+                        _buildButton(
+                            context, "ENVIAR RESPOSTA", missionSubmitBloc),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -620,7 +680,6 @@ class _MissionSubmitState extends State<MissionSubmit> {
           ],
         ),
       ),
-      
     );
   }
 }
