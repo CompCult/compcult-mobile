@@ -5,6 +5,8 @@ import 'package:museu_vivo/app/modules/pages/quiz/quizzes_bloc.dart';
 import 'package:museu_vivo/app/modules/shared/models/mission.dart';
 import 'package:museu_vivo/app/modules/shared/models/quiz.dart';
 
+import '../mission_submit/mission_submit.dart';
+
 class Challenges extends StatefulWidget {
   @override
   _ChallengesState createState() => _ChallengesState();
@@ -90,9 +92,15 @@ class _ChallengesState extends State<Challenges> {
                     color: Colors.white),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    "${i + 1} - ${item.name}",
-                    style: TextStyle(color: Colors.blue),
+                  child: GestureDetector(
+                    child: Text(
+                      "${i + 1} - ${item.name}",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(MissionSubmit.routeName, arguments: item);
+                    },
                   ),
                 ),
               ),
