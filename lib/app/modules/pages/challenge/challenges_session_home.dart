@@ -6,6 +6,7 @@ import 'package:museu_vivo/app/modules/shared/models/mission.dart';
 import 'package:museu_vivo/app/modules/shared/models/quiz.dart';
 
 import '../mission_submit/mission_submit.dart';
+import '../quiz_submit/quiz_submit.dart';
 
 class Challenges extends StatefulWidget {
   @override
@@ -65,14 +66,14 @@ class _ChallengesState extends State<Challenges> {
   }
 
   _buildListQuizzes(List<Quiz> quizzes) {
-    return _buildListItems(quizzes);
+    return _buildListItems(quizzes, QuizSubmit.routeName);
   }
 
   _buildListMissions(List<Mission> missions) {
-    return _buildListItems(missions);
+    return _buildListItems(missions, MissionSubmit.routeName);
   }
 
-  _buildListItems(var items) {
+  _buildListItems(var items, String routeName) {
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -99,7 +100,7 @@ class _ChallengesState extends State<Challenges> {
                     ),
                     onTap: () {
                       Navigator.of(context)
-                        .pushNamed(MissionSubmit.routeName, arguments: item);
+                          .pushNamed(routeName, arguments: item);
                     },
                   ),
                 ),
