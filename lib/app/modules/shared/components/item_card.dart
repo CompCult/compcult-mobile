@@ -25,7 +25,7 @@ class ItemCard extends StatelessWidget {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Enviado com sucesso!'),
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Colors.blue.withOpacity(0.7),
                     ),
                   );
                 }
@@ -49,20 +49,23 @@ class ItemCard extends StatelessWidget {
                       Radius.circular(30),
                     ),
                     color: Colors.blue),
-                height: 100,
-                width: 100,
+                height: 104,
+                width: 104,
               ),
               SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    item.name,
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).accentColor,
-                      fontSize: 15,
+                  Container(
+                    width: MediaQuery.of(context).size.width/2 ,
+                    child: Text(
+                      item.name,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).accentColor,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -109,9 +112,6 @@ class ItemCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
                       )),
-                      
-
-
                     ],
                   )
                   

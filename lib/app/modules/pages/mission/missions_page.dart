@@ -42,7 +42,7 @@ class _MissionsPageState extends State<MissionsPage> {
                   children: <Widget>[
                     
                     Container(
-                      width: 200,
+                      width: MediaQuery.of(context).size.width/2 + 10,
                       child: SecretCodeField(
                         label: 'Código secreto da missão',
                         onSubmited: (missionId) async {
@@ -70,7 +70,7 @@ class _MissionsPageState extends State<MissionsPage> {
                           border: Border.all(color: Colors.black38)
                           ),
                       height: 35,
-                      width: 170,
+                      width: MediaQuery.of(context).size.width/2 - 20,
                       child: FlatButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),

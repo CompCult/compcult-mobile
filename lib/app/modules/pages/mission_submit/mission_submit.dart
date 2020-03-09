@@ -610,70 +610,73 @@ class _MissionSubmitState extends State<MissionSubmit> {
         child: ListView(
           padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Colors.white.withOpacity(0.7)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    _buildTitle(missionSubmitBloc, widget.mission),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    _buildDescription(missionSubmitBloc, widget.mission),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    if (widget.mission.isGrupal)
-                      _buildTeamField(missionSubmitBloc),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    if (widget.mission.hasGeolocation)
-                      _buildLocationLabel("* Requer localização", Colors.red),
-                    if (widget.mission.hasText)
-                      _buildTextField(missionSubmitBloc),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        if (widget.mission.hasGeolocation)
-                          _buildLocationButton(
-                              "Clique aqui para enviar sua posição",
-                              missionSubmitBloc),
-                        if (widget.mission.hasImage)
-                          _buildImageField(missionSubmitBloc),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
-                    if (widget.mission.hasImage)
-                      _buildImageValidator(missionSubmitBloc),
-                    const SizedBox(height: 5),
-                    if (widget.mission.hasGeolocation)
-                      _buildLocationValidator(missionSubmitBloc),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        if (widget.mission.hasAudio)
-                          _buildRecordButton(missionSubmitBloc),
-                        const SizedBox(height: 10),
-                        if (widget.mission.hasAudio) _buildRecorderButtons(),
-                        const SizedBox(height: 80),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      
-                      children: <Widget>[
-                        _points(),
-                        SizedBox(width: 60,),
-                        _buildButton(
-                            context, "ENVIAR RESPOSTA", missionSubmitBloc),
-                      ],
-                    ),
-                  ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: Colors.white.withOpacity(0.7)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: <Widget>[
+                      _buildTitle(missionSubmitBloc, widget.mission),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _buildDescription(missionSubmitBloc, widget.mission),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      if (widget.mission.isGrupal)
+                        _buildTeamField(missionSubmitBloc),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      if (widget.mission.hasGeolocation)
+                        _buildLocationLabel("* Requer localização", Colors.red),
+                      if (widget.mission.hasText)
+                        _buildTextField(missionSubmitBloc),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          if (widget.mission.hasGeolocation)
+                            _buildLocationButton(
+                                "Clique aqui para enviar sua posição",
+                                missionSubmitBloc),
+                          if (widget.mission.hasImage)
+                            _buildImageField(missionSubmitBloc),
+                          const SizedBox(height: 20),
+                        ],
+                      ),
+                      if (widget.mission.hasImage)
+                        _buildImageValidator(missionSubmitBloc),
+                      const SizedBox(height: 5),
+                      if (widget.mission.hasGeolocation)
+                        _buildLocationValidator(missionSubmitBloc),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          if (widget.mission.hasAudio)
+                            _buildRecordButton(missionSubmitBloc),
+                          const SizedBox(height: 10),
+                          if (widget.mission.hasAudio) _buildRecorderButtons(),
+                          const SizedBox(height: 80),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        
+                        children: <Widget>[
+                          _points(),
+                          SizedBox(width: 60,),
+                          _buildButton(
+                              context, "ENVIAR RESPOSTA", missionSubmitBloc),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

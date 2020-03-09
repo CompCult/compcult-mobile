@@ -21,74 +21,76 @@ class _GamesPageState extends State<GamesPage> {
       appBar: AppBar(
         title: CustomAppBar(),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/background.png'),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/background.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            SizedBox(
-              height: 15,
-            ),
-            GestureDetector(
-              child: Image.asset(
-                "assets/leratos/aba_minigames.png",
-                height: 150,
-                width: 500,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              SizedBox(
+                height: 15,
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MiniGames(),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            GestureDetector(
-              child: Image.asset(
-                "assets/leratos/aba_missoes.png",
-                height: 150,
-                width: 500,
+              GestureDetector(
+                child: Image.asset(
+                  "assets/leratos/aba_minigames.png",
+                  height: 150,
+                  width: 500,
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MiniGames(),
+                    ),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MissionsPage(),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            GestureDetector(
-              child: Image.asset(
-                "assets/leratos/aba_quizzes.png",
-                height: 150,
-                width: 500,
+              SizedBox(
+                height: 8,
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuizzesPage(),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 8,
-            ),
-          ],
+              GestureDetector(
+                child: Image.asset(
+                  "assets/leratos/aba_missoes.png",
+                  height: 150,
+                  width: 500,
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MissionsPage(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              GestureDetector(
+                child: Image.asset(
+                  "assets/leratos/aba_quizzes.png",
+                  height: 150,
+                  width: 500,
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizzesPage(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(
+                height: 8,
+              ),
+            ],
+          ),
         ),
       ),
     );
