@@ -11,9 +11,9 @@ class SecretCodeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
           color: Colors.white),
-      height: 45,
+      height: 35,
       width: 280,
       child: TextFormField(
         keyboardType: TextInputType.text,
@@ -27,15 +27,23 @@ class SecretCodeField extends StatelessWidget {
             fontSize: 13,
           ),
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(40))),
-          prefixIcon: Icon(Icons.lock_outline),
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          prefixIcon: Icon(
+            Icons.lock_outline,
+            color: Color(0xff60B3FC),
+            size: 20,
+          ),
           suffixIcon: IconButton(
-            icon: Icon(Icons.send),
+            icon: Icon(
+              Icons.send,
+              color: Color(0xff60B3FC),
+              size: 20,
+            ),
             onPressed: () => onSubmited(_secretCodeController.text),
           ),
         ),
         style: TextStyle(
-          fontSize: 13,
+          fontSize: 12,
           fontFamily: "Poppins",
         ),
       ),

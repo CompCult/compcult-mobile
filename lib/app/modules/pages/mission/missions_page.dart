@@ -23,54 +23,104 @@ class _MissionsPageState extends State<MissionsPage> {
       appBar: AppBar(
         title: CustomAppBar(),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-          child: Column(
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                  'Minhas equipes',
-                  style: TextStyle(),
-                ),
-                trailing: Icon(Icons.keyboard_arrow_right),
-                onTap: () =>
-                    Navigator.of(context).pushNamed(TeamsPage.routeName),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                "assets/leratos/fundo_quizzes.jpg",
               ),
-              SizedBox(height: 15),
-              SecretCodeField(
-                label: 'Código secreto da missão',
-                onSubmited: (missionId) async {
-                  try {
-                    Mission mission =
-                        await missionsBloc.getSecretMission(missionId);
+              fit: BoxFit.cover),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    
+                    Container(
+                      width: MediaQuery.of(context).size.width/2 + 10,
+                      child: SecretCodeField(
+                        label: 'Código secreto da missão',
+                        onSubmited: (missionId) async {
+                          try {
+                            Mission mission =
+                                await missionsBloc.getSecretMission(missionId);
 
-                    Navigator.of(context)
-                        .pushNamed(MissionSubmit.routeName, arguments: mission);
-                  } catch (e) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(content: Text(e), backgroundColor: Colors.red),
-                    );
-                  }
-                },
-              ),
-              SizedBox(height: 15),
-              StreamBuilder(
-                stream: missionsBloc.missions,
-                builder: (_, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(),
+                            Navigator.of(context).pushNamed(
+                                MissionSubmit.routeName,
+                                arguments: mission);
+                          } catch (e) {
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(e),
+                                  backgroundColor: Colors.red),
+                            );
+                          }
+                        },
                       ),
-                    );
-                  }
-                  return _buildList(snapshot.data);
-                },
-              ),
-            ],
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black38)
+                          ),
+                      height: 35,
+                      width: MediaQuery.of(context).size.width/2 - 20,
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(TeamsPage.routeName),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Icon(
+                              Icons.group,
+                              color: Color(0xff60B3FC),
+                            ),
+                            SizedBox(width: 5,),
+                            Text(
+                              "Minhas Equipes",
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontFamily: "Poppins",
+                                color: Colors.black38
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                              color: Color(0xff60B3FC),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
+                StreamBuilder(
+                  stream: missionsBloc.missions,
+                  builder: (_, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return _buildList(snapshot.data);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
