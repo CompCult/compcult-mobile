@@ -2,6 +2,8 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:museu_vivo/app/modules/shared/repositories/item_repository.dart';
+import 'package:museu_vivo/app/modules/store/store_page_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +31,7 @@ import 'app/modules/shared/repositories/dio_repository.dart';
 import 'app/modules/shared/repositories/mission_repository.dart';
 import 'app/modules/shared/repositories/quiz_repository.dart';
 import 'app/modules/shared/repositories/user_repository.dart';
+import 'app/modules/shared/services/item_service.dart';
 import 'app/modules/shared/services/mission_service.dart';
 import 'app/modules/shared/services/quiz_service.dart';
 import 'app/modules/shared/services/user_service.dart';
@@ -72,6 +75,7 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => HomeBloc(
                     i.get<MissionRepository>(),
                     i.get<QuizRepository>(),
+                    i.get<ItemRepository>(),
                   )),
               Bloc((i) => RankingBloc(i.get<UserRepository>())),
               Bloc((i) => SignUpBloc(i.get<UserRepository>())),
@@ -80,6 +84,7 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => CoinsBloc(i.get<UserRepository>())),
               Bloc((i) => QuizzesBloc(i.get<QuizRepository>())),
               Bloc((i) => QuizSubmitBloc(i.get<QuizRepository>())),
+              Bloc((i) => ItensBloc(i.get<ItemRepository>())),
               Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
               Bloc((i) => MissionSubmitBloc(
                   i.get<MissionRepository>(), i.get<UserRepository>())),
@@ -90,6 +95,10 @@ class _MyAppState extends State<MyApp> {
                     i.get<QuizService>(),
                     i.get<UserRepository>(),
                   )),
+              Dependency((i) => ItemRepository(
+                    i.get<ItemService>(),
+                    i.get<UserRepository>(),
+                  )),    
               Dependency((i) => MissionRepository(
                     i.get<MissionService>(),
                     i.get<UserRepository>(),
@@ -103,6 +112,7 @@ class _MyAppState extends State<MyApp> {
               Dependency((i) => UserService(i.get<DioRepository>().dio)),
               Dependency((i) => QuizService(i.get<DioRepository>().dio)),
               Dependency((i) => MissionService(i.get<DioRepository>().dio)),
+              Dependency((i) => ItemService(i.get<DioRepository>().dio)),
               Dependency((i) => dioRepository),
             ],
             child: MultiProvider(
