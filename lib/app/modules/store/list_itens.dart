@@ -182,7 +182,12 @@ class _ListItensState extends State<ListItens> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
                             onPressed: () async {
-                               await itensBloc.createItemOrder(item.id);
+                              try {
+                                await itensBloc.createItemOrder(item.id);
+                              } catch (err) {
+                                Scaffold.of(context).showSnackBar(
+                                    SnackBar(content: Text('Algo deu errado')));
+                              }
                             },
                             color: Colors.blue,
                             child: Text(
