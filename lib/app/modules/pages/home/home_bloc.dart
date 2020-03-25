@@ -15,4 +15,6 @@ class HomeBloc extends BlocBase {
   fetchQuizzes() => _quizRepository.fetchQuizzes();
 
   fetchItens() => _itemRepository.fetchItens();
+
+  fetchItensPurchased() => _itemRepository.fetchPurchasedItens();
 }

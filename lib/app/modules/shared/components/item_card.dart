@@ -24,7 +24,7 @@ class ItemCard extends StatelessWidget {
                 if (value != null) {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Enviado com sucesso!'),
+                      content: Text('Enviado com sucesso!',style: TextStyle(color: Colors.white),),
                       backgroundColor: Colors.blue.withOpacity(0.7),
                     ),
                   );

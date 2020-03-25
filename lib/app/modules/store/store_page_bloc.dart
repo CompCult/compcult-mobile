@@ -9,4 +9,9 @@ class ItensBloc extends BlocBase {
   ItensBloc(this.itemRepository);
 
   Observable<List<Item>> get itens => itemRepository.itens;
+
+  Observable<List<Item>> get itensPurchased => itemRepository.itensPurchased;
+
+   Future createItemOrder(itemId) =>
+      itemRepository.createItemOrder(itemId);
 }
