@@ -195,7 +195,7 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                                       Container(
                                         width: 300,
                                         child: Text(
-                                          'O seu pedido foi enviado para o professo',
+                                          'A compra foi realizada com sucesso.',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 15,
@@ -220,7 +220,7 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                                       Container(
                                         width: 300,
                                         child: Text(
-                                          'Você não possui pontos suficientes para comprar esse item',
+                                          'Você não possui pontos suficientes para comprar esse item.',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 15,
