@@ -26,6 +26,7 @@ class _ListPurchasedItensState extends State<ListPurchasedItens> {
         }
         if (snapshot.data.length == 0) {
           return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
