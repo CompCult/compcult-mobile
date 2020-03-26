@@ -16,69 +16,49 @@ class _StorePageState extends State<StorePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: CustomAppBar()),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                "assets/leratos/fundo_quizzes.jpg",
-              ),
-              fit: BoxFit.cover),
-        ),
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width / 3,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    onPressed: () {
-                      listItemsStore(context, itensBloc, false);
-                    },
-                    color: _selected[0] == true
-                        ? Color(0xff00036c)
-                        : Color(0xff00036c).withOpacity(0.3),
-                    child: Text(
-                      "Não comprados",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10),
-                    ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+            title: CustomAppBar(),
+            bottom: TabBar(
+              unselectedLabelColor: Colors.grey,
+
+              tabs: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "Loja",
+                    style: TextStyle(
+                        fontFamily: "Poppins", fontWeight: FontWeight.bold),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 3,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    onPressed: () {
-                      listItemsStore(context, itensBloc, true);
-                    },
-                    color: _selected[1] == true
-                        ? Color(0xff00036c)
-                        : Color(0xff00036c).withOpacity(0.3),
-                    child: Text(
-                      "Comprados",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "Meus itens",
+                    style: TextStyle(
+                        fontFamily: "Poppins", fontWeight: FontWeight.bold),
                   ),
-                )
+                ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+          body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+              Color(0xff00036c).withOpacity(0.2),
+              Color(0xff00036c).withOpacity(0.4)
+            ])),
+            child: TabBarView(
+              children: <Widget>[
+                SingleChildScrollView(
+                    child: listItemsStore(context, itensBloc, false)),
+                SingleChildScrollView(
+                    child: listItemsStore(context, itensBloc, true)),
+              ],
+            ),
+          )),
     );
   }
 }

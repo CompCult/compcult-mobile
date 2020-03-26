@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.white,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.remove_shopping_cart,
+              icon: Icon(Icons.shopping_cart,
                   color: _currentIndex == 2 ? Color(0xff60B3FC) : Colors.black),
               title: Text(
                 'Loja',

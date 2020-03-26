@@ -89,7 +89,7 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: 100,
                       child: Text(
                         item.name,
                         style: TextStyle(
@@ -102,7 +102,7 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                     ),
                     SizedBox(height: 10),
                     Container(
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: 200,
                       child: Text(
                         '${item.description}',
                         style: TextStyle(
@@ -115,7 +115,7 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                     Row(
                       children: <Widget>[
                         Container(
-                          width: 90,
+                          width:90,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -178,7 +178,7 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                           ),
                         ),
                         SizedBox(
-                            width: MediaQuery.of(context).size.width / 2 - 150),
+                            width: 15),
                         RaisedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius:
@@ -186,17 +186,69 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                           onPressed: () async {
                             try {
                               await itensBloc.createItemOrder(item.id);
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+
+                                  content: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.error),
+                                      Container(
+                                        width: 300,
+                                        child: Text(
+                                          'O seu pedido foi enviado para o professo',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  backgroundColor: Colors.blue,
+                                ),
+                              );
+
                             } catch (err) {
                               Scaffold.of(context).showSnackBar(
-                                  SnackBar(content: Text('Algo deu errado')));
+                                SnackBar(
+
+                                  content: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.error),
+                                      Container(
+                                        width: 300,
+                                        child: Text(
+                                          'Você não possui pontos suficientes para comprar esse item',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  backgroundColor: Colors.blue,
+                                ),
+                              );
                             }
                           },
-                          color: Colors.blue,
-                          child: Text(
+                          color: isItensPurchased == true ? Color(0xff00036c) :Colors.blue,
+                          child: isItensPurchased == true ? Text(
+                            "COMPRADO",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                                
+                          ): Text(
                             "COMPRAR",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
+                                
                           ),
                         )
                       ],
