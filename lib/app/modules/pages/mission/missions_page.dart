@@ -31,98 +31,95 @@ class _MissionsPageState extends State<MissionsPage> {
               ),
               fit: BoxFit.cover),
         ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    
-                    Container(
-                      width: MediaQuery.of(context).size.width/2 + 10,
-                      child: SecretCodeField(
-                        label: 'Código secreto da missão',
-                        onSubmited: (missionId) async {
-                          try {
-                            Mission mission =
-                                await missionsBloc.getSecretMission(missionId);
+        child: ListView(children: <Widget>[
+          Column(
+            children: <Widget>[
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    width: 160,
+                    child: SecretCodeField(
+                      label: 'Código secreto da missão',
+                      onSubmited: (missionId) async {
+                        try {
+                          Mission mission =
+                              await missionsBloc.getSecretMission(missionId);
 
-                            Navigator.of(context).pushNamed(
-                                MissionSubmit.routeName,
-                                arguments: mission);
-                          } catch (e) {
-                            Scaffold.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text(e),
-                                  backgroundColor: Colors.red),
-                            );
-                          }
-                        },
-                      ),
+                          Navigator.of(context).pushNamed(
+                              MissionSubmit.routeName,
+                              arguments: mission);
+                        } catch (e) {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(e), backgroundColor: Colors.red),
+                          );
+                        }
+                      },
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black38)
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black38)),
+                    height: 35,
+                    width: 140,
+                    child: FlatButton(
+                      padding: EdgeInsets.all(2),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(TeamsPage.routeName),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Icon(
+                            Icons.group,
+                            color: Color(0xff60B3FC),
+                            size: 16,
                           ),
-                      height: 35,
-                      width: MediaQuery.of(context).size.width/2 - 20,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        onPressed: () => Navigator.of(context)
-                            .pushNamed(TeamsPage.routeName),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Icon(
-                              Icons.group,
-                              color: Color(0xff60B3FC),
-                            ),
-                            SizedBox(width: 5,),
-                            Text(
-                              "Minhas Equipes",
-                              style: TextStyle(
-                                fontSize: 11,
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Minhas Equipes",
+                            style: TextStyle(
+                                fontSize: 10,
                                 fontFamily: "Poppins",
-                                color: Colors.black38
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 20,
-                              color: Color(0xff60B3FC),
-                            ),
-                          ],
-                        ),
+                                color: Colors.black38),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 15,
+                            color: Color(0xff60B3FC),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                StreamBuilder(
-                  stream: missionsBloc.missions,
-                  builder: (_, snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-                    return _buildList(snapshot.data);
-                  },
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
+              StreamBuilder(
+                stream: missionsBloc.missions,
+                builder: (_, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  return _buildList(snapshot.data);
+                },
+              ),
+            ],
           ),
-        ),
+        ]),
       ),
     );
   }

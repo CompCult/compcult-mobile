@@ -14,8 +14,7 @@ class _MiniGamesState extends State<MiniGames> {
       appBar: AppBar(
         title: CustomAppBar(),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,8 +37,8 @@ class _MiniGamesState extends State<MiniGames> {
                         },
                         child: Image.asset(
                           "assets/leratos/jogo_da_memoria.jpg",
-                          height: 150,
-                          width: 150,
+                          height: 120,
+                          width: 120,
                         ),
                       ),
                       SizedBox(
@@ -57,8 +56,8 @@ class _MiniGamesState extends State<MiniGames> {
                         onTap: () {},
                         child: Image.asset(
                           "assets/leratos/jogo_da_vida.jpg",
-                          height: 150,
-                          width: 150,
+                          height: 120,
+                          width: 120,
                         ),
                       ),
                       SizedBox(
@@ -84,8 +83,8 @@ class _MiniGamesState extends State<MiniGames> {
                         onTap: () {},
                         child: Image.asset(
                           "assets/leratos/jogo_1.jpg",
-                          height: 150,
-                          width: 150,
+                          height: 120,
+                          width: 120,
                         ),
                       ),
                       SizedBox(
@@ -104,8 +103,8 @@ class _MiniGamesState extends State<MiniGames> {
                           child: Card(
                             child: Image.asset(
                               "assets/leratos/jogo_2.jpg",
-                              height: 150,
-                              width: 150,
+                              height: 120,
+                              width: 120,
                             ),
                           )),
                       SizedBox(

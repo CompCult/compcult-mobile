@@ -67,17 +67,19 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
           color: Colors.white,
           elevation: 5,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(35)),
                   child: Container(
-                    child: Image.network(
-                      item.image,
-                      height: 100,
-                      width: 100,
+                    height: 150,
+                    child: Center(
+                      child: Image.network(
+                        item.image,
+                        height: 100,
+                        width: 100,
+                      ),
                     ),
                   ),
                 ),
@@ -86,54 +88,66 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      width: 100,
-                      child: Text(
-                        item.name,
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).accentColor,
-                          fontSize: 20,
-                        ),
+                      width: 153,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            item.name,
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).accentColor,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 10),
                     Container(
-                      width: 200,
-                      child: Text(
-                        '${item.description}',
-                        style: TextStyle(
-                          fontFamily: "SourceSansPro",
-                          color: Colors.grey,
-                        ),
+                      width: 153,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,                        children: <Widget>[
+                          Text(
+                            '${item.description}',
+                            style: TextStyle(
+                              fontFamily: "SourceSansPro",
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 10),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width:90,
+                          width: 100,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
                                   Text(
                                     "Preço:",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.blue,
-                                    ),
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,
+                                        fontSize: 15),
                                   ),
                                   SizedBox(
                                     width: 3,
                                   ),
                                   Container(
-                                    width: 17,
-                                    height: 15,
+                                    width: 15,
+                                    height: 13,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(5)),
@@ -147,7 +161,7 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                                     style: TextStyle(
                                       fontFamily: "Poppins",
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                      fontSize: 15,
                                     ),
                                   ),
                                 ],
@@ -157,9 +171,9 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                                   Text(
                                     "Restam:",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.blue,
-                                    ),
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,
+                                        fontSize: 15),
                                   ),
                                   SizedBox(
                                     width: 3,
@@ -169,7 +183,7 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                                     style: TextStyle(
                                       fontFamily: "Poppins",
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                      fontSize: 15,
                                     ),
                                   ),
                                 ],
@@ -177,82 +191,77 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                             ],
                           ),
                         ),
-                        SizedBox(
-                            width: 15),
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          onPressed: () async {
-                            try {
-                              await itensBloc.createItemOrder(item.id);
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-
-                                  content: Row(
-                                    children: <Widget>[
-                                      Icon(Icons.error),
-                                      Container(
-                                        width: 300,
-                                        child: Text(
-                                          'A compra foi realizada com sucesso.',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  backgroundColor: Colors.blue,
-                                ),
-                              );
-
-                            } catch (err) {
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-
-                                  content: Row(
-                                    children: <Widget>[
-                                      Icon(Icons.error),
-                                      Container(
-                                        width: 300,
-                                        child: Text(
-                                          'Você não possui pontos suficientes para comprar esse item.',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  backgroundColor: Colors.blue,
-                                ),
-                              );
-                            }
-                          },
-                          color: isItensPurchased == true ? Color(0xff00036c) :Colors.blue,
-                          child: isItensPurchased == true ? Text(
-                            "COMPRADO",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                                
-                          ): Text(
-                            "COMPRAR",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                                
-                          ),
-                        )
                       ],
                     ),
+                    SizedBox(height: 10,),
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      onPressed: () async {
+                        try {
+                          isItensPurchased == true? null : itensBloc.createItemOrder(item.id);
+                          isItensPurchased == true? null : Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Row(
+                                children: <Widget>[
+                                  Icon(Icons.error),
+                                  Container(
+                                    width: 300,
+                                    child: Text(
+                                      'A compra foi realizada com sucesso.',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              backgroundColor: Colors.blue,
+                            ),
+                          );
+                        } catch (err) {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Row(
+                                children: <Widget>[
+                                  Icon(Icons.error),
+                                  Container(
+                                    width: 300,
+                                    child: Text(
+                                      'Você não possui pontos suficientes para comprar esse item.',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              backgroundColor: Colors.blue,
+                            ),
+                          );
+                        }
+                      },
+                      color: isItensPurchased == true
+                          ? Color(0xff00036c)
+                          : Colors.blue,
+                      child: isItensPurchased == true
+                          ? Text(
+                              "COMPRADO",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )
+                          : Text(
+                              "COMPRAR",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                    )
                   ],
                 ),
               ),

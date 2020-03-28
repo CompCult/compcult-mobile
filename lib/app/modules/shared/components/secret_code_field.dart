@@ -24,20 +24,22 @@ class SecretCodeField extends StatelessWidget {
             color: Colors.black38,
             fontFamily: "Poppins",
             fontWeight: FontWeight.w500,
-            fontSize: 13,
+            fontSize: 10,
+  
           ),
+        
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(15))),
           prefixIcon: Icon(
             Icons.lock_outline,
             color: Color(0xff60B3FC),
-            size: 20,
+            size: 16,
           ),
           suffixIcon: IconButton(
             icon: Icon(
               Icons.send,
               color: Color(0xff60B3FC),
-              size: 20,
+              size: 16,
             ),
             onPressed: () => onSubmited(_secretCodeController.text),
           ),

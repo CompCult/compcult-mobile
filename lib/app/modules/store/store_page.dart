@@ -11,9 +11,6 @@ class StorePage extends StatefulWidget {
 
 class _StorePageState extends State<StorePage> {
   final ItensBloc itensBloc = BlocProvider.getBloc<ItensBloc>();
-  // TODO: Criar flag para controle de itens comprados ou não comprados
-  // bool isItensPurchased = false;
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

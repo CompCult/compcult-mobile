@@ -49,8 +49,8 @@ class ItemCard extends StatelessWidget {
                       Radius.circular(30),
                     ),
                     color: Colors.blue),
-                height: 104,
-                width: 104,
+                height: 125,
+                width: 110,
               ),
               SizedBox(width: 10),
               Column(
@@ -69,11 +69,14 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Text(
-                    '${item.description.length > 30 ? item.description.substring(0, 30) : item.description}...',
-                    style: TextStyle(
-                      fontFamily: "SourceSansPro",
-                      color: Colors.grey,
+                  Container(
+                    width: 160,
+                    child: Text(
+                      '${item.description.length >= 30 ? item.description.substring(0, 30) : item.description}...',
+                      style: TextStyle(
+                        fontFamily: "SourceSansPro",
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
