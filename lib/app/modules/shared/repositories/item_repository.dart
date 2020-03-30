@@ -39,8 +39,8 @@ class ItemRepository extends BlocBase {
     });
   }
 
-  Future createItemOrder(String itemId) {
-    return _itemService.createItemOrder(itemId);
+  Future createItemOrder(String itemId) async {
+    return await _itemService.createItemOrder(itemId);
   }
 
     @override

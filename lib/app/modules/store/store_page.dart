@@ -1,7 +1,8 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/app/modules/shared/components/custom_appbar.dart';
-import 'package:museu_vivo/app/modules/shared/components/list_items_store.dart';
+import 'package:museu_vivo/app/modules/store/items_store.dart';
+import 'package:museu_vivo/app/modules/store/my_items.dart';
 import 'package:museu_vivo/app/modules/store/store_page_bloc.dart';
 
 class StorePage extends StatefulWidget {
@@ -10,7 +11,7 @@ class StorePage extends StatefulWidget {
 }
 
 class _StorePageState extends State<StorePage> {
-  final ItensBloc itensBloc = BlocProvider.getBloc<ItensBloc>();
+  final ItemsBloc itensBloc = BlocProvider.getBloc<ItemsBloc>();
 
   @override
   void initState() {
@@ -61,10 +62,8 @@ class _StorePageState extends State<StorePage> {
           ),
           child: TabBarView(
             children: <Widget>[
-              SingleChildScrollView(
-                  child: listItemsStore(context, itensBloc, false)),
-              SingleChildScrollView(
-                  child: listItemsStore(context, itensBloc, true)),
+              ItemsStore(),
+              MyItems(),
             ],
           ),
         ),

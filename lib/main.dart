@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => CoinsBloc(i.get<UserRepository>())),
               Bloc((i) => QuizzesBloc(i.get<QuizRepository>())),
               Bloc((i) => QuizSubmitBloc(i.get<QuizRepository>())),
-              Bloc((i) => ItensBloc(
+              Bloc((i) => ItemsBloc(
                     i.get<ItemRepository>(),
                     i.get<UserRepository>(),
                   )),

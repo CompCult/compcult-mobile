@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:museu_vivo/app/modules/shared/models/item.dart';
 import 'package:museu_vivo/app/modules/store/store_page_bloc.dart';
 
-Widget listItemsStore(
-    BuildContext context, ItensBloc itensBloc, bool isItemsPurchased) {
+ listItemsStore(
+    BuildContext context, ItemsBloc itensBloc, bool isItemsPurchased) {
   return StreamBuilder(
     stream: isItemsPurchased ? itensBloc.itensPurchased : itensBloc.itens,
     builder: (_, snapshot) {
@@ -51,7 +51,7 @@ Widget listItemsStore(
 }
 
 Widget _buildListItens(BuildContext context, List<Item> itens,
-    ItensBloc itensBloc, bool isItemsPurchased) {
+    ItemsBloc itensBloc, bool isItemsPurchased) {
   return ListView.builder(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
@@ -197,15 +197,13 @@ Widget _buildListItens(BuildContext context, List<Item> itens,
                     SizedBox(
                       height: 10,
                     ),
-                    if (isItemsPurchased)
+                    if (!isItemsPurchased)
                       RaisedButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         onPressed: () {
-                          if (!isItemsPurchased) {
-                            buyItem(context, itens, itensBloc, item);
-                          }
+                          buyItem(context, itens, itensBloc, item);
                         },
                         color: Colors.blue,
                         child: Text(
@@ -227,25 +225,19 @@ Widget _buildListItens(BuildContext context, List<Item> itens,
   );
 }
 
-void buyItem(
-    BuildContext context, List<Item> itens, ItensBloc itensBloc, var item) {
-  
+void buyItem (
+    BuildContext context, List<Item> itens, ItemsBloc itensBloc, var item) async {
   String successMessage = "A compra foi realizada com sucesso.";
   String failedMessage =
       "Você não possui pontos suficientes para comprar esse item.";
-  // Se o item não foi comprado e a compra deu sucesso...
-  itensBloc.createItemOrder(item.id).then((onValue) {
-    print("Sucesso!");
-    // Atualize os dados do usuário
-    itensBloc.updateUser();
 
-    // Exiba a SnackBar informando o sucesso da compra
-    return _customSnackBar(context, successMessage);
-  }).catchError((onError) {
-    print("NAM!");
-    // Caso contrário, retorne a SnackBar com o erro ocorrido
-    return _customSnackBar(context, failedMessage);
-  });
+  // Se o item não foi comprado e a compra deu sucesso...
+  try {
+    await itensBloc.createItemOrder(item.id);
+    _customSnackBar(context, successMessage);
+  } catch (e) {
+    _customSnackBar(context, failedMessage);
+  }
 }
 
 void _customSnackBar(BuildContext context, String message) {
