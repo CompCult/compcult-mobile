@@ -3,9 +3,9 @@ import 'package:museu_vivo/app/modules/shared/models/item.dart';
 import 'package:museu_vivo/app/modules/store/store_page_bloc.dart';
 
 Widget listItemsStore(
-    BuildContext context, ItensBloc itensBloc, bool isItensPurchased) {
+    BuildContext context, ItensBloc itensBloc, bool isItemsPurchased) {
   return StreamBuilder(
-    stream: isItensPurchased ? itensBloc.itensPurchased : itensBloc.itens,
+    stream: isItemsPurchased ? itensBloc.itensPurchased : itensBloc.itens,
     builder: (_, snapshot) {
       if (!snapshot.hasData) {
         return Center(
@@ -30,7 +30,7 @@ Widget listItemsStore(
               elevation: 5,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: isItensPurchased
+                child: isItemsPurchased
                     ? Text(
                         "Você não comprou nenhum item...",
                         textAlign: TextAlign.center,
@@ -45,13 +45,13 @@ Widget listItemsStore(
         );
       }
       return _buildListItens(
-          context, snapshot.data, itensBloc, isItensPurchased);
+          context, snapshot.data, itensBloc, isItemsPurchased);
     },
   );
 }
 
-_buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
-    bool isItensPurchased) {
+Widget _buildListItens(BuildContext context, List<Item> itens,
+    ItensBloc itensBloc, bool isItemsPurchased) {
   return ListView.builder(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
@@ -197,34 +197,25 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                     SizedBox(
                       height: 10,
                     ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                    if (isItemsPurchased)
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        onPressed: () {
+                          if (!isItemsPurchased) {
+                            buyItem(context, itens, itensBloc, item);
+                          }
+                        },
+                        color: Colors.blue,
+                        child: Text(
+                          "COMPRAR",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        if (!isItensPurchased) {
-                          buyItem(context, itens, itensBloc, item);
-                        }
-                      },
-                      color: isItensPurchased == true
-                          ? Color(0xff00036c)
-                          : Colors.blue,
-                      child: isItensPurchased == true
-                          ? Text(
-                              "COMPRADO",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            )
-                          : Text(
-                              "COMPRAR",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                    )
                   ],
                 ),
               ),
@@ -236,7 +227,12 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
   );
 }
 
-buyItem(BuildContext context, List<Item> itens, ItensBloc itensBloc, var item) {
+void buyItem(
+    BuildContext context, List<Item> itens, ItensBloc itensBloc, var item) {
+  
+  String successMessage = "A compra foi realizada com sucesso.";
+  String failedMessage =
+      "Você não possui pontos suficientes para comprar esse item.";
   // Se o item não foi comprado e a compra deu sucesso...
   itensBloc.createItemOrder(item.id).then((onValue) {
     print("Sucesso!");
@@ -244,52 +240,34 @@ buyItem(BuildContext context, List<Item> itens, ItensBloc itensBloc, var item) {
     itensBloc.updateUser();
 
     // Exiba a SnackBar informando o sucesso da compra
-    return Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: <Widget>[
-            Icon(Icons.error),
-            Container(
-              width: 300,
-              child: Text(
-                'A compra foi realizada com sucesso.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.blue,
-      ),
-    );
+    return _customSnackBar(context, successMessage);
   }).catchError((onError) {
     print("NAM!");
     // Caso contrário, retorne a SnackBar com o erro ocorrido
-    return Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Icon(Icons.error),
-              /* Container(
-                child: Text(
-                  'Você não possui pontos suficientes para comprar esse item.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-              ), */
-            ],
-          ),
-        ),
-        backgroundColor: Colors.blue,
-      ),
-    );
+    return _customSnackBar(context, failedMessage);
   });
+}
+
+void _customSnackBar(BuildContext context, String message) {
+  Scaffold.of(context).showSnackBar(
+    SnackBar(
+      content: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.error),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.blue,
+    ),
+  );
 }

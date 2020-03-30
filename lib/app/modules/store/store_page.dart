@@ -24,45 +24,51 @@ class _StorePageState extends State<StorePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-          appBar: AppBar(
-            title: CustomAppBar(),
-            bottom: TabBar(
-              unselectedLabelColor: Colors.grey,
-              tabs: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "Loja",
-                    style: TextStyle(
-                        fontFamily: "Poppins", fontWeight: FontWeight.bold),
-                  ),
+        appBar: AppBar(
+          title: CustomAppBar(),
+          bottom: TabBar(
+            unselectedLabelColor: Colors.grey,
+            tabs: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Loja",
+                  style: TextStyle(
+                      fontFamily: "Poppins", fontWeight: FontWeight.bold),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "Meus itens",
-                    style: TextStyle(
-                        fontFamily: "Poppins", fontWeight: FontWeight.bold),
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Meus itens",
+                  style: TextStyle(
+                      fontFamily: "Poppins", fontWeight: FontWeight.bold),
                 ),
+              ),
+            ],
+          ),
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.white,
+                Colors.grey[200],
               ],
             ),
           ),
-          body: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Color(0xff00036c).withOpacity(0.2),
-              Color(0xff00036c).withOpacity(0.4)
-            ])),
-            child: TabBarView(
-              children: <Widget>[
-                SingleChildScrollView(
-                    child: listItemsStore(context, itensBloc, false)),
-                SingleChildScrollView(
-                    child: listItemsStore(context, itensBloc, true)),
-              ],
-            ),
-          )),
+          child: TabBarView(
+            children: <Widget>[
+              SingleChildScrollView(
+                  child: listItemsStore(context, itensBloc, false)),
+              SingleChildScrollView(
+                  child: listItemsStore(context, itensBloc, true)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

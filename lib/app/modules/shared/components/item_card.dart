@@ -24,7 +24,10 @@ class ItemCard extends StatelessWidget {
                 if (value != null) {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Enviado com sucesso!',style: TextStyle(color: Colors.white),),
+                      content: Text(
+                        'Enviado com sucesso!',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       backgroundColor: Colors.blue.withOpacity(0.7),
                     ),
                   );
@@ -57,7 +60,7 @@ class ItemCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    width: MediaQuery.of(context).size.width/2 ,
+                    width: MediaQuery.of(context).size.width / 2,
                     child: Text(
                       item.name,
                       style: TextStyle(
@@ -90,45 +93,36 @@ class ItemCard extends StatelessWidget {
                           color: Colors.green,
                         ),
                       ),
-                      SizedBox(width: 3,),
-                      Text(
-                      '${item.lux}',
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      )),
-                      SizedBox(width: 7,),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text('${item.lux}',
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          )),
+                      SizedBox(
+                        width: 7,
+                      ),
                       Container(
                         width: 17,
                         height: 15,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          color: Colors.yellow
-                        ),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Colors.yellow),
                       ),
-                      SizedBox(width: 3,),
-                      Text(
-                      '${item.resources}',
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      )),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text('${item.resources}',
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          )),
                     ],
-                  )
-                  
-                  /*Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      '${item.lux} LUX | ${item.resources} RSC',
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
-                    ),
-                  )*/
+                  ),
                 ],
               ),
             ],
