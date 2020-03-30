@@ -113,7 +113,8 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                     Container(
                       width: 153,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,                        children: <Widget>[
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
                           Text(
                             '${item.description}',
                             style: TextStyle(
@@ -193,56 +194,18 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
                         ),
                       ],
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     RaisedButton(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      onPressed: () async {
-                        try {
-                          isItensPurchased == true? null : itensBloc.createItemOrder(item.id);
-                          isItensPurchased == true? null : Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Row(
-                                children: <Widget>[
-                                  Icon(Icons.error),
-                                  Container(
-                                    width: 300,
-                                    child: Text(
-                                      'A compra foi realizada com sucesso.',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              backgroundColor: Colors.blue,
-                            ),
-                          );
-                        } catch (err) {
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Row(
-                                children: <Widget>[
-                                  Icon(Icons.error),
-                                  Container(
-                                    width: 300,
-                                    child: Text(
-                                      'Você não possui pontos suficientes para comprar esse item.',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              backgroundColor: Colors.blue,
-                            ),
-                          );
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {
+                        if (!isItensPurchased) {
+                          buyItem(context, itens, itensBloc, item);
                         }
                       },
                       color: isItensPurchased == true
@@ -271,4 +234,62 @@ _buildListItens(BuildContext context, List<Item> itens, ItensBloc itensBloc,
       );
     },
   );
+}
+
+buyItem(BuildContext context, List<Item> itens, ItensBloc itensBloc, var item) {
+  // Se o item não foi comprado e a compra deu sucesso...
+  itensBloc.createItemOrder(item.id).then((onValue) {
+    print("Sucesso!");
+    // Atualize os dados do usuário
+    itensBloc.updateUser();
+
+    // Exiba a SnackBar informando o sucesso da compra
+    return Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: <Widget>[
+            Icon(Icons.error),
+            Container(
+              width: 300,
+              child: Text(
+                'A compra foi realizada com sucesso.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }).catchError((onError) {
+    print("NAM!");
+    // Caso contrário, retorne a SnackBar com o erro ocorrido
+    return Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: <Widget>[
+              Icon(Icons.error),
+              /* Container(
+                child: Text(
+                  'Você não possui pontos suficientes para comprar esse item.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ), */
+            ],
+          ),
+        ),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  });
 }

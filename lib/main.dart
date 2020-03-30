@@ -84,7 +84,10 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => CoinsBloc(i.get<UserRepository>())),
               Bloc((i) => QuizzesBloc(i.get<QuizRepository>())),
               Bloc((i) => QuizSubmitBloc(i.get<QuizRepository>())),
-              Bloc((i) => ItensBloc(i.get<ItemRepository>())),
+              Bloc((i) => ItensBloc(
+                    i.get<ItemRepository>(),
+                    i.get<UserRepository>(),
+                  )),
               Bloc((i) => MissionsBloc(i.get<MissionRepository>())),
               Bloc((i) => MissionSubmitBloc(
                   i.get<MissionRepository>(), i.get<UserRepository>())),
@@ -98,7 +101,7 @@ class _MyAppState extends State<MyApp> {
               Dependency((i) => ItemRepository(
                     i.get<ItemService>(),
                     i.get<UserRepository>(),
-                  )),    
+                  )),
               Dependency((i) => MissionRepository(
                     i.get<MissionService>(),
                     i.get<UserRepository>(),

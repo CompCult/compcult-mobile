@@ -11,8 +11,16 @@ class StorePage extends StatefulWidget {
 
 class _StorePageState extends State<StorePage> {
   final ItensBloc itensBloc = BlocProvider.getBloc<ItensBloc>();
+
+  @override
+  void initState() {
+    super.initState();
+    itensBloc.updateUser();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("CONSTRUIU");
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -20,7 +28,6 @@ class _StorePageState extends State<StorePage> {
             title: CustomAppBar(),
             bottom: TabBar(
               unselectedLabelColor: Colors.grey,
-
               tabs: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(10.0),
