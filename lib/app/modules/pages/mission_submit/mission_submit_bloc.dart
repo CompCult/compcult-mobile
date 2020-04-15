@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:museu_vivo/app/modules/shared/models/mission.dart';
 import 'package:museu_vivo/app/modules/shared/models/user.dart';
 import 'package:museu_vivo/app/modules/shared/repositories/mission_repository.dart';
@@ -16,6 +17,7 @@ class MissionSubmitBloc extends BlocBase {
   final BehaviorSubject<String> _textAnswerController =
       BehaviorSubject<String>();
   final BehaviorSubject<int> _groupController = BehaviorSubject<int>();
+  final BehaviorSubject<File> _videoAnswerController = BehaviorSubject<File>();
   final BehaviorSubject<File> _imageAnswerController = BehaviorSubject<File>();
   final BehaviorSubject<File> _audioAnswerController = BehaviorSubject<File>();
   final BehaviorSubject<Position> _locationController =
@@ -23,9 +25,11 @@ class MissionSubmitBloc extends BlocBase {
 
   MissionSubmitBloc(this._missionRepository, this._userRepository);
 
+
   Function(String) get changeTextAnswer => _textAnswerController.sink.add;
   Function(int) get changeGroup => _groupController.sink.add;
-  Function(File) get changeImageAnswer => _imageAnswerController.sink.add;
+  Function(File) get  changeImageAnswer => _imageAnswerController.sink.add;
+  Function(File) get  changeVideoAnswer => _videoAnswerController.sink.add;
   Function(Position) get changePositionAnswer => _locationController.sink.add;
   Function(File) get changeAudioAnswer => _audioAnswerController.sink.add;
 
@@ -34,11 +38,13 @@ class MissionSubmitBloc extends BlocBase {
   Observable<String> get groupAnswer => _groupController.stream
       .map((group) => group != null ? group.toString() : null);
   Observable<File> get imageAnswer => _imageAnswerController.stream;
+  Observable<File> get videoAnswer => _videoAnswerController.stream;
   Observable<File> get audioAnswer => _audioAnswerController.stream;
   Observable<Position> get positionAnswer => _locationController.stream;
 
   Future createMissionAnswer(Mission mission) async {
     if (mission.hasImage && _imageAnswerController.value == null ||
+        mission.hasVideo && _videoAnswerController.value == null ||
         mission.hasText && _textAnswerController.value == null ||
         mission.isGrupal && _groupController == null ||
         mission.hasGeolocation && _locationController == null ||
@@ -47,6 +53,7 @@ class MissionSubmitBloc extends BlocBase {
 
     return _missionRepository.createMissionAnswer(mission.id, {
       if (mission.hasText) 'text_msg': _textAnswerController.value,
+      if (mission.hasVideo) 'video': _videoAnswerController.value,
       if (mission.hasImage)
         'image': await _changeFormatImage(_imageAnswerController.value),
       if (mission.isGrupal) '_group': _groupController.value,
@@ -73,6 +80,7 @@ class MissionSubmitBloc extends BlocBase {
   void dispose() {
     _textAnswerController.close();
     _imageAnswerController.close();
+    _videoAnswerController.close();
     _groupController.close();
     _locationController.close();
     _audioAnswerController.close();

@@ -374,6 +374,41 @@ class _MissionSubmitState extends State<MissionSubmit> {
         });
   }
 
+  Widget _buildVideoValidator(MissionSubmitBloc missionSubmitBloc) {
+    return StreamBuilder(
+        stream: missionSubmitBloc.videoAnswer,
+        builder: (context, snapshot) {
+          return !snapshot.hasData
+              ? Text(
+                  "Nenhum video selecionado...",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.red,
+                  ),
+                )
+              : Text(
+                  "Vídeo carregado!",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w700,
+                    color: Colors.green,
+                  ),
+                );
+        });
+  }
+
+  Widget _buildVideoField(MissionSubmitBloc missionSubmitBloc) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        _flatButtonIcon("Camera", Icons.add_a_photo,
+            () => _getVideoFromCamera(missionSubmitBloc)),
+        _flatButtonIcon("Galeria", Icons.wallpaper,
+            () => _getVideoFromGallery(missionSubmitBloc)),
+      ],
+    );
+  }
+
   Widget _buildImageField(MissionSubmitBloc missionSubmitBloc) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -384,6 +419,16 @@ class _MissionSubmitState extends State<MissionSubmit> {
             () => _getImageFromGallery(missionSubmitBloc)),
       ],
     );
+  }
+
+  Future _getVideoFromCamera(MissionSubmitBloc bloc) async {
+    final video = await ImagePicker.pickVideo(source: ImageSource.camera);
+    bloc.changeVideoAnswer(video);
+  }
+
+  Future _getVideoFromGallery(MissionSubmitBloc bloc) async {
+    final video = await ImagePicker.pickVideo(source: ImageSource.gallery);
+    bloc.changeVideoAnswer(video);
   }
 
   Future _getImageFromCamera(MissionSubmitBloc bloc) async {
@@ -644,13 +689,33 @@ class _MissionSubmitState extends State<MissionSubmit> {
                             _buildLocationButton(
                                 "Clique aqui para enviar sua posição",
                                 missionSubmitBloc),
-                          if (widget.mission.hasImage)
-                            _buildImageField(missionSubmitBloc),
                           const SizedBox(height: 20),
                         ],
                       ),
-                      if (widget.mission.hasImage)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                              if (widget.mission.hasImage)
+                          Column(
+                            children: <Widget>[
+                              Text("Envio de Imagem"),
+                                _buildImageField(missionSubmitBloc),
+                            ],
+                          ),
+                              if (widget.mission.hasVideo)
+                          Column(
+                            children: <Widget>[
+                              Text("Envio de Vídeo"),
+                                _buildVideoField(missionSubmitBloc),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      if (widget.mission.hasImage )
                         _buildImageValidator(missionSubmitBloc),
+                      if (widget.mission.hasVideo)
+                        _buildVideoValidator(missionSubmitBloc ),
                       const SizedBox(height: 5),
                       if (widget.mission.hasGeolocation)
                         _buildLocationValidator(missionSubmitBloc),
@@ -667,10 +732,11 @@ class _MissionSubmitState extends State<MissionSubmit> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        
                         children: <Widget>[
                           _points(),
-                          SizedBox(width: 60,),
+                          SizedBox(
+                            width: 60,
+                          ),
                           _buildButton(
                               context, "ENVIAR RESPOSTA", missionSubmitBloc),
                         ],
