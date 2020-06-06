@@ -1,15 +1,22 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:museu_vivo/app/shared/repositories/local_storage_interface.dart';
 
 part 'home_controller.g.dart';
 
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  @observable
-  int value = 0;
+  // Recuperando a injeção de dependências pelo contrato
+  // As operações de salvar offline é feita usando o _storage
+  final ILocalStorage _storage = Modular.get();
+
+  _HomeControllerBase() {
+    init();
+  }
 
   @action
-  void increment() {
-    value++;
+  init() {
+    // TODO: Alterar a lógica para iniciar o usuário
   }
 }

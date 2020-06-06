@@ -6,12 +6,16 @@ import 'package:path_provider/path_provider.dart';
 import 'local_storage_interface.dart';
 
 class LocalStorageHive implements ILocalStorage {
+  // Abre uma Future
   Completer<Box> _instance = Completer<Box>();
 
   _init() async {
     var dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
     var box = await Hive.openBox('db');
+    // Quando a operação na linha acima for concluída
+    // a Future da linha abaixo será executada.
+    // OBS: Se a Future já tiver sido executada, chama ela mesmo.
     _instance.complete(box);
   }
 
