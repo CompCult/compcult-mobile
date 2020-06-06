@@ -24,10 +24,49 @@ mixin _$AuthController on _AuthControllerBase, Store {
     });
   }
 
+  final _$userAtom = Atom(name: '_AuthControllerBase.user');
+
+  @override
+  UserModel get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(UserModel value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
+    });
+  }
+
+  final _$authenticateAsyncAction =
+      AsyncAction('_AuthControllerBase.authenticate');
+
+  @override
+  Future<dynamic> authenticate(String email, String password) {
+    return _$authenticateAsyncAction
+        .run(() => super.authenticate(email, password));
+  }
+
+  final _$_AuthControllerBaseActionController =
+      ActionController(name: '_AuthControllerBase');
+
+  @override
+  dynamic setUser(UserModel newUser) {
+    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
+        name: '_AuthControllerBase.setUser');
+    try {
+      return super.setUser(newUser);
+    } finally {
+      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-status: ${status}
+status: ${status},
+user: ${user}
     ''';
   }
 }

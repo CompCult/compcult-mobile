@@ -13,10 +13,10 @@ abstract class _LoginControllerBase with Store {
   bool loading = false;
 
   @action
-  Future login() async {
+  Future login(String email, String password) async {
     try {
       loading = true;
-      await auth.loginWithCredentials();
+      await auth.authenticate(email, password);
       Modular.to.pushReplacementNamed('/home');
     } catch (e) {
       loading = false;

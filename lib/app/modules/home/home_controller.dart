@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:museu_vivo/app/shared/auth/auth_controller.dart';
 import 'package:museu_vivo/app/shared/repositories/local_storage_interface.dart';
 
 part 'home_controller.g.dart';
@@ -18,5 +19,10 @@ abstract class _HomeControllerBase with Store {
   @action
   init() {
     // TODO: Alterar a lógica para iniciar o usuário
+  }
+
+  logout() async {
+    await Modular.get<AuthController>().logout();
+    Modular.to.pushReplacementNamed('/login');
   }
 }

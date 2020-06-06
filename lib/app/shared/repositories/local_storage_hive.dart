@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:hive/hive.dart';
+import 'package:museu_vivo/app/shared/models/user_modal.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'local_storage_interface.dart';
@@ -30,14 +31,19 @@ class LocalStorageHive implements ILocalStorage {
   }
 
   @override
-  Future<List<String>> get(String key) async {
+  Future<UserModel> get(String key) async {
     var box = await _instance.future;
     return box.get(key);
   }
 
   @override
-  Future put(String key, List<String> value) async {
+  Future put(String key, UserModel value) async {
     var box = await _instance.future;
     box.put(key, value);
+  }
+
+  Future close() async {
+    var box = await _instance.future;
+    return box.close();
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:museu_vivo/app/shared/auth/auth_controller.dart';
-import 'package:museu_vivo/app/shared/widgets/loading_widget.dart';
+import 'package:museu_vivo/app/shared/widgets/custom_loading.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     disposer = autorun((_) {
       final auth = Modular.get<AuthController>();
-      
+
       if (auth.status == AuthStatus.login) {
         Modular.to.pushReplacementNamed('/home');
       } else if (auth.status == AuthStatus.logoff) {
@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LoadingWidget();
+    return CustomLoading();
   }
 
   @override

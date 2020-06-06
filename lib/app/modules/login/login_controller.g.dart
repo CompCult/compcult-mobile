@@ -27,8 +27,8 @@ mixin _$LoginController on _LoginControllerBase, Store {
   final _$loginAsyncAction = AsyncAction('_LoginControllerBase.login');
 
   @override
-  Future<dynamic> login() {
-    return _$loginAsyncAction.run(() => super.login());
+  Future<dynamic> login(String email, String password) {
+    return _$loginAsyncAction.run(() => super.login(email, password));
   }
 
   @override

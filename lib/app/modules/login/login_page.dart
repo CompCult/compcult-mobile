@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:museu_vivo/app/shared/widgets/custom_submit_button.dart';
+import 'package:museu_vivo/app/shared/widgets/form_container.dart';
+import 'package:museu_vivo/app/shared/widgets/sign_up_button.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,15 +15,36 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends ModularState<LoginPage, LoginController> {
   //use 'controller' variable to access controller
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Text("LOGIN =D"),
+      body: GestureDetector(
+        onTap: () {
+          // Esconde o teclado caso esteja aberto ao clicar na tela
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Container(
+          color: Color(0xFF2d91e7),
+          child: ListView(
+            padding: EdgeInsets.fromLTRB(40, 50, 40, 10),
+            children: <Widget>[
+              FormContainer(formKey: _formKey),
+              SizedBox(height: 30),
+              CustomSubmitButton(
+                formKey: _formKey,
+                label: "ENTRAR",
+                functionSubmit: controller.login,
+              ),
+              SizedBox(height: 15),
+              SignUpButton(),
+            ],
+          ),
+        ),
       ),
     );
   }
