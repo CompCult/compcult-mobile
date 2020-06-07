@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:museu_vivo/app/shared/widgets/custom_submit_button.dart';
 import 'package:museu_vivo/app/shared/widgets/form_container.dart';
 import 'package:museu_vivo/app/shared/widgets/sign_up_button.dart';
 import 'login_controller.dart';
@@ -35,12 +34,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
             children: <Widget>[
               SizedBox(height: 30),
               FormContainer(formKey: _formKey),
-              SizedBox(height: 30),
-              CustomSubmitButton(
-                formKey: _formKey,
-                label: "ENTRAR",
-                functionSubmit: controller.login,
-              ),
               SizedBox(height: 20),
               SignUpButton(),
             ],

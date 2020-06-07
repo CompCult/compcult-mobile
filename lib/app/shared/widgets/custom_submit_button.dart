@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 class CustomSubmitButton extends StatelessWidget {
   final String label;
-  final GlobalKey<FormState> formKey;
   final Function functionSubmit;
 
   CustomSubmitButton({
     Key key,
     @required this.label,
-    @required this.formKey,
     @required this.functionSubmit,
   });
 
@@ -19,12 +17,7 @@ class CustomSubmitButton extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: SizedBox.expand(
         child: FlatButton(
-          onPressed: () {
-            if (formKey.currentState.validate())
-              return functionSubmit;
-            else
-              return null;
-          },
+          onPressed: functionSubmit,
           child: Text(
             label,
             style: TextStyle(

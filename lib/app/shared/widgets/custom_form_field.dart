@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 class CustomFormField extends StatelessWidget {
   final String label;
   final bool permissionToObscure;
+  final TextEditingController textEditingController;
 
   CustomFormField({
     Key key,
     @required this.label,
     @required this.permissionToObscure,
+    @required this.textEditingController,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: textEditingController,
       keyboardType: this.permissionToObscure == true
           ? TextInputType.text
           : TextInputType.emailAddress,
