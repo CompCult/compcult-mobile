@@ -19,7 +19,12 @@ class CustomSubmitButton extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: SizedBox.expand(
         child: FlatButton(
-          onPressed: formKey.currentState.validate() ? functionSubmit : null,
+          onPressed: () {
+            if (formKey.currentState.validate())
+              return functionSubmit;
+            else
+              return null;
+          },
           child: Text(
             label,
             style: TextStyle(

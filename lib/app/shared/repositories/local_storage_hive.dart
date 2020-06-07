@@ -13,7 +13,7 @@ class LocalStorageHive implements ILocalStorage {
   _init() async {
     var dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
-    var box = await Hive.openBox('db');
+    var box = await Hive.openBox("db");
     // Quando a operação na linha acima for concluída
     // a Future da linha abaixo será executada.
     // OBS: Se a Future já tiver sido executada, chama ela mesmo.
@@ -40,6 +40,11 @@ class LocalStorageHive implements ILocalStorage {
   Future put(String key, UserModel value) async {
     var box = await _instance.future;
     box.put(key, value);
+  }
+
+  Box getBox(String key) {
+    var box = Hive.box(key);
+    return box;
   }
 
   Future close() async {

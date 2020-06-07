@@ -4,9 +4,6 @@ class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      padding: EdgeInsets.only(
-        top: 160,
-      ),
       onPressed: () {
         /* Navigator.push(
           context,
@@ -23,7 +20,7 @@ class SignUpButton extends StatelessWidget {
           fontFamily: "PTSans",
           fontWeight: FontWeight.w700,
           color: Colors.white,
-          fontSize: 12,
+          fontSize: 13,
         ),
       ),
     );

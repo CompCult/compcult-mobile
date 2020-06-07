@@ -1,3 +1,4 @@
+import 'package:hive/hive.dart';
 import 'package:museu_vivo/app/shared/models/user_modal.dart';
 
 abstract class ILocalStorage {
@@ -5,4 +6,5 @@ abstract class ILocalStorage {
   Future put(String key, UserModel value);
   Future delete(String key);
   Future close();
+  Box getBox(String key);
 }

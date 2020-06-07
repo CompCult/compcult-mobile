@@ -33,6 +33,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
           child: ListView(
             padding: EdgeInsets.fromLTRB(40, 50, 40, 10),
             children: <Widget>[
+              SizedBox(height: 30),
               FormContainer(formKey: _formKey),
               SizedBox(height: 30),
               CustomSubmitButton(
@@ -40,7 +41,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                 label: "ENTRAR",
                 functionSubmit: controller.login,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 20),
               SignUpButton(),
             ],
           ),

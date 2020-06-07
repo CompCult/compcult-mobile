@@ -6,6 +6,9 @@ import 'package:museu_vivo/app/app_widget.dart';
 import 'package:museu_vivo/app/modules/home/home_module.dart';
 import 'package:museu_vivo/app/modules/login/login_module.dart';
 import 'package:museu_vivo/app/screens/splash/splash_screen.dart';
+import 'package:museu_vivo/app/shared/auth/auth_controller.dart';
+import 'package:museu_vivo/app/shared/auth/auth_repository.dart';
+import 'package:museu_vivo/app/shared/auth/auth_repository_interface.dart';
 import 'package:museu_vivo/app/shared/repositories/local_storage_hive.dart';
 import 'package:museu_vivo/app/shared/repositories/local_storage_interface.dart';
 import 'package:museu_vivo/app/shared/services/mission_service.dart';
@@ -17,8 +20,14 @@ class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
+        // Database offline
         Bind<ILocalStorage>((i) => LocalStorageHive()),
+        Bind<IAuthRepository>((i) => AuthRepository()),
+        // Auth
+        Bind((i) => AuthController()),
+        // HTTP Provider
         Bind((i) => DioProvider()),
+        // Services
         Bind((i) => UserService(i.get<DioProvider>().dio)),
         Bind((i) => MissionService(i.get<DioProvider>().dio)),
         Bind((i) => QuizService(i.get<DioProvider>().dio)),

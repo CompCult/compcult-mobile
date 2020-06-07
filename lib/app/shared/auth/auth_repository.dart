@@ -12,9 +12,16 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<UserModel> getUser() async {
+    // var box = _storage.getBox("db");
+    // UserModel persistedUser = await box.get("user");
     UserModel persistedUser = await _storage.get("user");
-    Response response = await _userService.fetchUser(persistedUser.id);
-    return response.data;
+
+    if (persistedUser != null) {
+      Response response = await _userService.fetchUser(persistedUser.id);
+      return response.data;
+    } else {
+      return null;
+    }
   }
 
   @override
