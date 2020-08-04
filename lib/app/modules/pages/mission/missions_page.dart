@@ -135,6 +135,7 @@ class _MissionsPageState extends State<MissionsPage> {
         return ItemCard(
           item: mission,
           routeName: MissionSubmit.routeName,
+          imageAssetPath: "assets/leratos/flag.png",
         );
       },
     );

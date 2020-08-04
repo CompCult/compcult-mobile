@@ -27,6 +27,12 @@ dependencies:
   path_provider: ^1.2.0
   flutter_audio_recorder: ^0.5.2
   audioplayers:
+  chewie: ^0.9.10
+  chewie_audio: ^1.0.0+1
+  video_player: ^0.10.11
+  video_thumbnail: ^0.2.1
+  flutter_svg: ^0.17.4
+
   
   flutter:
     sdk: flutter
@@ -113,6 +119,10 @@ flutter:
     - family: SourceSerifPro
       fonts:
         - asset: fonts/SourceSerifPro-Regular.ttf
+
+    - family: BadScript
+      fonts:
+        - asset: fonts/BadScript-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

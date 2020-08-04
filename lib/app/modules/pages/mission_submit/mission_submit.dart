@@ -4,6 +4,7 @@ import 'dart:io' as io;
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:geolocator/geolocator.dart';
@@ -18,6 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 
 import 'mission_submit_bloc.dart';
 
@@ -378,22 +380,23 @@ class _MissionSubmitState extends State<MissionSubmit> {
     return StreamBuilder(
         stream: missionSubmitBloc.videoAnswer,
         builder: (context, snapshot) {
-          return !snapshot.hasData
-              ? Text(
-                  "Nenhum video selecionado...",
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.red,
-                  ),
-                )
-              : Text(
-                  "Vídeo carregado!",
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.w700,
-                    color: Colors.green,
-                  ),
-                );
+          if (!snapshot.hasData) {
+            return Text(
+              "Nenhum video selecionado...",
+              style: TextStyle(
+                fontFamily: "Poppins",
+                color: Colors.red,
+              ),
+            );
+          }
+          final ChewieController _chewieController = ChewieController(
+            videoPlayerController: VideoPlayerController.file(snapshot.data),
+            aspectRatio: 16 / 9,
+            autoInitialize: true,
+            looping: false,
+            errorBuilder: (_, __) => Text("Erro ao carregar o vídeo"),
+          );
+          return Chewie(controller: _chewieController);
         });
   }
 
@@ -497,6 +500,46 @@ class _MissionSubmitState extends State<MissionSubmit> {
         fontWeight: FontWeight.w700,
         color: Colors.black,
         fontSize: 16,
+      ),
+    );
+  }
+
+  Widget _buildItemPropertiens(MissionSubmitBloc missionSubmitBloc) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+              'Se aprovado, sua resposta será transformada em uma obra exposta na feira, por favor preencha os campos:'),
+          TextField(
+            decoration: InputDecoration(
+              labelText: "Titulo da obra",
+              hintText: "ex: Poema contra violência",
+              icon: Icon(Icons.text_fields),
+            ),
+            onChanged: missionSubmitBloc.changeItemTitleAnswer,
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              WhitelistingTextInputFormatter.digitsOnly
+            ],
+            decoration: InputDecoration(
+              labelText: "Valor da obra",
+              hintText: "ex: 20",
+              icon: Container(
+                width: 17,
+                height: 15,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
+            onChanged: (value) =>
+                missionSubmitBloc.changeItemValueAnswer(int.parse(value)),
+          ),
+        ],
       ),
     );
   }
@@ -695,27 +738,29 @@ class _MissionSubmitState extends State<MissionSubmit> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                              if (widget.mission.hasImage)
-                          Column(
-                            children: <Widget>[
-                              Text("Envio de Imagem"),
+                          if (widget.mission.hasImage)
+                            Column(
+                              children: <Widget>[
+                                Text("Envio de Imagem"),
                                 _buildImageField(missionSubmitBloc),
-                            ],
-                          ),
-                              if (widget.mission.hasVideo)
-                          Column(
-                            children: <Widget>[
-                              Text("Envio de Vídeo"),
+                              ],
+                            ),
+                          if (widget.mission.hasVideo)
+                            Column(
+                              children: <Widget>[
+                                Text("Envio de Vídeo"),
                                 _buildVideoField(missionSubmitBloc),
-                            ],
-                          )
+                              ],
+                            )
                         ],
                       ),
-                      SizedBox(height: 10,),
-                      if (widget.mission.hasImage )
+                      SizedBox(
+                        height: 10,
+                      ),
+                      if (widget.mission.hasImage)
                         _buildImageValidator(missionSubmitBloc),
                       if (widget.mission.hasVideo)
-                        _buildVideoValidator(missionSubmitBloc ),
+                        _buildVideoValidator(missionSubmitBloc),
                       const SizedBox(height: 5),
                       if (widget.mission.hasGeolocation)
                         _buildLocationValidator(missionSubmitBloc),
@@ -730,13 +775,12 @@ class _MissionSubmitState extends State<MissionSubmit> {
                           const SizedBox(height: 80),
                         ],
                       ),
+                      if (widget.mission.isEntrepreneurial)
+                        _buildItemPropertiens(missionSubmitBloc),
+                      SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          _points(),
-                          SizedBox(
-                            width: 60,
-                          ),
                           _buildButton(
                               context, "ENVIAR RESPOSTA", missionSubmitBloc),
                         ],

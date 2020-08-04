@@ -23,12 +23,12 @@ class _GamesPageState extends State<GamesPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/background.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
+          //decoration: BoxDecoration(
+          //  image: DecorationImage(
+          //    image: AssetImage('assets/background.png'),
+          //    fit: BoxFit.cover,
+          //  ),
+          //),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[

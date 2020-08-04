@@ -13,17 +13,15 @@ mixin _$MemoryGameController on _MemoryGameControllerBase, Store {
 
   @override
   int get time {
-    _$timeAtom.context.enforceReadPolicy(_$timeAtom);
-    _$timeAtom.reportObserved();
+    _$timeAtom.reportRead();
     return super.time;
   }
 
   @override
   set time(int value) {
-    _$timeAtom.context.conditionallyRunInAction(() {
+    _$timeAtom.reportWrite(value, super.time, () {
       super.time = value;
-      _$timeAtom.reportChanged();
-    }, _$timeAtom, name: '${_$timeAtom.name}_set');
+    });
   }
 
   final _$_MemoryGameControllerBaseActionController =
@@ -31,8 +29,8 @@ mixin _$MemoryGameController on _MemoryGameControllerBase, Store {
 
   @override
   dynamic startTimer() {
-    final _$actionInfo =
-        _$_MemoryGameControllerBaseActionController.startAction();
+    final _$actionInfo = _$_MemoryGameControllerBaseActionController
+        .startAction(name: '_MemoryGameControllerBase.startTimer');
     try {
       return super.startTimer();
     } finally {
@@ -42,12 +40,19 @@ mixin _$MemoryGameController on _MemoryGameControllerBase, Store {
 
   @override
   dynamic endTime() {
-    final _$actionInfo =
-        _$_MemoryGameControllerBaseActionController.startAction();
+    final _$actionInfo = _$_MemoryGameControllerBaseActionController
+        .startAction(name: '_MemoryGameControllerBase.endTime');
     try {
       return super.endTime();
     } finally {
       _$_MemoryGameControllerBaseActionController.endAction(_$actionInfo);
     }
+  }
+
+  @override
+  String toString() {
+    return '''
+time: ${time}
+    ''';
   }
 }

@@ -41,8 +41,8 @@ final Map<String, Config> _preConfigured = {
     apiUrl: 'https://cine-porto-api.herokuapp.com',
     assetsDirectoryName: 'leratos',
     coinName: 'Cults',
-    primaryColor: Color(0xff00036c),
-    accentColor: Color(0xff00036c),
+    primaryColor: Colors.white,
+    accentColor: Color(0xff60B3FC),
   ),
 };
 

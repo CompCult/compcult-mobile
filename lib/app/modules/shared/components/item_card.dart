@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:museu_vivo/app/modules/shared/models/mission.dart';
 
 class ItemCard extends StatelessWidget {
   final dynamic item;
   final String routeName;
+  final String imageAssetPath;
 
-  ItemCard({this.item, this.routeName});
+  ItemCard({this.item, this.routeName, this.imageAssetPath});
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +42,7 @@ class ItemCard extends StatelessWidget {
             children: <Widget>[
               Container(
                 child: Center(
-                  child: Text(
-                    "...",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                    ),
-                  ),
+                  child: Image.asset(imageAssetPath),
                 ),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
@@ -85,13 +82,8 @@ class ItemCard extends StatelessWidget {
                   SizedBox(height: 10),
                   Row(
                     children: <Widget>[
-                      Container(
-                        width: 17,
-                        height: 15,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          color: Colors.green,
-                        ),
+                      SvgPicture.asset(
+                        'assets/leratos/points.svg',
                       ),
                       SizedBox(
                         width: 3,
@@ -105,24 +97,38 @@ class ItemCard extends StatelessWidget {
                       SizedBox(
                         width: 7,
                       ),
-                      Container(
-                        width: 17,
-                        height: 15,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: Colors.yellow),
+                      SvgPicture.asset(
+                        'assets/leratos/coins.svg',
                       ),
                       SizedBox(
                         width: 3,
                       ),
-                      Text('${item.resources}',
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          )),
+                      Text(
+                        '${item.resources}',
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 7,
+                      ),
                     ],
                   ),
+                  SizedBox(height: 5),
+                  if (item is Mission && item.isEntrepreneurial)
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        color: Colors.green,
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Text(
+                        'Empreendedorismo',
+                        style: TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ),
                 ],
               ),
             ],

@@ -5,11 +5,11 @@ import 'package:museu_vivo/app/modules/shared/repositories/item_repository.dart'
 import 'package:museu_vivo/app/modules/shared/repositories/user_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ItemsBloc extends BlocBase {
+class StoreBloc extends BlocBase {
   final ItemRepository itemRepository;
   final UserRepository userRepository;
 
-  ItemsBloc(this.itemRepository, this.userRepository);
+  StoreBloc(this.itemRepository, this.userRepository);
 
   Observable<List<Item>> get itens => itemRepository.itens;
 
@@ -19,7 +19,7 @@ class ItemsBloc extends BlocBase {
 
   updateUser() => userRepository.updateUser();
 
-   Future createItemOrder(itemId) async {
-      return await itemRepository.createItemOrder(itemId);
-   }
+  Future createItemOrder(itemId) async {
+    return await itemRepository.createItemOrder(itemId);
+  }
 }

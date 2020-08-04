@@ -82,6 +82,7 @@ class QuizzesPage extends StatelessWidget {
         return ItemCard(
           item: quiz,
           routeName: QuizSubmit.routeName,
+          imageAssetPath: "assets/leratos/test-quiz.png",
         );
       },
     );

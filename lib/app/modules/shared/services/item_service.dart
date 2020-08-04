@@ -10,7 +10,7 @@ class ItemService {
   }
 
   Future<Response> fetchItens(String userId) {
-    return dio.get('/store/items?purchased=0');
+    return dio.get('/store/items');
   }
 
   Future<Response> createItemOrder(String itemId) {

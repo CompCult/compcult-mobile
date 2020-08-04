@@ -2,8 +2,8 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:museu_vivo/app/modules/pages/store/store_bloc.dart';
 import 'package:museu_vivo/app/modules/shared/repositories/item_repository.dart';
-import 'package:museu_vivo/app/modules/store/store_page_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
               Bloc((i) => CoinsBloc(i.get<UserRepository>())),
               Bloc((i) => QuizzesBloc(i.get<QuizRepository>())),
               Bloc((i) => QuizSubmitBloc(i.get<QuizRepository>())),
-              Bloc((i) => ItemsBloc(
+              Bloc((i) => StoreBloc(
                     i.get<ItemRepository>(),
                     i.get<UserRepository>(),
                   )),

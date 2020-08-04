@@ -24,9 +24,9 @@ class _MemoryGameDashboardPageState extends State<MemoryGameDashboardPage> {
         appBar: AppBar(
           title: Text(
             "Jogos da Memória",
-            style: TextStyle(color: Colors.white),
+            //style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Color(0xff00036c),
+          //backgroundColor: Color(0xff00036c),
         ),
         body: SingleChildScrollView(
             child: Padding(

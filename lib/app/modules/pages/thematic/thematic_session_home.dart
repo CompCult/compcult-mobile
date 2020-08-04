@@ -74,9 +74,7 @@ class _ThematicSessionState extends State<ThematicSession> {
                           "Me chamo Lara Arara e vou te ajudar e te dar algumas instruções sobre "
                           "este jogo.  "
                           "\nLogo abaixo de mim, você vai ter novas missões, quizzes e minigames para jogar."
-                          "\nLogo acima de mim, é onde está localizado o ranking, aonde você vai poder "
-                          "ver a sua posição e a posição de alguns outros jogadores que você"
-                          "está competindo."
+                          "\nLogo acima de mim está o painel de seus poderes no jogo."
                           "\n E ai? Vamos Jogar?",
                           style: TextStyle(fontSize: 11, color: Colors.white),
                         )

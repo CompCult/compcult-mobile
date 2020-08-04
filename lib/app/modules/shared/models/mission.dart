@@ -19,6 +19,7 @@ class Mission {
   bool singleAnswer;
   int lux;
   int resources;
+  bool isEntrepreneurial;
 
   Mission(
       {this.id,
@@ -40,7 +41,8 @@ class Mission {
       this.startTime,
       this.singleAnswer,
       this.lux,
-      this.resources});
+      this.resources,
+      this.isEntrepreneurial});
 
   Mission.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
@@ -63,6 +65,7 @@ class Mission {
     singleAnswer = json['single_answer'];
     lux = json['lux'];
     resources = json['resources'];
+    isEntrepreneurial = json['isEntrepreneurial'];
   }
 
   Map<String, dynamic> toJson() {
@@ -87,6 +90,7 @@ class Mission {
     data['single_answer'] = this.singleAnswer;
     data['lux'] = this.lux;
     data['resources'] = this.resources;
+    data['isEntrepreneurial'] = this.isEntrepreneurial;
 
     return data;
   }

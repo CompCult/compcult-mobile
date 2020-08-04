@@ -2,8 +2,8 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:museu_vivo/app/modules/pages/coins/coins_page.dart';
 import 'package:museu_vivo/app/modules/pages/games/games_page.dart';
+import 'package:museu_vivo/app/modules/pages/store/store_page.dart';
 import 'package:museu_vivo/app/modules/pages/user/user_page.dart';
-import 'package:museu_vivo/app/modules/store/store_page.dart';
 
 import 'home_bloc.dart';
 
@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
     homeBloc.fetchMissions();
     homeBloc.fetchQuizzes();
     homeBloc.fetchItens();
-    homeBloc.fetchItensPurchased();
 
     super.didChangeDependencies();
   }
@@ -80,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.videogame_asset,
                   color: _currentIndex == 1 ? Color(0xff60B3FC) : Colors.black),
               title: Text(
-                'Minijogos',
+                'Atividades',
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: Colors.white,
@@ -89,7 +88,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.shopping_cart,
                   color: _currentIndex == 2 ? Color(0xff60B3FC) : Colors.black),
               title: Text(
-                'Loja',
+                'Feira',
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: Colors.white,

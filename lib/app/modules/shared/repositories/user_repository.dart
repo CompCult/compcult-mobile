@@ -20,8 +20,10 @@ class UserRepository extends BlocBase {
 
   UserRepository(this._userService, _user, this._userBox, this._dioRepository) {
     user.listen((user) {
-      _dioRepository.addToken(user.token);
-      _userBox.put(0, user.toJson());
+      if (user.token != null) {
+        _dioRepository.addToken(user.token);
+        _userBox.put(0, user.toJson());
+      }
     });
 
     _userController.sink.add(_user);
@@ -32,6 +34,12 @@ class UserRepository extends BlocBase {
       final response = await _userService.fetchUser(user.id);
       _userController.sink.add(User.fromJson(response.data));
     });
+  }
+
+  Future updateUserAsync() async {
+    final response = await _userService.fetchUser(_userController.value.id);
+    response.data['token'] = _userController.value.token;
+    _userController.sink.add(User.fromJson(response.data));
   }
 
   Future<List<User>> fetchUsers() async {

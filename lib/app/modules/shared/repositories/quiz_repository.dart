@@ -33,6 +33,7 @@ class QuizRepository extends BlocBase {
   }
 
   Future createQuizAnswer(String quizId, String answer) {
+    userRepository.updateUserAsync();
     return _quizService.createQuizAnswer(quizId, answer);
   }
 
