@@ -21,17 +21,30 @@ class _UserPageState extends State<UserPage> {
             stream: bloc.user,
             builder: (context, snapshot) {
               if (!snapshot.hasData) return Container();
-              return Text(
-                'Olá, ${snapshot.data.name}!',
-                style: TextStyle(fontFamily: "Poppins", fontSize: 18),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Olá, ${snapshot.data.name}!',
+                    style: TextStyle(fontFamily: "Poppins", fontSize: 18),
+                  ),
+                  GestureDetector(
+                    onTap: () => logout(bloc),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          "Sair ",
+                          style: TextStyle(fontFamily: "Poppins", fontSize: 16),
+                        ),
+                        Icon(Icons.exit_to_app),
+                      ],
+
+                    ),
+                  )
+                ],
               );
             }),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () => logout(bloc),
-          ),
-        ],
       ),
       body: StreamBuilder<User>(
         stream: bloc.user,

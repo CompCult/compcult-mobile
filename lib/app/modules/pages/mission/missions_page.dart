@@ -35,11 +35,10 @@ class _MissionsPageState extends State<MissionsPage> {
           Column(
             children: <Widget>[
               SizedBox(height: 15),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Container(
-                    width: 160,
                     child: SecretCodeField(
                       label: 'Código secreto da missão',
                       onSubmited: (missionId) async {
@@ -59,46 +58,7 @@ class _MissionsPageState extends State<MissionsPage> {
                       },
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black38)),
-                    height: 35,
-                    width: 140,
-                    child: FlatButton(
-                      padding: EdgeInsets.all(2),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed(TeamsPage.routeName),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Icon(
-                            Icons.group,
-                            color: Color(0xff60B3FC),
-                            size: 16,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Minhas Equipes",
-                            style: TextStyle(
-                                fontSize: 10,
-                                fontFamily: "Poppins",
-                                color: Colors.black38),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: 15,
-                            color: Color(0xff60B3FC),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  
                 ],
               ),
               SizedBox(height: 15),
@@ -120,6 +80,20 @@ class _MissionsPageState extends State<MissionsPage> {
             ],
           ),
         ]),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Navigator.of(context).pushNamed(TeamsPage.routeName),
+        backgroundColor: Color(0xff60B3FC),
+        icon: Icon(
+          Icons.group,
+          color: Colors.white,
+          size: 18,
+        ),
+        label: Text(
+          "Minhas Equipes",
+          style: TextStyle(
+              fontSize: 12, fontFamily: "Poppins", color: Colors.white),
+        ),
       ),
     );
   }

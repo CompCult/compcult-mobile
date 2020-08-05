@@ -7,6 +7,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:museu_vivo/app/modules/shared/components/custom_appbar.dart';
 import 'package:museu_vivo/app/modules/shared/models/group.dart';
@@ -527,14 +528,9 @@ class _MissionSubmitState extends State<MissionSubmit> {
             decoration: InputDecoration(
               labelText: "Valor da obra",
               hintText: "ex: 20",
-              icon: Container(
-                width: 17,
-                height: 15,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  color: Colors.yellow,
-                ),
-              ),
+              icon: SvgPicture.asset(
+              'assets/leratos/coins.svg',
+            ),
             ),
             onChanged: (value) =>
                 missionSubmitBloc.changeItemValueAnswer(int.parse(value)),
@@ -567,13 +563,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
         SizedBox(
           width: 7,
         ),
-        Container(
-          width: 17,
-          height: 15,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              color: Colors.yellow),
-        ),
+        
         SizedBox(
           width: 3,
         ),
