@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
     homeBloc.fetchMissions();
     homeBloc.fetchQuizzes();
     homeBloc.fetchItens();
-
     super.didChangeDependencies();
   }
 

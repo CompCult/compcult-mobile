@@ -16,6 +16,7 @@ class UserRepository extends BlocBase {
   BehaviorSubject<User> _userController = BehaviorSubject<User>();
   DioRepository _dioRepository;
 
+
   Observable<User> get user => _userController.stream;
 
   UserRepository(this._userService, _user, this._userBox, this._dioRepository) {

@@ -25,7 +25,6 @@ class _CoinsPageState extends State<CoinsPage> {
     return Scaffold(
       appBar: AppBar(
         title: CustomAppBar(),
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Container(

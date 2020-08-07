@@ -2,6 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:museu_vivo/app/modules/shared/repositories/item_repository.dart';
 import 'package:museu_vivo/app/modules/shared/repositories/mission_repository.dart';
 import 'package:museu_vivo/app/modules/shared/repositories/quiz_repository.dart';
+import 'package:museu_vivo/app/modules/shared/repositories/user_repository.dart';
 
 class HomeBloc extends BlocBase {
   final MissionRepository _missionRepository;
@@ -17,4 +18,5 @@ class HomeBloc extends BlocBase {
   fetchItens() => _itemRepository.fetchItens();
 
   fetchItensPurchased() => _itemRepository.fetchPurchasedItens();
+
 }

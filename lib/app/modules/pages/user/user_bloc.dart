@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 
 class UserBloc extends BlocBase {
   final UserRepository userRepository;
-
+  
   UserBloc(this.userRepository);
 
   Observable<User> get user => userRepository.user;
