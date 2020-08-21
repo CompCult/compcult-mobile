@@ -20,6 +20,8 @@ class _QuizSubmitState extends State<QuizSubmit> {
   final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
   String _alternative = 'a';
   List<bool> colors = [false, false, false, false, false];
+  Color color_selected = Colors.greenAccent;
+  Color color_unselected = Colors.blue[50];
 
   _changeColor(int ind) {
     setState(() {
@@ -34,63 +36,68 @@ class _QuizSubmitState extends State<QuizSubmit> {
       key: _scaffoldState,
       appBar: AppBar(
         title: CustomAppBar(),
+        elevation: 0,
       ),
-      body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/leratos/fundo_quizzes.jpg"),
-                fit: BoxFit.cover),
+      body: ListView(
+        children: <Widget>[
+          SizedBox(
+            height: 20,
           ),
-          child: ListView(
-            children: <Widget>[
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: 600,
-                margin: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30),
+          Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.25),
+                  offset: Offset(0, 2),
+                  blurRadius: 5,
+                ),
+              ],
+            ),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    "${widget.quiz.title.toUpperCase()}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF50555C),
+                      fontSize: 18,
+                    ),
                   ),
-                  color: Colors.white.withOpacity(0.7),
                 ),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        "${widget.quiz.title}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.blue),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  child: Text(
+                    "${widget.quiz.description}",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: "SourceSansPro",
+                      color: Colors.black54,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        "${widget.quiz.description}",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "SourceSansPro",
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    _buildQuizForm(),
-                    SizedBox(height: 20),
-                    _buildButtonSubmit("ENVIAR RESPOSTA"),
-                    SizedBox(height: 10),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          )),
+                SizedBox(height: 20),
+                _buildQuizForm(),
+                SizedBox(height: 20),
+                _buildButtonSubmit("ENVIAR RESPOSTA"),
+                SizedBox(height: 10),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -107,9 +114,7 @@ class _QuizSubmitState extends State<QuizSubmit> {
                     _changeColor(0);
                   });
                 },
-                color: colors[0] == false
-                    ? Colors.white
-                    : Color(0xff60B3FC).withOpacity(0.4),
+                color: colors[0] == false ? color_unselected : color_selected,
                 child: Container(
                   width: 290,
                   child: Padding(
@@ -135,9 +140,7 @@ class _QuizSubmitState extends State<QuizSubmit> {
                     _changeColor(1);
                   });
                 },
-                color: colors[1] == false
-                    ? Colors.white
-                    : Color(0xff60B3FC).withOpacity(0.4),
+                color: colors[1] == false ? color_unselected : color_selected,
                 child: Container(
                   width: 290,
                   child: Padding(
@@ -157,9 +160,7 @@ class _QuizSubmitState extends State<QuizSubmit> {
             ),
             if (widget.quiz.alternativeC != null)
               FlatButton(
-                color: colors[2] == false
-                    ? Colors.white
-                    : Color(0xff60B3FC).withOpacity(0.4),
+                color: colors[2] == false ? color_unselected : color_selected,
                 onPressed: () {
                   setState(() {
                     _alternative = 'c';
@@ -191,9 +192,7 @@ class _QuizSubmitState extends State<QuizSubmit> {
                     _changeColor(3);
                   });
                 },
-                color: colors[3] == false
-                    ? Colors.white
-                    : Color(0xff60B3FC).withOpacity(0.4),
+                color: colors[3] == false ? color_unselected : color_selected,
                 child: Container(
                   width: 290,
                   child: Padding(
@@ -219,9 +218,7 @@ class _QuizSubmitState extends State<QuizSubmit> {
                     _changeColor(4);
                   });
                 },
-                color: colors[4] == false
-                    ? Colors.white
-                    : Color(0xff60B3FC).withOpacity(0.4),
+                color: colors[4] == false ? color_unselected : color_selected,
                 child: Container(
                   width: 290,
                   child: Padding(

@@ -8,8 +8,10 @@ class HomeBloc extends BlocBase {
   final MissionRepository _missionRepository;
   final QuizRepository _quizRepository;
   final ItemRepository _itemRepository;
+  final UserRepository _userRepository;
 
-  HomeBloc(this._missionRepository, this._quizRepository, this._itemRepository);
+  HomeBloc(this._missionRepository, this._quizRepository, this._itemRepository,
+      this._userRepository);
 
   fetchMissions() => _missionRepository.fetchMissions();
 
@@ -19,4 +21,5 @@ class HomeBloc extends BlocBase {
 
   fetchItensPurchased() => _itemRepository.fetchPurchasedItens();
 
+  fetchUser() => _userRepository.updateUserAsync();
 }

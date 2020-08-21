@@ -6,7 +6,7 @@ class MissionService {
   MissionService(this._dio);
 
   Future<Response> fetchMissions(String userId) {
-    return _dio.get('/missions?answered=0');
+    return _dio.get('/missions');
   }
 
   Future<Response> fetchSecretMission(String missionId) {

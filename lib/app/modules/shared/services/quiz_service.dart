@@ -6,7 +6,7 @@ class QuizService {
   QuizService(this.dio);
 
   Future<Response> fetchQuizzes(String userId) {
-    return dio.get('/quizzes?answered=0');
+    return dio.get('/quizzes');
   }
 
   Future<Response> fetchSecretQuiz(String quizId) {

@@ -22,9 +22,14 @@ class MissionRepository extends BlocBase {
       final Response missionsResponse =
           await _missionService.fetchMissions(user.id);
 
-      _missionsController.sink.add(List<Mission>.from(
-        missionsResponse.data.map((mission) => Mission.fromJson(mission)),
-      ));
+      List<Mission> missions = List<Mission>.from(
+        missionsResponse.data.map((mission) {
+          mission['answered'] = mission['users'].contains(user.id);
+          return Mission.fromJson(mission);
+        }),
+      );
+
+      _missionsController.sink.add(missions.reversed.toList());
     });
   }
 
@@ -38,7 +43,16 @@ class MissionRepository extends BlocBase {
   Future createMissionAnswer(
       String missionId, Map<String, dynamic> data) async {
     userRepository.user.listen((user) async {
-      return await _missionService.createMissionAnswer(missionId, data);
+      var response = await _missionService.createMissionAnswer(missionId, data);
+
+      List<Mission> missions = _missionsController.value.map((m) {
+        if (m.id == missionId) m.answered = true;
+        return m;
+      }).toList();
+
+      _missionsController.sink.add(missions);
+
+      return response;
     });
   }
 

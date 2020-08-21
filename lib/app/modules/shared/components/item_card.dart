@@ -14,127 +14,136 @@ class ItemCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         color: Colors.white,
-        elevation: 5,
-        child: InkWell(
-          splashColor: Color(0xff60B3FC),
-          onTap: () async {
-            await Navigator.of(context)
-                .pushNamed(routeName, arguments: item)
-                .then(
-              (value) {
-                if (value != null) {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Enviado com sucesso!',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      backgroundColor: Colors.blue.withOpacity(0.7),
-                    ),
-                  );
-                }
-              },
-            );
-          },
-          child: Row(
-            children: <Widget>[
-              Container(
-                child: Center(
-                  child: Image.asset(imageAssetPath),
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
-                    ),
-                    color: Colors.blue),
-                height: 125,
-                width: 110,
+        elevation: 3,
+        child: Row(
+          children: <Widget>[
+            Container(
+              child: Center(
+                child: Image.asset(imageAssetPath),
               ),
-              SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: Text(
-                      item.name,
+              height: 80,
+              width: 80,
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      item.name.toUpperCase(),
                       style: TextStyle(
-                        fontFamily: "Poppins",
+                        fontFamily: "Roboto",
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).accentColor,
-                        fontSize: 15,
+                        color: Color(0xFF50555C),
+                        fontSize: 16,
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    width: 170,
-                    child: Text(
-                      '${item.description.length >= 25 ? item.description.substring(0, 25) : item.description}...',
+                    SizedBox(height: 5),
+                    Text(
+                      item.description,
                       style: TextStyle(
                         fontFamily: "SourceSansPro",
                         color: Colors.grey,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[
-                      SvgPicture.asset(
-                        'assets/leratos/points.svg',
-                      ),
-                      SizedBox(
-                        width: 3,
-                      ),
-                      Text('${item.lux}',
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          )),
-                      SizedBox(
-                        width: 7,
-                      ),
-                      SvgPicture.asset(
-                        'assets/leratos/coins.svg',
-                      ),
-                      SizedBox(
-                        width: 3,
-                      ),
-                      Text(
-                        '${item.resources}',
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
+                    if (item is Mission && item.isEntrepreneurial)
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Color(0xff60B3FC),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Empreendedorismo',
+                          style: TextStyle(color: Colors.white, fontSize: 11),
                         ),
                       ),
-                      SizedBox(
-                        width: 7,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  if (item is Mission && item.isEntrepreneurial)
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        color: Colors.green,
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      child: Text(
-                        'Empreendedorismo',
-                        style: TextStyle(color: Colors.white, fontSize: 10),
-                      ),
-                    ),
-                ],
+                    SizedBox(height: 10),
+                    buildSelectButton(context),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Widget buildSelectButton(BuildContext context) {
+    Widget notAnsweredSection = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        SvgPicture.asset(
+          'assets/leratos/points.svg',
+        ),
+        SizedBox(
+          width: 3,
+        ),
+        Text('${item.lux}',
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            )),
+        SizedBox(
+          width: 7,
+        ),
+        SvgPicture.asset(
+          'assets/leratos/coins.svg',
+        ),
+        SizedBox(
+          width: 3,
+        ),
+        Text(
+          '${item.resources}',
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
+          ),
+        ),
+        SizedBox(
+          height: 25,
+          child: MaterialButton(
+              onPressed: () async => await Navigator.of(context)
+                  .pushNamed(routeName, arguments: item),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              color: Color(0xff1fce27),
+              child: Text(
+                item.answered ? "REALIZADO" : "REALIZAR",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              )),
+        ),
+      ],
+    );
+
+    Widget answeredSection = MaterialButton(
+      height: 25,
+      onPressed: item.singleAnswer
+          ? () {}
+          : () async =>
+              await Navigator.of(context).pushNamed(routeName, arguments: item),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      color: item.singleAnswer
+          ? Color.fromRGBO(196, 196, 196, 0.4)
+          : Color(0xff1fce27),
+      child: Center(
+        child: Text(
+          item.singleAnswer ? "REALIZADO" : "REALIZAR NOVAMENTE",
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      ),
+    );
+
+    return item.answered ? answeredSection : notAnsweredSection;
   }
 }

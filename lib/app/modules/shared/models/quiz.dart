@@ -19,7 +19,9 @@ class Quiz {
   int lux;
   int resources;
 
-  String get name => this.title;
+  bool answered;
+
+  String name;
 
   Quiz(
       {this.id,
@@ -40,7 +42,9 @@ class Quiz {
       this.startTime,
       this.singleAnswer,
       this.lux,
-      this.resources});
+      this.resources,
+      this.answered,
+      this.name});
 
   Quiz.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
@@ -56,12 +60,14 @@ class Quiz {
     description = json['description'];
     user = json['_user'];
     title = json['title'];
+    name = json['title'];
     iV = json['__v'];
     createdAt = json['created_at'];
     startTime = json['start_time'];
     singleAnswer = json['single_answer'];
     lux = json['lux'];
     resources = json['resources'];
+    answered = json['answered'];
   }
 
   Map<String, dynamic> toJson() {

@@ -9,6 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:museu_vivo/app/modules/pages/teams/teams_page.dart';
 import 'package:museu_vivo/app/modules/shared/components/custom_appbar.dart';
 import 'package:museu_vivo/app/modules/shared/models/group.dart';
 import 'package:museu_vivo/app/modules/shared/models/mission.dart';
@@ -336,14 +337,37 @@ class _MissionSubmitState extends State<MissionSubmit> {
                 );
               }).toList();
 
+              Widget addGroupButton = MaterialButton(
+                onPressed: () => Navigator.of(context)
+                    .pushNamed(TeamsPage.routeName)
+                    .then((_) => setState(() {})),
+                color: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  'criar\ngrupo',
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              );
+
               return StreamBuilder<String>(
                   stream: bloc.groupAnswer,
                   builder: (context, groupSnapshot) {
-                    return DropdownButton<String>(
-                      hint: Text('Selecione um grupo'),
-                      items: items,
-                      onChanged: (value) => bloc.changeGroup(int.parse(value)),
-                      value: groupSnapshot.data,
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DropdownButton<String>(
+                          hint: Text('Selecione um grupo'),
+                          items: items,
+                          onChanged: (value) =>
+                              bloc.changeGroup(int.parse(value)),
+                          value: groupSnapshot.data,
+                        ),
+                        SizedBox(width: 10),
+                        addGroupButton
+                      ],
                     );
                   });
             },
@@ -481,26 +505,34 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
   Widget _buildDescription(
       MissionSubmitBloc missionSubmitBloc, Mission mission) {
-    return Text(
-      mission.description,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontFamily: "SourceSansPro",
-        fontSize: 16,
-        color: Colors.black54,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        color: Colors.white,
+        border: Border.all(color: Colors.blue),
+      ),
+      padding: EdgeInsets.all(10),
+      child: Text(
+        mission.description,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: "SourceSansPro",
+          fontSize: 16,
+          color: Colors.black54,
+        ),
       ),
     );
   }
 
   Widget _buildTitle(MissionSubmitBloc missionSubmitBloc, Mission mission) {
     return Text(
-      mission.name,
+      mission.name.toUpperCase(),
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontFamily: "Poppins",
-        fontWeight: FontWeight.w700,
-        color: Colors.black,
-        fontSize: 16,
+        fontFamily: "Roboto",
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF50555C),
+        fontSize: 18,
       ),
     );
   }
@@ -529,8 +561,8 @@ class _MissionSubmitState extends State<MissionSubmit> {
               labelText: "Valor da obra",
               hintText: "ex: 20",
               icon: SvgPicture.asset(
-              'assets/leratos/coins.svg',
-            ),
+                'assets/leratos/coins.svg',
+              ),
             ),
             onChanged: (value) =>
                 missionSubmitBloc.changeItemValueAnswer(int.parse(value)),
@@ -563,7 +595,6 @@ class _MissionSubmitState extends State<MissionSubmit> {
         SizedBox(
           width: 7,
         ),
-        
         SizedBox(
           width: 3,
         ),
@@ -579,20 +610,20 @@ class _MissionSubmitState extends State<MissionSubmit> {
 
   Widget _buildButton(
       BuildContext context, String label, MissionSubmitBloc bloc) {
-    return Container(
-      width: 180,
-      height: 35,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Color(0xff60B3FC),
-      ),
-      child: SizedBox.expand(
-        child: FlatButton(
-          child: _isLoading
-              ? CircularProgressIndicator(
-                  backgroundColor: Colors.white,
-                )
-              : Text(
+    return _isLoading
+        ? CircularProgressIndicator(
+            backgroundColor: Colors.white,
+          )
+        : FlatButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            color: Colors.blue,
+            child: Container(
+              height: 45,
+              width: 150,
+              child: Center(
+                child: Text(
                   label,
                   style: TextStyle(
                     fontFamily: "Poppins",
@@ -602,25 +633,25 @@ class _MissionSubmitState extends State<MissionSubmit> {
                   ),
                   textAlign: TextAlign.left,
                 ),
-          onPressed: () async {
-            setState(() {
-              _isLoading = true;
-            });
-
-            try {
-              // Envio de áudio
-              await bloc.changeAudioAnswer(io.File(_recording.path));
-              await bloc.createMissionAnswer(widget.mission);
-              Navigator.of(context).pop(true);
-            } catch (e) {
+              ),
+            ),
+            onPressed: () async {
               setState(() {
-                _isLoading = false;
+                _isLoading = true;
               });
-            }
-          },
-        ),
-      ),
-    );
+
+              try {
+                // Envio de áudio
+                await bloc.changeAudioAnswer(io.File(_recording.path));
+                await bloc.createMissionAnswer(widget.mission);
+                Navigator.of(context).pop(true);
+              } catch (e) {
+                setState(() {
+                  _isLoading = false;
+                });
+              }
+            },
+          );
   }
 
   Widget _flatButtonIcon(String label, IconData icon, Function func) {
@@ -676,24 +707,30 @@ class _MissionSubmitState extends State<MissionSubmit> {
     return Scaffold(
       appBar: AppBar(
         title: CustomAppBar(),
+        elevation: 0,
       ),
       body: Container(
+        margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                "assets/leratos/fundo_quizzes.jpg",
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, 0.25),
+                offset: Offset(0, 2),
+                blurRadius: 5,
               ),
-              fit: BoxFit.cover),
-        ),
+            ]),
         child: ListView(
-          padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: Colors.white.withOpacity(0.7)),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: Colors.white,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(

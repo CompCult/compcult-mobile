@@ -16,15 +16,9 @@ class QuizzesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: CustomAppBar(),
+        elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                "assets/leratos/fundo_quizzes.jpg",
-              ),
-              fit: BoxFit.cover),
-        ),
         child: ListView(
           children: <Widget>[
             SizedBox(
@@ -82,7 +76,7 @@ class QuizzesPage extends StatelessWidget {
         return ItemCard(
           item: quiz,
           routeName: QuizSubmit.routeName,
-          imageAssetPath: "assets/leratos/test-quiz.png",
+          imageAssetPath: "assets/leratos/memory_borda_cinza.png",
         );
       },
     );

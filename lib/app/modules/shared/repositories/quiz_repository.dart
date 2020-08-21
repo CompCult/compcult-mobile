@@ -19,10 +19,15 @@ class QuizRepository extends BlocBase {
   fetchQuizzes() {
     userRepository.user.listen((user) async {
       final Response quizzesReponse = await _quizService.fetchQuizzes(user.id);
+      List<Quiz> quizzes = List<Quiz>.from(
+        quizzesReponse.data.map((quiz) {
+          quiz['answered'] = quiz['users'].contains(user.id);
 
-      _quizController.sink.add(List<Quiz>.from(
-        quizzesReponse.data.map((quiz) => Quiz.fromJson(quiz)),
-      ));
+          return Quiz.fromJson(quiz);
+        }),
+      );
+
+      _quizController.sink.add(quizzes.reversed.toList());
     });
   }
 
@@ -32,9 +37,19 @@ class QuizRepository extends BlocBase {
     return Quiz.fromJson(quizzesReponse.data[0]);
   }
 
-  Future createQuizAnswer(String quizId, String answer) {
+  Future createQuizAnswer(String quizId, String answer) async {
     userRepository.updateUserAsync();
-    return _quizService.createQuizAnswer(quizId, answer);
+
+    var response = await _quizService.createQuizAnswer(quizId, answer);
+
+    List<Quiz> quizes = _quizController.value.map((q) {
+      if (q.id == quizId) q.answered = true;
+      return q;
+    }).toList();
+
+    _quizController.sink.add(quizes);
+
+    return response;
   }
 
   @override

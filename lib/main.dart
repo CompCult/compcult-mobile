@@ -76,6 +76,7 @@ class _MyAppState extends State<MyApp> {
                     i.get<MissionRepository>(),
                     i.get<QuizRepository>(),
                     i.get<ItemRepository>(),
+                    i.get<UserRepository>(),
                   )),
               Bloc((i) => RankingBloc(i.get<UserRepository>())),
               Bloc((i) => SignUpBloc(i.get<UserRepository>())),

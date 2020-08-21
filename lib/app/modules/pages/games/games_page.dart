@@ -20,76 +20,71 @@ class _GamesPageState extends State<GamesPage> {
     return Scaffold(
       appBar: AppBar(
         title: CustomAppBar(),
+        elevation: 0,
       ),
-      body: SingleChildScrollView(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _buildButton(
+            name: 'MINI-GAMES',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MiniGames(),
+                ),
+              );
+            },
+          ),
+          _buildButton(
+            name: 'MISSÕES',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MissionsPage(),
+                ),
+              );
+            },
+          ),
+          _buildButton(
+            name: 'QUIZZES',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuizzesPage(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildButton({String name, Function onPressed}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: FlatButton(
+        onPressed: onPressed,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        color: Colors.blue,
         child: Container(
-          //decoration: BoxDecoration(
-          //  image: DecorationImage(
-          //    image: AssetImage('assets/background.png'),
-          //    fit: BoxFit.cover,
-          //  ),
-          //),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              SizedBox(
-                height: 15,
+          padding: EdgeInsets.all(20),
+          child: Center(
+            child: Text(
+              name,
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                fontSize: 40,
               ),
-              GestureDetector(
-                child: Image.asset(
-                  "assets/leratos/aba_minigames.png",
-                  height: 150,
-                  width: 500,
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MiniGames(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              GestureDetector(
-                child: Image.asset(
-                  "assets/leratos/aba_missoes.png",
-                  height: 150,
-                  width: 500,
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MissionsPage(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              GestureDetector(
-                child: Image.asset(
-                  "assets/leratos/aba_quizzes.png",
-                  height: 150,
-                  width: 500,
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuizzesPage(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 8,
-              ),
-            ],
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),
