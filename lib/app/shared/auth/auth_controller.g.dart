@@ -6,7 +6,7 @@ part of 'auth_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AuthController on _AuthControllerBase, Store {
   final _$statusAtom = Atom(name: '_AuthControllerBase.status');
@@ -46,6 +46,16 @@ mixin _$AuthController on _AuthControllerBase, Store {
   Future<dynamic> authenticate(String email, String password) {
     return _$authenticateAsyncAction
         .run(() => super.authenticate(email, password));
+  }
+
+  final _$registerUserAsyncAction =
+      AsyncAction('_AuthControllerBase.registerUser');
+
+  @override
+  Future<dynamic> registerUser(
+      String name, String institution, String email, String password) {
+    return _$registerUserAsyncAction
+        .run(() => super.registerUser(name, institution, email, password));
   }
 
   final _$_AuthControllerBaseActionController =

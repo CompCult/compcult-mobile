@@ -12,6 +12,9 @@ abstract class _HomeControllerBase with Store {
   // As operações de salvar offline é feita usando o _storage
   final ILocalStorage _storage = Modular.get();
 
+  @observable
+  int currentTabIndex = 0;
+
   _HomeControllerBase() {
     init();
   }
@@ -19,10 +22,5 @@ abstract class _HomeControllerBase with Store {
   @action
   init() {
     // TODO: Alterar a lógica para iniciar o usuário
-  }
-
-  logout() async {
-    await Modular.get<AuthController>().logout();
-    Modular.to.pushReplacementNamed('/login');
   }
 }

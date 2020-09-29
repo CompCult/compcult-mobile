@@ -32,6 +32,15 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
+  Future registerUser(
+      String name, String institution, String email, String password) async {
+    Response response = await _userService.createUser(
+        name: name, institution: institution, email: email, password: password);
+
+    if (response.data != null) {}
+  }
+
+  @override
   logout() async {
     await _storage.delete("user");
     await _storage.close();

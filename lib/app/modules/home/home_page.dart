@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:museu_vivo/app/shared/widgets/custom_bottom_bar.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,21 +14,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
 
+  final PageStorageBucket bucket = PageStorageBucket();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: controller.logout,
-          )
-        ],
       ),
       body: Center(
         child: Text("HOME!!!"),
       ),
+      bottomNavigationBar: CustomBottomBar(),
     );
   }
 }

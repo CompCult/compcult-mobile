@@ -5,12 +5,12 @@ import 'package:museu_vivo/app/shared/widgets/custom_form_field.dart';
 import 'package:museu_vivo/app/shared/widgets/custom_submit_button.dart';
 import 'package:museu_vivo/config.dart';
 
-class FormContainer extends StatelessWidget {
+class LoginFormContainer extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  FormContainer({
+  LoginFormContainer({
     Key key,
     @required this.formKey,
   });

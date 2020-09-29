@@ -33,6 +33,12 @@ abstract class _AuthControllerBase with Store {
     user = await _authRepository.login(email, password);
   }
 
+  @action
+  Future registerUser(
+      String name, String institution, String email, String password) async {
+    await _authRepository.registerUser(name, institution, email, password);
+  }
+
   logout() async {
     await _authRepository.logout();
   }

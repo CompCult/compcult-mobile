@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:museu_vivo/app/shared/widgets/login_form_container.dart';
-import 'package:museu_vivo/app/shared/widgets/sign_up_button.dart';
-import 'login_controller.dart';
+import 'package:museu_vivo/app/shared/widgets/sign_up_form_container.dart';
+import 'sign_up_controller.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   final String title;
-  const LoginPage({Key key, this.title = "Login"}) : super(key: key);
+  const SignUpPage({Key key, this.title = "SignUp"}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends ModularState<LoginPage, LoginController> {
+class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
   //use 'controller' variable to access controller
   final _formKey = GlobalKey<FormState>();
 
@@ -33,9 +32,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
             padding: EdgeInsets.fromLTRB(40, 50, 40, 10),
             children: <Widget>[
               SizedBox(height: 30),
-              LoginFormContainer(formKey: _formKey),
+              SignUpFormContainer(formKey: _formKey),
               SizedBox(height: 20),
-              SignUpButton(),
             ],
           ),
         ),
