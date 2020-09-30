@@ -18,7 +18,7 @@ abstract class _AuthControllerBase with Store {
 
   _AuthControllerBase() {
     _authRepository.getUser().then((setUser)).catchError((err) {
-      print("TREEEETAAAAA!");
+      print("[ERROR] Erro ao executar o método authRepository.getUser(): $err");
     });
   }
 
