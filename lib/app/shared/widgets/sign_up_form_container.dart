@@ -31,7 +31,7 @@ class SignUpFormContainer extends StatelessWidget {
             width: 120,
             height: 120,
             child: Image.asset(
-              'assets/${config.assetsDirectoryName}/icon.png',
+              'assets/images/${config.assetsDirectoryName}/icon.png',
             ),
           ),
           SizedBox(height: 10),
