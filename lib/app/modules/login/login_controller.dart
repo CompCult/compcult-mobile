@@ -12,13 +12,20 @@ abstract class _LoginControllerBase with Store {
   @observable
   bool loading = false;
 
+  @observable
+  bool showErrorMessage = false;
+
   @action
   Future login(String email, String password) async {
     try {
       loading = true;
+      showErrorMessage = false;
       await auth.authenticate(email, password);
-      Modular.to.pushReplacementNamed('/home');
+      Modular.to.pushNamedAndRemoveUntil('/home', (_) => false);
     } catch (e) {
+      loading = false;
+      showErrorMessage = true;
+    } finally {
       loading = false;
     }
   }

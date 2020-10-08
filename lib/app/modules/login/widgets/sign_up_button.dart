@@ -12,16 +12,24 @@ class SignUpButton extends StatelessWidget {
           ),
         ); */
       },
-      child: Text(
-        "Não possui uma conta? Cadastre-se",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          letterSpacing: 0.5,
-          fontFamily: "PTSans",
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          fontSize: 13,
+      child: RichText(
+        text: TextSpan(
+          style: TextStyle(
+            letterSpacing: 0.5,
+            fontFamily: "Product Sans",
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            fontSize: 17,
+          ),
+          text: "Não possui uma conta? ",
+          children: [
+            TextSpan(
+              text: "Cadastre-se.",
+              style: TextStyle(color: Colors.black),
+            ),
+          ],
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }

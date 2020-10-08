@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:museu_vivo/app/shared/widgets/sign_up_form_container.dart';
+import 'package:museu_vivo/app/modules/sign_up/widgets/sign_up_form_container.dart';
 import 'sign_up_controller.dart';
 
 class SignUpPage extends StatefulWidget {

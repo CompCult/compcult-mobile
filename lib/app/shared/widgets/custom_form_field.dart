@@ -16,28 +16,30 @@ class CustomFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: textEditingController,
+      obscureText: this.permissionToObscure,
       keyboardType: this.permissionToObscure == true
           ? TextInputType.text
           : TextInputType.emailAddress,
-      obscureText: this.permissionToObscure,
       decoration: InputDecoration(
-        filled: true,
         fillColor: Colors.white,
-        hintText: this.label,
+        labelText: this.label,
+        labelStyle: TextStyle(
+          fontFamily: "Product Sans",
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
         contentPadding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+        enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+        border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
         ),
       ),
       style: TextStyle(
-        color: Colors.grey,
-        fontSize: 15,
-        fontFamily: "PTSans",
+        color: Colors.white,
+        fontSize: 20,
+        fontFamily: "Product Sans",
         fontWeight: FontWeight.w500,
       ),
       validator: (value) {

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:museu_vivo/app/modules/login/login_controller.dart';
 
 class CustomSubmitButton extends StatelessWidget {
   final String label;
@@ -12,26 +15,49 @@ class CustomSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginController = Modular.get<LoginController>();
+
     return Container(
-      height: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(18),
+            topRight: Radius.circular(18),
+            bottomLeft: Radius.circular(18),
+            bottomRight: Radius.circular(18)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12.withOpacity(0.35),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 5), // changes position of shadow
+          ),
+        ],
+      ),
+      height: MediaQuery.of(context).size.height * 0.08,
       alignment: Alignment.centerLeft,
       child: SizedBox.expand(
-        child: FlatButton(
-          onPressed: functionSubmit,
-          child: Text(
-            label,
-            style: TextStyle(
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w700,
+        child: Observer(
+          builder: (_) {
+            return FlatButton(
+              onPressed: functionSubmit,
+              child: loginController.loading
+                  ? CircularProgressIndicator()
+                  : Text(
+                      label,
+                      style: TextStyle(
+                        fontFamily: "Product Sanrs",
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF0072D5),
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
               color: Colors.white,
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.left,
-          ),
-          color: Color(0xFF0072d5),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-          ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+            );
+          },
         ),
       ),
     );
