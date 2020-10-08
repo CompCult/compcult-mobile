@@ -59,7 +59,7 @@ class _LoginFormContainerState extends State<LoginFormContainer> {
     );
   }
 
-  _submitLogin() async {
+  void _submitLogin() async {
     if (_formKey.currentState.validate()) {
       String email = _emailController.text.trim();
       String password = _passwordController.text.trim();

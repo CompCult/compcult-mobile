@@ -26,8 +26,12 @@ class AuthRepository implements IAuthRepository {
   @override
   Future login(String email, String password) async {
     Response response = await _userService.authenticate(email, password);
-    final UserModel user = UserModel.fromJson(response.data);
-    _storage.put("user", response.data);
+
+    var user = UserModel();
+    if (response.data != null) {
+      user = UserModel.fromJson(response.data);
+      _storage.put("user", response.data);
+    }
     return user;
   }
 
@@ -37,7 +41,12 @@ class AuthRepository implements IAuthRepository {
     Response response = await _userService.createUser(
         name: name, institution: institution, email: email, password: password);
 
-    if (response.data != null) {}
+    var user = UserModel();
+    if (response.data != null) {
+      user = UserModel.fromJson(response.data);
+      _storage.put("user", response.data);
+    }
+    return user;
   }
 
   @override

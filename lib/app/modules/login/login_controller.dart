@@ -22,9 +22,10 @@ abstract class _LoginControllerBase with Store {
       showErrorMessage = false;
       await auth.authenticate(email, password);
       Modular.to.pushNamedAndRemoveUntil('/home', (_) => false);
-    } catch (e) {
+    } catch (error) {
       loading = false;
       showErrorMessage = true;
+      print("[ERROR] Erro ao efetuar login: $error");
     } finally {
       loading = false;
     }

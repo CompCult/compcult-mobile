@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class SignUpButton extends StatelessWidget {
+class BackToLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        Modular.to.pushNamed("/register");
+        Modular.to.pushNamed("/login");
       },
       child: RichText(
         text: TextSpan(
@@ -17,10 +17,10 @@ class SignUpButton extends StatelessWidget {
             color: Colors.white,
             fontSize: 17,
           ),
-          text: "Não possui uma conta? ",
+          text: "Já possui uma conta? ",
           children: [
             TextSpan(
-              text: "Cadastre-se.",
+              text: "Faça o login.",
               style: TextStyle(color: Colors.black),
             ),
           ],

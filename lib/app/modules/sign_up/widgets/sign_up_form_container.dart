@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:museu_vivo/app/modules/sign_up/sign_up_controller.dart';
 import 'package:museu_vivo/app/shared/widgets/custom_form_field.dart';
 import 'package:museu_vivo/app/shared/widgets/custom_submit_button.dart';
-import 'package:museu_vivo/config.dart';
 
 class SignUpFormContainer extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -26,15 +25,6 @@ class SignUpFormContainer extends StatelessWidget {
       key: formKey,
       child: Column(
         children: <Widget>[
-          // Para redimensionar a logo
-          SizedBox(
-            width: 120,
-            height: 120,
-            child: Image.asset(
-              'assets/images/${config.assetsDirectoryName}/icon.png',
-            ),
-          ),
-          SizedBox(height: 10),
           CustomFormField(
             label: "Nome",
             permissionToObscure: false,
@@ -64,7 +54,7 @@ class SignUpFormContainer extends StatelessWidget {
             permissionToObscure: true,
             textEditingController: confirmPasswordController,
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 50),
           CustomSubmitButton(
             label: "CADASTRAR",
             functionSubmit: _submitRegister,
@@ -74,7 +64,11 @@ class SignUpFormContainer extends StatelessWidget {
     );
   }
 
-  _submitRegister() {
+  bool _validatePassword() {
+    return this.passwordController.text == this.confirmPasswordController.text;
+  }
+
+  void _submitRegister() async {
     if (formKey.currentState.validate() && _validatePassword()) {
       final controller = Modular.get<SignUpController>();
 
@@ -82,11 +76,7 @@ class SignUpFormContainer extends StatelessWidget {
       String email = this.emailController.text.trim();
       String password = this.passwordController.text.trim();
       String institution = this.institutionController.text.trim();
-      return controller.registerUser(name, institution, email, password);
+      await controller.registerUser(name, institution, email, password);
     }
-  }
-
-  bool _validatePassword() {
-    return this.passwordController.text == this.confirmPasswordController.text;
   }
 }

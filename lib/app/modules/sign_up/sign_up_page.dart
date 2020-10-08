@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:museu_vivo/app/modules/login/widgets/logo_container.dart';
+import 'package:museu_vivo/app/modules/sign_up/widgets/back_to_login_button.dart';
 import 'package:museu_vivo/app/modules/sign_up/widgets/sign_up_form_container.dart';
 import 'sign_up_controller.dart';
 
@@ -31,9 +33,13 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
           child: ListView(
             padding: EdgeInsets.fromLTRB(40, 50, 40, 10),
             children: <Widget>[
-              SizedBox(height: 30),
+              SizedBox(height: 50),
+              LogoContainer(),
+              SizedBox(height: 50),
               SignUpFormContainer(formKey: _formKey),
               SizedBox(height: 20),
+              BackToLoginButton(),
+              SizedBox(height: 30),
             ],
           ),
         ),

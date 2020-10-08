@@ -17,8 +17,9 @@ abstract class _AuthControllerBase with Store {
   UserModel user;
 
   _AuthControllerBase() {
-    _authRepository.getUser().then((setUser)).catchError((err) {
-      print("[ERROR] Erro ao executar o método authRepository.getUser(): $err");
+    _authRepository.getUser().then((setUser)).catchError((error) {
+      print(
+          "[ERROR] Erro ao executar o método authRepository.getUser(): $error");
     });
   }
 
@@ -36,7 +37,8 @@ abstract class _AuthControllerBase with Store {
   @action
   Future registerUser(
       String name, String institution, String email, String password) async {
-    await _authRepository.registerUser(name, institution, email, password);
+    user =
+        await _authRepository.registerUser(name, institution, email, password);
   }
 
   logout() async {

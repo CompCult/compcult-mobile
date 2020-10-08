@@ -11,6 +11,11 @@ abstract class _SignUpControllerBase with Store {
   
   @action
   Future registerUser(String name, String institution, String email, String password) async {
-    await auth.registerUser(name, institution, email, password);
+    try {
+      await auth.registerUser(name, institution, email, password);
+      Modular.to.pushNamedAndRemoveUntil("/register/success", (_) => false);
+    } catch(error) {
+      print("[ERROR] Erro ao tentar regitrar usuário: $error");
+    }
   }
 }

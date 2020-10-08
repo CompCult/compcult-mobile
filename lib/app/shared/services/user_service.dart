@@ -22,7 +22,7 @@ class UserService {
     return response;
   }
 
-  Future<dynamic> createUser(
+  Future<Response> createUser(
       {String name, String institution, String email, String password}) async {
     final response = await _client.post('/users/register', data: {
       'name': name,
@@ -32,6 +32,6 @@ class UserService {
       'password': password,
     });
 
-    return response.data;
+    return response;
   }
 }
