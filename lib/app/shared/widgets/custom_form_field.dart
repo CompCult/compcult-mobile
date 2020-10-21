@@ -35,6 +35,15 @@ class CustomFormField extends StatelessWidget {
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
         ),
+        suffixIcon: this.permissionToObscure
+            ? IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.visibility,
+                  color: Colors.white,
+                ),
+              )
+            : null,
       ),
       style: TextStyle(
         color: Colors.white,

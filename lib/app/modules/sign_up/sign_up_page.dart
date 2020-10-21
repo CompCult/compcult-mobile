@@ -30,16 +30,21 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
         },
         child: Container(
           color: Color(0xFF2d91e7),
-          child: ListView(
-            padding: EdgeInsets.fromLTRB(40, 50, 40, 10),
-            children: <Widget>[
-              SizedBox(height: 50),
+          child: Column(
+            children: [
+              SizedBox(height: 80),
               LogoContainer(),
-              SizedBox(height: 50),
-              SignUpFormContainer(formKey: _formKey),
-              SizedBox(height: 20),
-              BackToLoginButton(),
-              SizedBox(height: 30),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.fromLTRB(40, 40, 40, 10),
+                  children: <Widget>[
+                    SignUpFormContainer(formKey: _formKey),
+                    SizedBox(height: 20),
+                    BackToLoginButton(),
+                    SizedBox(height: 30),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

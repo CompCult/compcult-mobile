@@ -31,15 +31,20 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
         },
         child: Container(
           color: Color(0xFF2d91e7),
-          child: ListView(
-            padding: EdgeInsets.fromLTRB(40, 50, 40, 10),
-            children: <Widget>[
-              SizedBox(height: 50),
+          child: Column(
+            children: [
+              SizedBox(height: 80),
               LogoContainer(),
-              SizedBox(height: 50),
-              LoginFormContainer(),
-              SizedBox(height: 20),
-              SignUpButton(),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.fromLTRB(40, 40, 40, 10),
+                  children: <Widget>[
+                    LoginFormContainer(),
+                    SizedBox(height: 20),
+                    SignUpButton(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
