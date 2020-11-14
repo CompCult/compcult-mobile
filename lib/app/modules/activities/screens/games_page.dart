@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:museu_vivo/app/modules/activities/controllers/games_controller.dart';
 
-import 'store_controller.dart';
-
-class StorePage extends StatefulWidget {
+class GamesPage extends StatefulWidget {
   final String title;
-  const StorePage({Key key, this.title = "Store"}) : super(key: key);
+  const GamesPage({Key key, this.title = "Game"}) : super(key: key);
 
   @override
-  _StorePageState createState() => _StorePageState();
+  _GamesPageState createState() => _GamesPageState();
 }
 
-class _StorePageState extends ModularState<StorePage, StoreController> {
+class _GamesPageState extends ModularState<GamesPage, GamesController> {
   //use 'controller' variable to access controller
 
   @override
@@ -21,7 +20,7 @@ class _StorePageState extends ModularState<StorePage, StoreController> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Text("Store Page"),
+        child: Text("Games Page"),
       ),
     );
   }

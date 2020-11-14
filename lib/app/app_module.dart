@@ -1,8 +1,9 @@
-import 'package:museu_vivo/app/app_controller.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:museu_vivo/app/app_controller.dart';
 import 'package:museu_vivo/app/app_widget.dart';
-import 'package:museu_vivo/app/modules/home/home_module.dart';
+import 'package:museu_vivo/app/modules/activities/activities_module.dart';
+import 'package:museu_vivo/app/modules/initial/initial_module.dart';
 import 'package:museu_vivo/app/modules/login/login_module.dart';
 import 'package:museu_vivo/app/modules/sign_up/sign_up_module.dart';
 import 'package:museu_vivo/app/screens/splash/splash_screen.dart';
@@ -38,7 +39,8 @@ class AppModule extends MainModule {
         ModularRouter(Modular.initialRoute, child: (_, args) => SplashScreen()),
         ModularRouter('/login',
             module: LoginModule(), transition: TransitionType.noTransition),
-        ModularRouter('/home', module: HomeModule()),
+        ModularRouter('/initial', module: InitialModule()),
+        ModularRouter('/activities', module: ActivitiesModule()),
         ModularRouter('/register', module: SignUpModule()),
       ];
 

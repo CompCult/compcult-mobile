@@ -21,7 +21,7 @@ abstract class _LoginControllerBase with Store {
       loading = true;
       showErrorMessage = false;
       await auth.authenticate(email, password);
-      Modular.to.pushNamedAndRemoveUntil('/home', (_) => false);
+      Modular.to.pushNamedAndRemoveUntil('/initial', (_) => false);
     } catch (error) {
       loading = false;
       showErrorMessage = true;

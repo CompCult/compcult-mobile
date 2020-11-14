@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:museu_vivo/app/modules/login/widgets/login_form_container.dart';
 import 'package:museu_vivo/app/modules/login/widgets/logo_container.dart';
 import 'package:museu_vivo/app/modules/login/widgets/sign_up_button.dart';
+
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {

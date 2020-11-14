@@ -7,8 +7,10 @@ part 'profile_controller.g.dart';
 class ProfileController = _ProfileControllerBase with _$ProfileController;
 
 abstract class _ProfileControllerBase with Store {
+  final _authController = Modular.get<AuthController>();
+
   logout() async {
-    await Modular.get<AuthController>().logout();
-    Modular.to.pushReplacementNamed('/login');
+    await _authController.logout();
+    Modular.to.pushNamedAndRemoveUntil("/login", (_) => false);
   }
 }

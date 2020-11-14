@@ -21,7 +21,8 @@ class _CardItemState extends State<CardItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Modular.to.pushNamed("/${widget.routeName}");
+        // TODO: Fazer animação de rota...
+        Modular.to.pushNamed("${widget.routeName}");
       },
       child: Container(
         decoration: BoxDecoration(
