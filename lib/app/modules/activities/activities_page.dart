@@ -37,9 +37,6 @@ class _ActivitiesPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: SafeArea(
         child: Container(
           color: Color.fromRGBO(250, 250, 250, 1),

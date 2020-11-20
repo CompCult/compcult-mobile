@@ -15,6 +15,12 @@ abstract class _LoginControllerBase with Store {
   @observable
   bool showErrorMessage = false;
 
+  @observable
+  bool visibilityInputText = false;
+
+  @action
+  void setVisibilityInputText(bool newValue) => visibilityInputText = newValue;
+
   @action
   Future login(String email, String password) async {
     try {

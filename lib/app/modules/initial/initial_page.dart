@@ -46,13 +46,26 @@ class _InitialPageState extends ModularState<InitialPage, InitialController> {
             ProfilePage(),
           ],
         ),
-        bottomNavigationBar: TabBar(
-          tabs: appTabs,
-          labelColor: ThemeData().primaryColor,
-          unselectedLabelColor: Colors.grey,
-          indicatorSize: TabBarIndicatorSize.label,
-          indicatorPadding: EdgeInsets.only(bottom: 5.0),
-          indicatorColor: ThemeData().primaryColor,
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 0.5,
+                blurRadius: 5,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: TabBar(
+            tabs: appTabs,
+            labelColor: ThemeData().primaryColor,
+            unselectedLabelColor: Colors.grey,
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorPadding: EdgeInsets.only(bottom: 5.0),
+            indicatorColor: ThemeData().primaryColor,
+          ),
         ),
       ),
     );
