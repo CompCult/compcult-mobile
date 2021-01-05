@@ -1,16 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:museu_vivo/app/shared/models/user_modal.dart';
+import 'package:museu_vivo/app/shared/models/user_model.dart';
 import 'package:museu_vivo/app/shared/repositories/local_storage_interface.dart';
 import 'package:museu_vivo/app/shared/services/user_service.dart';
-import 'package:museu_vivo/app/shared/utils/providers/dio_provider.dart';
+import 'package:museu_vivo/app/shared/utils/providers/custom_dio.dart';
 
 import 'auth_repository_interface.dart';
 
 class AuthRepository implements IAuthRepository {
   final ILocalStorage _storage = Modular.get();
   final UserService _userService = Modular.get<UserService>();
-  final _dioRepository = DioProvider();
 
   @override
   Future<UserModel> getUser() async {
@@ -33,7 +32,8 @@ class AuthRepository implements IAuthRepository {
     if (response.data != null) {
       user = UserModel.fromJson(response.data);
       await _storage.put("user", response.data);
-      _dioRepository.addToken(user.token);
+
+      CustomDio(Modular.get<Dio>()).addToken(user.token);
     }
     return user;
   }
@@ -55,6 +55,6 @@ class AuthRepository implements IAuthRepository {
   @override
   logout() async {
     await _storage.delete("user");
-    await _storage.close();
+    // await _storage.close();
   }
 }

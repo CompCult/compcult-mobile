@@ -14,13 +14,24 @@ class _MissionPageState extends ModularState<MissionPage, MissionController> {
   //use 'controller' variable to access controller
 
   @override
+  void initState() {
+    super.initState();
+    controller.fetchMissions();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Text("Missions Page"),
+      body: ListView.builder(
+        itemCount: controller.missions.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('${controller.missions[index].name}'),
+          );
+        },
       ),
     );
   }

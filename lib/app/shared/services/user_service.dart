@@ -1,20 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:museu_vivo/app/shared/utils/providers/custom_dio.dart';
 
 class UserService {
-  final Dio _client;
+  final CustomDio dio;
 
-  UserService(this._client);
+  UserService(this.dio);
 
   Future<Response> fetchUser(String userId) {
-    return _client.get('/users/$userId');
+    return dio.client.get('/users/$userId');
   }
 
   Future<Response> fetchUsers() {
-    return _client.get('/users');
+    return dio.client.get('/users');
   }
 
   Future<Response> authenticate(String email, String password) async {
-    final Response response = await _client.post('/users/auth', data: {
+    final Response response = await dio.client.post('/users/auth', data: {
       'email': email,
       'password': password,
     });
@@ -24,7 +25,7 @@ class UserService {
 
   Future<Response> createUser(
       {String name, String institution, String email, String password}) async {
-    final response = await _client.post('/users/register', data: {
+    final response = await dio.client.post('/users/register', data: {
       'name': name,
       'type': 'estudante',
       'institution': institution,

@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:museu_vivo/app/shared/models/mission_model.dart';
+import 'package:museu_vivo/app/shared/services/mission_service.dart';
 
 part 'mission_controller.g.dart';
 
@@ -7,11 +10,14 @@ part 'mission_controller.g.dart';
 class MissionController = _MissionControllerBase with _$MissionController;
 
 abstract class _MissionControllerBase with Store {
+  final _missionService = Modular.get<MissionService>();
+
   @observable
-  int value = 0;
+  List<MissionModel> missions = [];
 
   @action
-  void increment() {
-    value++;
+  Future<void> fetchMissions() async {
+    Response missionsResponse = await _missionService.fetchMissions(); 
+    print(missionsResponse);
   }
 }

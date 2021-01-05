@@ -18,10 +18,10 @@ environment:
 
 dependencies:
   dio: ^3.0.10
-  provider: ^4.3.2+1
+  provider: ^4.3.2+3
   flutter_mobx: ^1.1.0+2
-  mobx: ^1.2.1+2
-  flutter_modular: ^2.0.0+1
+  mobx: ^1.2.1+4
+  flutter_modular: ^2.0.1
 
   # Para gerenciamento da sessão do banco de dados offline
   # hive: ^1.0.0
@@ -29,7 +29,7 @@ dependencies:
   # path_provider: ^1.2.0
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
-  path_provider: ^1.6.9
+  path_provider: ^1.6.24
 
   # Captura de fotos e seleção de imagens na galeria
   image_picker: ^0.6.7
@@ -39,8 +39,7 @@ dependencies:
   audioplayers: ^0.15.1
 
   # Trabalhar com geolocalização
-  # geolocator: ^5.2.1
-  geolocator: ^5.3.1
+  geolocator: ^6.1.13
 
   flutter:
     sdk: flutter

@@ -1,4 +1,4 @@
-import 'package:museu_vivo/app/shared/models/user_modal.dart';
+import 'package:museu_vivo/app/shared/models/user_model.dart';
 
 abstract class IAuthRepository {
   Future<UserModel> getUser();

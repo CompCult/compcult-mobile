@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:museu_vivo/app/shared/auth/auth_repository_interface.dart';
-import 'package:museu_vivo/app/shared/models/user_modal.dart';
+import 'package:museu_vivo/app/shared/models/user_model.dart';
 
 part 'auth_controller.g.dart';
 

@@ -1,21 +1,22 @@
 import 'package:dio/dio.dart';
+import 'package:museu_vivo/app/shared/utils/providers/custom_dio.dart';
 
 class MissionService {
-  final Dio _client;
+  final CustomDio dio;
 
-  MissionService(this._client);
+  MissionService(this.dio);
 
-  Future<Response> fetchMissions(String userId) {
-    return _client.get('/missions?answered=0');
+  Future<Response> fetchMissions() {
+    return dio.client.get('/missions?answered=0');
   }
 
   Future<Response> fetchSecretMission(String missionId) {
-    return _client.get('/missions?secret_code=$missionId');
+    return dio.client.get('/missions?secret_code=$missionId');
   }
 
   Future<Response> createMissionAnswer(
       String missionId, Map<String, dynamic> data) {
-    return _client.post(
+    return dio.client.post(
       '/missions/$missionId/answers',
       data: data,
     );

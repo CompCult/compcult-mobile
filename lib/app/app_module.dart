@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:museu_vivo/app/app_controller.dart';
@@ -15,7 +16,7 @@ import 'package:museu_vivo/app/shared/repositories/local_storage_interface.dart'
 import 'package:museu_vivo/app/shared/services/mission_service.dart';
 import 'package:museu_vivo/app/shared/services/quiz_service.dart';
 import 'package:museu_vivo/app/shared/services/user_service.dart';
-import 'package:museu_vivo/app/shared/utils/providers/dio_provider.dart';
+import 'package:museu_vivo/app/shared/utils/providers/custom_dio.dart';
 
 class AppModule extends MainModule {
   @override
@@ -27,11 +28,12 @@ class AppModule extends MainModule {
         // Auth
         Bind((i) => AuthController()),
         // HTTP Provider
-        Bind((i) => DioProvider()),
+        Bind((i) => Dio()),
+        Bind((i) => CustomDio(i.get<Dio>())),
         // Services
-        Bind((i) => UserService(i.get<DioProvider>().dio)),
-        Bind((i) => MissionService(i.get<DioProvider>().dio)),
-        Bind((i) => QuizService(i.get<DioProvider>().dio)),
+        Bind((i) => UserService(i.get<CustomDio>())),
+        Bind((i) => MissionService(i.get<CustomDio>())),
+        Bind((i) => QuizService(i.get<CustomDio>())),
       ];
 
   @override
