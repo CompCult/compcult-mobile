@@ -48,6 +48,8 @@ class ConfirmSignUp extends StatelessWidget {
               child: CustomSubmitButton(
                 label: "ENTRAR NO APP",
                 functionSubmit: _goToHome,
+                labelColor: Color(0xFF0072D5),
+                backgroundColor: Colors.white,
               ),
             ),
           ],
@@ -57,6 +59,6 @@ class ConfirmSignUp extends StatelessWidget {
   }
 
   void _goToHome() {
-    Modular.to.pushNamedAndRemoveUntil("/home", (_) => false);
+    Modular.to.pushNamedAndRemoveUntil("/initial/home", (_) => false);
   }
 }

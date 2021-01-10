@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:museu_vivo/app/modules/login/login_controller.dart';
+import 'package:museu_vivo/app/shared/loading/loading_controller.dart';
 
 class CustomSubmitButton extends StatelessWidget {
   final String label;
   final Function functionSubmit;
+  final Color labelColor;
+  final Color backgroundColor;
 
   CustomSubmitButton({
     Key key,
     @required this.label,
     @required this.functionSubmit,
+    @required this.labelColor,
+    @required this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    final loginController = Modular.get<LoginController>();
+    final loadingController = Modular.get<LoadingController>();
 
     return Container(
       decoration: BoxDecoration(
@@ -40,19 +44,19 @@ class CustomSubmitButton extends StatelessWidget {
           builder: (_) {
             return FlatButton(
               onPressed: functionSubmit,
-              child: loginController.loading
+              child: loadingController.loading
                   ? CircularProgressIndicator()
                   : Text(
                       label,
                       style: TextStyle(
                         fontFamily: "Product Sanrs",
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF0072D5),
+                        color: this.labelColor,
                         fontSize: 18,
                       ),
                       textAlign: TextAlign.left,
                     ),
-              color: Colors.white,
+              color: this.backgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
               ),

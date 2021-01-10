@@ -1,13 +1,15 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:museu_vivo/app/shared/auth/auth_controller.dart';
+import 'package:museu_vivo/app/shared/loading/loading_controller.dart';
 
 part 'login_controller.g.dart';
 
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  final auth = Modular.get<AuthController>();
+  final _authController = Modular.get<AuthController>();
+  final _loadingController = Modular.get<LoadingController>();
 
   @observable
   bool loading = false;
@@ -15,25 +17,18 @@ abstract class _LoginControllerBase with Store {
   @observable
   bool showErrorMessage = false;
 
-  @observable
-  bool visibilityInputText = false;
-
-  @action
-  void setVisibilityInputText(bool newValue) => visibilityInputText = newValue;
-
   @action
   Future login(String email, String password) async {
     try {
-      loading = true;
+      _loadingController.setLoading(true);
       showErrorMessage = false;
-      await auth.authenticate(email, password);
+      await _authController.authenticate(email, password);
       Modular.to.pushNamedAndRemoveUntil('/initial', (_) => false);
     } catch (error) {
-      loading = false;
       showErrorMessage = true;
       print("[ERROR] Erro ao efetuar login: $error");
     } finally {
-      loading = false;
+      _loadingController.setLoading(false);
     }
   }
 }

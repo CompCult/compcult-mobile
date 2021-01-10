@@ -40,22 +40,6 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
-  final _$visibilityInputTextAtom =
-      Atom(name: '_LoginControllerBase.visibilityInputText');
-
-  @override
-  bool get visibilityInputText {
-    _$visibilityInputTextAtom.reportRead();
-    return super.visibilityInputText;
-  }
-
-  @override
-  set visibilityInputText(bool value) {
-    _$visibilityInputTextAtom.reportWrite(value, super.visibilityInputText, () {
-      super.visibilityInputText = value;
-    });
-  }
-
   final _$loginAsyncAction = AsyncAction('_LoginControllerBase.login');
 
   @override
@@ -63,26 +47,11 @@ mixin _$LoginController on _LoginControllerBase, Store {
     return _$loginAsyncAction.run(() => super.login(email, password));
   }
 
-  final _$_LoginControllerBaseActionController =
-      ActionController(name: '_LoginControllerBase');
-
-  @override
-  void setVisibilityInputText(bool newValue) {
-    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
-        name: '_LoginControllerBase.setVisibilityInputText');
-    try {
-      return super.setVisibilityInputText(newValue);
-    } finally {
-      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
   @override
   String toString() {
     return '''
 loading: ${loading},
-showErrorMessage: ${showErrorMessage},
-visibilityInputText: ${visibilityInputText}
+showErrorMessage: ${showErrorMessage}
     ''';
   }
 }

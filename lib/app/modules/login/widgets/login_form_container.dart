@@ -25,12 +25,14 @@ class _LoginFormContainerState extends State<LoginFormContainer> {
           CustomFormField(
             label: "E-mail",
             permissionToObscure: false,
+            toggleViewIcon: false,
             textEditingController: _emailController,
           ),
           SizedBox(height: 10),
           CustomFormField(
             label: "Senha",
             permissionToObscure: true,
+            toggleViewIcon: true,
             textEditingController: _passwordController,
           ),
           SizedBox(height: 30),
@@ -53,6 +55,8 @@ class _LoginFormContainerState extends State<LoginFormContainer> {
           CustomSubmitButton(
             label: "ENTRAR",
             functionSubmit: _submitLogin,
+            labelColor: Color(0xFF0072D5),
+            backgroundColor: Colors.white,
           ),
         ],
       ),

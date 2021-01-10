@@ -36,6 +36,7 @@ class _InitialPageState extends ModularState<InitialPage, InitialController> {
     ];
 
     return DefaultTabController(
+      initialIndex: 0,
       length: appTabs.length,
       child: Scaffold(
         body: TabBarView(
@@ -47,6 +48,7 @@ class _InitialPageState extends ModularState<InitialPage, InitialController> {
           ],
         ),
         bottomNavigationBar: Container(
+          height: MediaQuery.of(context).size.height * 0.08,
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [

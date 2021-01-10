@@ -11,6 +11,7 @@ import 'package:museu_vivo/app/screens/splash/splash_screen.dart';
 import 'package:museu_vivo/app/shared/auth/auth_controller.dart';
 import 'package:museu_vivo/app/shared/auth/auth_repository.dart';
 import 'package:museu_vivo/app/shared/auth/auth_repository_interface.dart';
+import 'package:museu_vivo/app/shared/loading/loading_controller.dart';
 import 'package:museu_vivo/app/shared/repositories/local_storage_hive.dart';
 import 'package:museu_vivo/app/shared/repositories/local_storage_interface.dart';
 import 'package:museu_vivo/app/shared/services/mission_service.dart';
@@ -34,6 +35,8 @@ class AppModule extends MainModule {
         Bind((i) => UserService(i.get<CustomDio>())),
         Bind((i) => MissionService(i.get<CustomDio>())),
         Bind((i) => QuizService(i.get<CustomDio>())),
+        // Global Loading
+        Bind((i) => LoadingController()),
       ];
 
   @override

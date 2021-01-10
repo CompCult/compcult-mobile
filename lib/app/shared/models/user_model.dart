@@ -2,7 +2,7 @@ class UserModel {
   String id;
   String email;
   String name;
-  String instituition;
+  String institution;
   String token;
   int lux;
   int resources;
@@ -13,7 +13,7 @@ class UserModel {
       {this.id,
       this.email,
       this.name,
-      this.instituition,
+      this.institution,
       this.token,
       this.lux,
       this.resources,
@@ -24,7 +24,7 @@ class UserModel {
     id = json['_id'];
     email = json['email'];
     name = json['name'];
-    instituition = json['instituition'];
+    institution = json['institution'];
     token = json['token'];
     lux = json['lux'];
     resources = json['resources'];
@@ -37,7 +37,7 @@ class UserModel {
     data['_id'] = this.id;
     data['email'] = this.email;
     data['name'] = this.name;
-    data['instituition'] = this.instituition;
+    data['institution'] = this.institution;
     data['token'] = this.token;
     data['lux'] = this.lux;
     data['resources'] = this.resources;

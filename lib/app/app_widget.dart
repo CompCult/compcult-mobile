@@ -11,6 +11,10 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        }),
       ),
       initialRoute: Modular.initialRoute,
       onGenerateRoute: Modular.generateRoute,

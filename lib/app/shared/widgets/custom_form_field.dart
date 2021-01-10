@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:museu_vivo/app/modules/login/login_controller.dart';
+import 'package:mobx/mobx.dart';
 
 class CustomFormField extends StatefulWidget {
   final String label;
   final bool permissionToObscure;
+  final bool toggleViewIcon;
   final TextEditingController textEditingController;
 
   CustomFormField({
     Key key,
     @required this.label,
     @required this.permissionToObscure,
+    @required this.toggleViewIcon,
     @required this.textEditingController,
   });
 
@@ -20,12 +21,12 @@ class CustomFormField extends StatefulWidget {
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
-  final _loginController = Modular.get<LoginController>();
+  @observable
+  bool fieldVisibility = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _loginController.setVisibilityInputText(widget.permissionToObscure);
+  @action
+  void changeFieldVisibility(bool value) {
+    fieldVisibility = value;
   }
 
   @override
@@ -36,9 +37,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
         // Verifica se o campo está habilitado para ser oculto.
         // Caso positivo, deixa o controle de visibilidade com o _loginController,
         // visto que, no caso do input de senha, é possível alterar a visilibidade.
-        obscureText: widget.permissionToObscure
-            ? _loginController.visibilityInputText
-            : widget.permissionToObscure,
+        obscureText: widget.permissionToObscure,
         keyboardType: this.widget.permissionToObscure
             ? TextInputType.text
             : TextInputType.emailAddress,
@@ -57,17 +56,14 @@ class _CustomFormFieldState extends State<CustomFormField> {
           border: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
           ),
-          suffixIcon: this.widget.permissionToObscure
+          suffixIcon: this.widget.toggleViewIcon
               ? IconButton(
                   onPressed: () {
-                    _loginController.setVisibilityInputText(
-                        !_loginController.visibilityInputText);
+                    changeFieldVisibility(!fieldVisibility);
                   },
                   icon: Observer(
                     builder: (_) => Icon(
-                      _loginController.visibilityInputText
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      !fieldVisibility ? Icons.visibility : Icons.visibility_off,
                       color: Colors.white,
                     ),
                   ),
