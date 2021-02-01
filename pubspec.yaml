@@ -31,7 +31,7 @@ dependencies:
   chewie_audio: ^1.0.0+1
   video_player: ^0.10.11
   video_thumbnail: ^0.2.1
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
 
   
   flutter:
