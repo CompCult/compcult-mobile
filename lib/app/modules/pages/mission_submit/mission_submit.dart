@@ -215,7 +215,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
           onPressed:
               _recording?.status == RecordingStatus.Stopped ? _play : null,
         ),
-        SizedBox(width: 4),
+        SizedBox(width: 2),
         RaisedButton(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -229,7 +229,7 @@ class _MissionSubmitState extends State<MissionSubmit> {
           onPressed:
               _recording?.status == RecordingStatus.Stopped ? _pause : null,
         ),
-        SizedBox(width: 4),
+        SizedBox(width: 2),
         RaisedButton(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
